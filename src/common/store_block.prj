@@ -1,0 +1,3 @@
+vhdl work D_TYPE.vhd
+vhdl work ENABLEABLE_D_TYPE.vhd
+vhdl work STORE_BLOCK.vhd

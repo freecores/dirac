@@ -1,0 +1,2 @@
+vhdl work ../common/D_TYPE.vhd
+vhdl work STORAGE_REGISTER.vhd

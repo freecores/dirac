@@ -1,0 +1,3 @@
+vhdl work ../common/D_TYPE.vhd
+vhdl work ../common/COUNT_UNIT.vhd
+vhdl work ../common/FOLLOW_COUNTER.vhd

@@ -1,0 +1,62 @@
+README for the Dirac video codec hardware implementation
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+by Thomas Davies and Peter Bleackley, BBC R&D (dirac@rd.bbc.co.uk)
+
+
+1. Executive Summary
+~~~~~~~~~~~~~~~~~~~~
+
+Dirac is an open source video codec. It uses a traditional hybrid video codec
+architecture, but with the wavelet transform instead of the usual block
+transforms.  Motion compensation uses overlapped blocks to reduce block
+artefacts that would upset the transform coding stage.
+
+Dirac can code just about any size of video, from streaming up to HD and
+beyond, although certain presets are defined for different applications and
+standards.  These cover the parameters that need to be set for the encoder to
+work, such as block sizes and temporal prediction structures, which must
+otherwise be set by hand.
+
+Dirac is intended to develop into real coding and decoding software and hardware, capable of plugging 
+into video processing applications and media players that need compression. It is intended to develop 
+into a simple set of reliable but effective coding tools that work over a wide variety of content and 
+formats, using well-understood compression techniques, in a clear and accessible software or hardware 
+structure. It is not intended as a demonstration or reference coder.
+
+This release of the hardware implementation comprises VHDL modules for a prototype arithmetic coder 
+and decoder. These implement a fixed probability model.
+
+
+2. Documentation
+~~~~~~~~~~~~~~~~
+
+A user guide and a guide to the software is in progress. More details on
+running the codec can be found at http://dirac.sourceforge.net/
+Documentation specific to the hardware will be posted the directory /docs.
+
+
+3. Synthesis
+~~~~~~~~~~
+
+  All modules are built in RTL style, and are synthesizable. Modules common to 
+the encoder and the decoder are in /src/common. Modules specific to the encoder are in /src/encoder 
+and those specific to the decoder are in /src/decoder.
+
+Alongside each vhdl module (.vhd) is a .prj file. This specifies the compilation sequence for the 
+module.
+
+The initial development of the vhdl was done with Xilinx ISE Webpack.
+
+4. Simulation
+~~~~~~~~~~~
+The encoder may run at clock rates of up to 100MHz, and process an input symbol every 4 clock cycles, 
+thus giving a possible troughput of 25 Msymbol/second. The decoder can run at the same clock rate as 
+the encoder, and decode the encoded stream at the same rate that it is produced by the encoder.
+
+A testbench is provided in /src/testbench, together with a test input file /src/rawdata. This 
+testbench provides an end-to end simulation of the encoding and decoding process, for a data stream 
+with a fixed source entropy of 0.498 bits/symbol. The testbench also provides a process that counts 
+the number of bits produced by the encoder.
+
+Simulations have been perfomed with Modelsym XE.

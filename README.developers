@@ -1,0 +1,193 @@
+
+
+Dirac development practices
+======================
+
+Contents
+--------
+
+1. Licenses and submitting work
+
+2. Sourceforge Developers forum
+
+3. Mailing lists
+
+4. Using the CVS repository
+
+5. CVS log messages
+
+6. Design practices
+
+7. Line-endings
+
+8. Binary files in CVS
+
+
+
+1. Licenses and submitting work
+-------------------------------
+
+Developers submitting work to the Dirac project should print out, 
+complete, and sign the Developer's Certificate of Origin contained 
+in the DCO.developers file. It should be posted to: 
+
+Dr Tim Borer
+BBC Research and Development
+Kingswood Warren
+Tadworth
+Surrey KT20 6NP
+United Kingdom
+
+For simplicity developers must submit code using the same
+license that we distribute under, which is the Mozilla Triple
+license (http://www.mozilla.org/MPL/). Using any other license
+causes complexity and FUD.
+
+Contributions should be in the form of a patch, which may be for a
+whole directory. For changes to an existing file all that is needed
+is to add the author's name to the list of contributors, since the
+license will remain the MPL. For new files, the header in each file
+should be completed from Exhibit A, the Mozilla Triple License (from the
+COPYING file). It should NOT be copied from files already obtained
+in the Dirac project, since some details may differ.
+
+To create a context diff patch run the command
+
+diff -ruN compress-orig compress-mods > patch.txt
+
+   where compress-orig is the directory with the original code and
+   compress-mods is the directory with the modified files.
+
+The patch.txt file should then be submitted to the Sourceforge Patch
+tracker.
+
+2. Sourceforge Developers forum
+-------------------------------
+The Developers forum is where Dirac core developers plan and coordinate
+changes to Dirac.  All API changes, new features and implementation
+difficulties are announced and discussed here.
+
+Examples of changes which should be announced in the Developers forum:
+
+  - Pic API change: return bool instead of void for ReadNextFrame
+  - Pic API change: most methods can now throw ErrorState objects
+
+Changes which are small in scope and unlikely to affect developers
+should not be announced on the forum.  Changes which touch
+many files can fall into this category - for example
+
+  - Fixed inconsistent CRLF line-endings to be LF.
+  - Fixed "use of uninitialised variable" cases found by gcc.
+  - Fixed memory leak in all instantiations of Pic (found by valgrind).
+  - Add feature test for stdint.h to be portable to Solaris.
+
+Developers should 'monitor' the forums by going to the forum page and
+clicking 'Monitor this forum'.  Any new message will then be emailed
+to their username@users.sourceforge.net <mailto:username@users.sourceforge.net> email address.
+  http://sourceforge.net/forum/forum.php?forum_id=353620
+
+
+3. Mailing lists
+----------------
+Developers should subscribe to the dirac-announce and dirac-commits
+mailing lists.  dirac-announce is used to announce new releases and
+dirac-commits is sent mail automatically for every commit.
+
+
+4. Using the CVS repository
+---------------------------
+
+The latest (but non-stable) version of the code can be downloaded direct
+from the Sourceforge repository using anonymous CVS. Instructions for 
+doing so can be found at the Dirac CVS page: 
+
+http://sourceforge.net/cvs/ 
+
+The Dirac codec module is called 'diracvhdl'.
+
+5. CVS log messages
+-------------------
+Always indicate why the change is necessary in addition to a succinct summary
+of what as changed.  As the number of developers increases it becomes
+increasingly difficult for developers to understand the changes going on in
+areas they are not familiar with.  If the changes relate to an API change
+developers may not realise this if it is not mentioned in the log message
+as the reason for the change.
+
+E.g.
+  Bad
+  ---
+  - Added gamma parameter
+  - Replace stricmp with strcasecmp
+
+  Good
+  ----
+  - Added gamma parameter to record more accurate data on source material
+  - Enhanced portability: stricmp replaced by strcasecmp (the POSIX standard) 
+
+
+6. Design practices
+---------------------
+
+I. Coding Style
+
+   The following guidelines must be adhered to while developing code.
+
+-- CVS related tags
+   
+ - Include the following RCS tags in all new files (.vhd). Include them
+   on the first line of the licence block
+
+   Id
+   Name
+
+   E.g.
+   -- /* ***** BEGIN LICENSE BLOCK *****
+   -- *
+   -- * $Id: README.developers,v 1.1.1.1 2005-03-30 10:09:49 petebleackley Exp $ $Name: not supported by cvs2svn $
+   -- *
+   -- *  rest of licence text
+   -- * ***** END LICENSE BLOCK ***** */
+
+
+ - Remove the following tags from all files. Do not include them in new files
+   Author
+   Revision
+   Log
+
+--  General Source code formatting
+
+ All signals should be std_logic or std_logic_vector.
+ Widths and slices of vectors should be specified with downto.
+ VHDL '97 style is preferred for end statements (e.g. end architecture RTL;)
+ VHDL keywords should be in lower case, entity, architecture and signal names, 
+ 
+
+       
+III. Code Review
+
+   All code will be peer-reviewed before being checked in to SourceForge
+   CVS. Developers should use the guidelines specified in the Coding Style
+   sub-section while reviewing code.
+
+7. Line-endings
+---------------
+All source code and documentation will have LF line-endings, include makefiles
+and scripts. 
+
+
+8. Binary files in CVS
+----------------------
+CVS will modify files during checkin and checkout unless they are tagged as
+binary.  The modifications include translation of CR-LF <-> LF (depending on
+the OS of the CVS client) and expansion of CVS keywords such as $Id and $Log.
+
+Files which must not be modified in this way must be tagged as binary either
+using the add command or admin command:
+  cvs add -kb fig1.jpg
+  cvs admin -kb fig1.jpg  (for files already in CVS)
+
+MS VC++ project files, such as .vcproj and .sln, fall into this category since
+they do not function if their line-endings are not CR-LF.
+
+------------------------------------------------------------------------

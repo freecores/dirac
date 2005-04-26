@@ -27,8 +27,6 @@ ARCHITECTURE behavior OF arithmeticcoder_ArithmeticCoderTestbench_vhd_tb IS
 	PORT(
 		ENABLE : IN std_logic;
 		DATA_IN : IN std_logic;
-		CONTEXT_ENABLE : in std_logic;
-		CONTEXT_IN : in std_logic_vector (5 downto 0);
 		RESET : IN std_logic;
 		CLOCK : IN std_logic;          
 		SENDING : OUT std_logic;
@@ -55,9 +53,7 @@ ARCHITECTURE behavior OF arithmeticcoder_ArithmeticCoderTestbench_vhd_tb IS
 	signal TRANSMIT :	std_logic;
 	signal DATA_TRANSFER :	std_logic;
 	constant PERIOD : time := 10 ns;
-	signal CONTEXT_ENABLE : std_logic;
-	signal CONTEXT : std_logic_vector (5 downto 0) := "000000";
-	file TESTDATA :	text is in "";
+	file TESTDATA :	text is in "raw_data";
 	file RESULTS :	text is out "results";
 
 BEGIN
@@ -68,8 +64,6 @@ BEGIN
 	PORT MAP(
 		ENABLE => ENABLE,
 		DATA_IN => DATA_IN,
-		CONTEXT_ENABLE => CONTEXT_ENABLE,
-		CONTEXT_IN => CONTEXT,
 		RESET => RESET,
 		CLOCK => CLOCK,
 		SENDING => TRANSMIT,
@@ -135,6 +129,7 @@ BEGIN
 			if (WRITTEN mod 32) = 31 then
 				writeline(RESULTS,OUTLINE);
 			end if;
+		end if;
 	end loop;
 	end process;
 	

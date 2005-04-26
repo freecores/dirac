@@ -1,6 +1,6 @@
 -- ***** BEGIN LICENSE BLOCK *****
 -- 
--- $Id: ARITHMETIC_UNIT.vhd,v 1.1.1.1 2005-03-30 10:09:49 petebleackley Exp $ $Name: not supported by cvs2svn $
+-- $Id: ARITHMETIC_UNIT.vhd,v 1.2 2005-04-26 13:40:14 petebleackley Exp $ $Name: not supported by cvs2svn $
 -- *
 -- * Version: MPL 1.1/GPL 2.0/LGPL 2.1
 -- *
@@ -20,7 +20,7 @@
 -- * Portions created by the Initial Developer are Copyright (C) 2004.
 -- * All Rights Reserved.
 -- *
--- * Contributor(s): Peter Bleackley (Original author)
+-- * Contributor(s): Peter Bleackley (Original author), Stephan Reichör
 -- *
 -- * Alternatively, the contents of this file may be used under the terms of
 -- * the GNU General Public License Version 2 (the "GPL"), or the GNU Lesser
@@ -70,7 +70,7 @@ architecture RTL of ARITHMETIC_UNIT is
 	signal PRODUCT :	std_logic_vector (26 downto 0);
 	signal PRODUCT2 :	 std_logic_vector (16 downto 0);
 	signal RESULT :	std_logic_vector (16 downto 0);
-	signal RESULT0 : std_logic_vector (15 downto 0);
+	signal RESULT0 : std_logic_vector (16 downto 0);
 	signal DIFFERENCE1 : std_logic_vector (16 downto 0);
 	signal DIFFERENCE2 : std_logic_vector(16 downto 0);
 	signal DIFFERENCE3 : std_logic_vector(16 downto 0);

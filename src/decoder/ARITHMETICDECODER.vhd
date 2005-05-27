@@ -1,6 +1,6 @@
 -- ***** BEGIN LICENSE BLOCK *****
 -- 
--- $Id: ARITHMETICDECODER.vhd,v 1.1.1.1 2005-03-30 10:09:49 petebleackley Exp $ $Name: not supported by cvs2svn $
+-- $Id: ARITHMETICDECODER.vhd,v 1.2 2005-05-27 16:00:29 petebleackley Exp $ $Name: not supported by cvs2svn $
 -- *
 -- * Version: MPL 1.1/GPL 2.0/LGPL 2.1
 -- *
@@ -47,9 +47,10 @@ use IEEE.STD_LOGIC_UNSIGNED.ALL;
 --use UNISIM.VComponents.all;
 
 entity ARITHMETICDECODER is
-	generic (PROB :	std_logic_vector (9 downto 0) := "1010101010");
     Port ( ENABLE : in std_logic;
            DATA_IN : in std_logic;
+			  NEWCONTEXT :	in std_logic;
+			  CONTEXT_SELECT : in std_logic_vector (5 downto 0);
 			  RESET : in std_logic;
            CLOCK : in std_logic;
            SENDING : out std_logic;
@@ -58,14 +59,15 @@ end ARITHMETICDECODER;
 
 architecture RTL of ARITHMETICDECODER is
 	component INPUT_CONTROL
+	generic(WIDTH :	integer range 1 to 16);
 	port(	  ENABLE : in std_logic;
-           DATA_IN : in std_logic;
+           DATA_IN : in std_logic_vector (WIDTH -1 downto 0);
            BUFFER_CONTROL : in std_logic;
            DEMAND : in std_logic;
            RESET : in std_logic;
            CLOCK : in std_logic;
            SENDING : out std_logic;
-           DATA_OUT : out std_logic);
+           DATA_OUT : out std_logic_vector (WIDTH - 1 downto 0));
 	end component INPUT_CONTROL;
  	component STORAGE_REGISTER
 	Port ( LOAD : in std_logic_vector(15 downto 0);
@@ -105,6 +107,12 @@ architecture RTL of ARITHMETICDECODER is
            THRESHOLD : in std_logic_vector (15 downto 0);
 			  DATA_OUT : out std_logic);
 	end component SYMBOL_DETECTOR;
+	component CONTEXT_MANAGER
+	port ( CONTEXT_NUMBER : in std_logic_vector(5 downto 0);
+           RESET : in std_logic;
+           CLOCK : in std_logic;
+           PROB : out std_logic_vector(9 downto 0));
+	end component CONTEXT_MANAGER;
 	signal HIGH_SET : std_logic;
 	signal LOW_SET	: std_logic;
 	signal SHIFT_ALL :	std_logic;
@@ -130,18 +138,33 @@ architecture RTL of ARITHMETICDECODER is
 	signal HIGH_VALUE : std_logic_vector (15 downto 0);
 	signal LOW_VALUE : std_logic_vector (15 downto 0);
 	signal CURRENT_VALUE : std_logic_vector (15 downto 0);
+	signal PROB :	std_logic_vector (9 downto 0);
+	signal DATA_IN2 : std_logic_vector(0 downto 0);
+	signal BUFFERED_DATA2 :	std_logic_vector(0 downto 0);
 
 begin
 -- input buffering
 INBUFFER:	INPUT_CONTROL
+	generic map (WIDTH => 1)
 	port map(ENABLE => ENABLE,
-	DATA_IN => DATA_IN,
+	DATA_IN => DATA_IN2,
 	BUFFER_CONTROL => HOLD,
 	DEMAND => GET_DATA,
 	RESET => RESET,
 	CLOCK => CLOCK,
 	SENDING => DATA_AVAILABLE,
-	DATA_OUT => BUFFERED_DATA);
+	DATA_OUT => BUFFERED_DATA2);
+
+	DATA_IN2(0) <= DATA_IN;
+	BUFFERED_DATA <= BUFFERED_DATA2(0);
+
+--	Context
+
+ PROBABILITY : CONTEXT_MANAGER
+			port map(CONTEXT_NUMBER => CONTEXT_SELECT,
+			RESET => RESET,
+			CLOCK => CLOCK,
+			PROB => PROB);
 
 -- Specify the registers
   HIGH:	STORAGE_REGISTER
@@ -244,7 +267,7 @@ OUTPUT:	SYMBOL_DETECTOR
 
 -- Control logic for arithmetic unit
 	
-	ARITHMETIC_UNIT_ENABLE <=  GET_DATA nor DATA_LOAD;
+	ARITHMETIC_UNIT_ENABLE <=  not(GET_DATA or DATA_LOAD or NEWCONTEXT);
 
 -- Control Logic for input control
 	SHIFT_ALL <= TRIGGER_INPUT and DATA_AVAILABLE;

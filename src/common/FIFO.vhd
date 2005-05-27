@@ -1,6 +1,6 @@
 -- ***** BEGIN LICENSE BLOCK *****
 -- 
--- $Id: FIFO.vhd,v 1.1.1.1 2005-03-30 10:09:49 petebleackley Exp $ $Name: not supported by cvs2svn $
+-- $Id: FIFO.vhd,v 1.2 2005-05-27 16:00:28 petebleackley Exp $ $Name: not supported by cvs2svn $
 -- *
 -- * Version: MPL 1.1/GPL 2.0/LGPL 2.1
 -- *
@@ -46,38 +46,21 @@ use IEEE.STD_LOGIC_UNSIGNED.ALL;
 --library UNISIM;
 --use UNISIM.VComponents.all;
 
-entity FIFO is
-	generic (RANK :	integer range 0 to 16 :=8);
+  entity FIFO is
+	generic (RANK :	integer range 0 to 16 :=8;
+	WIDTH : integer range 1 to 16);
     Port ( WRITE_ENABLE : in std_logic;
-           DATA_IN : in std_logic;
+           DATA_IN : in std_logic_vector(WIDTH - 1 downto 0);
            READ_ENABLE : in std_logic;
            RESET : in std_logic;
            CLOCK : in std_logic;
-           DATA_OUT : out std_logic;
-			  EMPTY : out std_logic);
+           DATA_OUT : out std_logic_vector(WIDTH - 1 downto 0);
+           EMPTY : out std_logic);
 end FIFO;
 
 architecture RTL of FIFO is
-	 component	ENABLEABLE_D_TYPE
-	 port (DATA_IN : in std_logic;
-	 		ENABLE : in std_logic;
-			 CLK : in std_logic;
-			 DATA_OUT:	out std_logic);
-	end component ENABLEABLE_D_TYPE;
-	component D_TYPE
-	port(	 D : in std_logic;
-           CLOCK : in std_logic;
-           Q : out std_logic);
-end component D_TYPE;
-	component COUNT_UNIT
-	port(		INCREMENT : in std_logic;
-           DECREMENT : in std_logic;
-			  RESET :	in std_logic;
-           CLOCK : in std_logic;
-           OUTPUT : out std_logic;
-           INCREMENT_CARRY : out std_logic;
-           DECREMENT_CARRY : out std_logic);
-end component COUNT_UNIT;
+
+
 	function TWO_TO_N(N:	integer) return integer is
 	variable A:	integer;
 	begin
@@ -87,126 +70,61 @@ end component COUNT_UNIT;
 	end loop;
 	return A;
 	end function TWO_TO_N;
-	function ZERO_VALUE(ADDRESS:	std_logic_vector) return std_logic is
-	begin
-	for J in 0 to RANK - 1 loop
-	if ADDRESS(J) = '1' then
-	return '0';
-	end if;
-	end loop;
-	return '1';
-	end function ZERO_VALUE;
-
+	signal WRITE_ADDRESS :	std_logic_vector (RANK - 1 downto 0);
 	signal READ_ADDRESS :	std_logic_vector (RANK - 1 downto 0);
-	signal INC :	std_logic_vector (RANK - 1 downto 0);
-	signal DEC : 	std_logic_vector (RANK - 1 downto 0);
 	type MATRIX is
-	array (RANK downto 0) of std_logic_vector (TWO_TO_N(RANK) -1 downto 0);
+	array (TWO_TO_N(RANK) - 1 downto 0) of std_logic_vector(WIDTH - 1 downto 0);
 	signal GET_OUTPUT: MATRIX;
-	signal NEWVAL :	std_logic_vector(TWO_TO_N(RANK) - 1 downto 0);
-	signal INCREMENT :	std_logic;
-	signal DECREMENT :	std_logic;
-	signal TOGGLE :	std_logic;
-	signal IS_EMPTY :	std_logic;
-	signal ZERO :	std_logic;
-	signal NEW_EMPTY : std_logic;
+
 	signal EMPTY_OUT :	std_logic;
-	signal NOWRITE :	std_logic;
-	signal CHANGED_VALUE : std_logic;
-	signal EMPTY_IF_READ :	std_logic;
-	signal LOAD_ENABLE : std_logic;
+
+
 begin
--- Storage registers
+-- Counters
 
-
-BUILD: for I in 0 to RANK -1 generate
-
-LSB:	if I = 0 generate
-COUNTER : COUNT_UNIT
-	port map( INCREMENT => INCREMENT,
-				DECREMENT => DECREMENT,
-				RESET => RESET,
-				CLOCK => CLOCK,
-				OUTPUT => READ_ADDRESS(I),
-				INCREMENT_CARRY => INC(I),
-				DECREMENT_CARRY => DEC(I));
-
-	end generate;
-
-OTHER_BITS:	if I > 0 generate
-COUNTER :	COUNT_UNIT
-	port map( INCREMENT => INC(I-1),
-				DECREMENT => DEC(I-1),
-				RESET => RESET,
-				CLOCK => CLOCK,
-				OUTPUT => READ_ADDRESS(I),
-				INCREMENT_CARRY => INC(I),
-				DECREMENT_CARRY => DEC(I));
-	end generate;
-
-MULTIPLEX:	for Z in 0 to TWO_TO_N(I) - 1 generate
-OUTPUT_SELECT: process(READ_ADDRESS(RANK - I - 1),GET_OUTPUT(RANK - I -1))
-begin
-	if READ_ADDRESS(RANK - I - 1) = '1' then
-		GET_OUTPUT(RANK - I)(Z) <= GET_OUTPUT(RANK - I - 1)(2*Z + 1);
-	else
-		GET_OUTPUT(RANK - I)(Z) <= GET_OUTPUT(RANK - I - 1)(2*Z);
+COUNT: process (CLOCK)
+	begin
+	if (CLOCK'event and CLOCK = '1') then
+		if (RESET = '1') then
+			READ_ADDRESS <= (others => '0');
+			WRITE_ADDRESS <= (others => '0');
+		else
+			if WRITE_ENABLE = '1' then
+				WRITE_ADDRESS <= WRITE_ADDRESS + "1";
+			end if;
+			if READ_ENABLE = '1' and EMPTY_OUT = '0' then
+				READ_ADDRESS <= READ_ADDRESS + "1";
+			end if;
+		end if;	
 	end if;
-end process OUTPUT_SELECT;
-end generate;
-
-STORAGE: if I = RANK - 1 generate
-BITS:	for X in 0 to TWO_TO_N(RANK) - 1 generate
-STORE:	ENABLEABLE_D_TYPE
-			port map (DATA_IN => NEWVAL(X),
-			ENABLE => LOAD_ENABLE,
-			CLK => CLOCK,
-			DATA_OUT => GET_OUTPUT(0)(X));
-MOST_RECENT:	if X = 0 generate
-	NEWVAL(X) <= DATA_IN and not RESET;
-end generate;
-
-OLDER_DATA: if X > 0 generate
-	NEWVAL(X) <= GET_OUTPUT(0)(X-1) and not RESET;
-end generate;
-end generate;
-end generate;
+end process COUNT;
 
 
-end generate;
 
-LOAD_ENABLE <= WRITE_ENABLE or RESET;
-INCREMENT <= WRITE_ENABLE and not (READ_ENABLE or EMPTY_OUT);
-DECREMENT <= READ_ENABLE and not (WRITE_ENABLE or ZERO);
 
-EMPTY_VALUE:	D_TYPE
-	port map(D => IS_EMPTY,
-				CLOCK => CLOCK,
-				Q => EMPTY_OUT);
-
-IS_EMPTY <= NEW_EMPTY or RESET;
-
-SWITCH_EMPTY: process(TOGGLE,EMPTY_OUT,CHANGED_VALUE)
+ZEROVALUE : process (READ_ADDRESS, WRITE_ADDRESS)
 begin
-	if(TOGGLE = '1') then
-		NEW_EMPTY <= CHANGED_VALUE;
+	if READ_ADDRESS = WRITE_ADDRESS then
+	EMPTY_OUT <= '1';
 	else
-		NEW_EMPTY <= EMPTY_OUT;
+	EMPTY_OUT <= '0';
 	end if;
-end process SWITCH_EMPTY;
-
-TOGGLE <= WRITE_ENABLE xor READ_ENABLE;
-CHANGED_VALUE <= EMPTY_IF_READ and NOWRITE;
-NOWRITE <= not WRITE_ENABLE;
-EMPTY_IF_READ <= ZERO or EMPTY_OUT;
-
-
-ZERO <= ZERO_VALUE(READ_ADDRESS);
+end process ZEROVALUE;
 
 EMPTY <= EMPTY_OUT;
 
-DATA_OUT <= GET_OUTPUT(RANK)(0);
+SETDATA: process (CLOCK)
+	begin
+	if CLOCK'event and CLOCK = '1' then
+	if WRITE_ENABLE = '1' then
+		GET_OUTPUT(conv_integer(WRITE_ADDRESS)) <= DATA_IN;
+	end if;
+	end if;
+	end process SETDATA;
 
+
+	DATA_OUT <= GET_OUTPUT(conv_integer(READ_ADDRESS));
 
 
 end RTL;
+

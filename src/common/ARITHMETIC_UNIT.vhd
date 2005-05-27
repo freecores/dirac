@@ -1,6 +1,6 @@
 -- ***** BEGIN LICENSE BLOCK *****
 -- 
--- $Id: ARITHMETIC_UNIT.vhd,v 1.2 2005-04-26 13:40:14 petebleackley Exp $ $Name: not supported by cvs2svn $
+-- $Id: ARITHMETIC_UNIT.vhd,v 1.3 2005-05-27 16:00:28 petebleackley Exp $ $Name: not supported by cvs2svn $
 -- *
 -- * Version: MPL 1.1/GPL 2.0/LGPL 2.1
 -- *
@@ -47,7 +47,7 @@ use IEEE.NUMERIC_STD.ALL;
 --library UNISIM;
 --use UNISIM.VComponents.all;
 
-entity ARITHMETIC_UNIT is
+	entity ARITHMETIC_UNIT is
     Port ( DIFFERENCE : in std_logic_vector(15 downto 0);
            PROB : in std_logic_vector(9 downto 0);
 			  LOW :	in std_logic_vector(15 downto 0);
@@ -62,10 +62,7 @@ entity ARITHMETIC_UNIT is
 end ARITHMETIC_UNIT;
 
 architecture RTL of ARITHMETIC_UNIT is
-	component D_TYPE
-	port(D,CLOCK:	in std_logic;
-	 Q:	out std_logic);
-	end component D_TYPE;
+
 	signal LOW2 : std_logic_vector(16 downto 0);
 	signal PRODUCT :	std_logic_vector (26 downto 0);
 	signal PRODUCT2 :	 std_logic_vector (16 downto 0);
@@ -106,38 +103,18 @@ MULTIPLY : process (CLOCK, DIFFERENCE2, PROB)
 
 -- Sequential control logic
 
-READ_DELAY: D_TYPE
-	port map(D => CALCULATE,
-	CLOCK => CLOCK,
-	Q => DELAY1);
-
-CHECK_DELAY: D_TYPE
-	port map(D => DELAY1,
-	CLOCK => CLOCK,
-	Q => DELAY2);
-
-DELAYS: for I in 0 to 15 generate
-
-DIFF_DELAY: D_TYPE
-	port map(D => DIFFERENCE(I),
-	CLOCK => CLOCK,
-	Q => DIFFERENCE1(I));
-
-LOW_DELAY: D_TYPE
-	port map(D => LOW(I),
-	CLOCK => CLOCK,
-	Q => LOW2(I));
-
-OUT_DELAY0: D_TYPE
-	port map(D => DIFFERENCE3(I),
-	CLOCK => CLOCK,
-	Q => DIFFERENCE_OUT0(I));
+DELAYS: process (CLOCK)
+	begin
+	if CLOCK'event and CLOCK = '1' then
+		DELAY1 <= CALCULATE;
+		DELAY2 <= DELAY1;
+		DIFFERENCE1 <= '0' & DIFFERENCE;
+		LOW2 <= '0' & LOW;
+		DIFFERENCE_OUT0 <= DIFFERENCE3(15 downto 0);
+	end if;
+end process DELAYS;
 
 
-end generate;
-
-LOW2(16) <= '0';
-DIFFERENCE1(16) <= '0';
 
 
 end RTL;

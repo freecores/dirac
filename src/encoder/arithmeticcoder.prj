@@ -1,10 +1,7 @@
-vhdl work ../common/D_TYPE.vhd
-vhdl work ../common/COUNT_UNIT.vhd
-vhdl work ../common/ENABLEABLE_D_TYPE.vhd
 vhdl work ../common/FIFO.vhd
 vhdl work ../common/INPUT_CONTROL.vhd
-vhdl work ../common/STORE_BLOCK.vhd
 vhdl work LIMIT_REGISTER.vhd
+vhdl work ../common/CONTEXT_MANAGER.vhd
 vhdl work ../common/ARITHMETIC_UNIT.vhd
 vhdl work ../common/CONVERGENCE_CHECK.vhd
 vhdl work FOLLOW_COUNTER.vhd

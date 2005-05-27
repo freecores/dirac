@@ -144,7 +144,7 @@ I. Coding Style
    E.g.
    -- /* ***** BEGIN LICENSE BLOCK *****
    -- *
-   -- * $Id: README.developers,v 1.1.1.1 2005-03-30 10:09:49 petebleackley Exp $ $Name: not supported by cvs2svn $
+   -- * $Id: README.developers,v 1.2 2005-05-27 16:00:27 petebleackley Exp $ $Name: not supported by cvs2svn $
    -- *
    -- *  rest of licence text
    -- * ***** END LICENSE BLOCK ***** */
@@ -160,7 +160,8 @@ I. Coding Style
  All signals should be std_logic or std_logic_vector.
  Widths and slices of vectors should be specified with downto.
  VHDL '97 style is preferred for end statements (e.g. end architecture RTL;)
- VHDL keywords should be in lower case, entity, architecture and signal names, 
+ VHDL keywords should be in lower case, entity, architecture and signal names, and other user-defined names in upper case
+ When instantiating a component, use both positional association and named association, ie the "belt and braces" approach.
  
 
        

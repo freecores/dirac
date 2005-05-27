@@ -1,4 +1,1 @@
-vhdl work ../common/D_TYPE.vhd
-vhdl work ../common/ENABLEABLE_D_TYPE.vhd
-vhdl work ../common/STORE_BLOCK.vhd
-vhdl work REGISTER.vhd
+vhdl work LIMIT_REGISTER.vhd

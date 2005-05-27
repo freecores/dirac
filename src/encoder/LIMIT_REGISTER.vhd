@@ -1,6 +1,6 @@
 -- ***** BEGIN LICENSE BLOCK *****
 -- 
--- $Id: LIMIT_REGISTER.vhd,v 1.1.1.1 2005-03-30 10:09:49 petebleackley Exp $ $Name: not supported by cvs2svn $
+-- $Id: LIMIT_REGISTER.vhd,v 1.2 2005-05-27 16:00:30 petebleackley Exp $ $Name: not supported by cvs2svn $
 -- *
 -- * Version: MPL 1.1/GPL 2.0/LGPL 2.1
 -- *
@@ -46,7 +46,7 @@ use IEEE.STD_LOGIC_UNSIGNED.ALL;
 --library UNISIM;
 --use UNISIM.VComponents.all;
 
-entity LIMIT_REGISTER is
+ entity LIMIT_REGISTER is
 	generic(CONST : std_logic := '1');
     Port ( LOAD : in std_logic_vector(15 downto 0);
            SET_VALUE : in std_logic;
@@ -58,16 +58,12 @@ entity LIMIT_REGISTER is
 end entity LIMIT_REGISTER;
 
 architecture RTL of LIMIT_REGISTER is
-	component STORE_BLOCK
-	port(LOAD_IN, SHIFT_IN, SHIFT, ENABLE, CLK:	in std_logic;
-	OUTPUT:	out std_logic);
-	end component STORE_BLOCK;
 	signal SHIFT_LSBS: std_logic;
 	signal SET_RESET: std_logic;
 	signal ENABLE_MSB: std_logic;
 	signal ENABLE_LSBS: std_logic;
-	signal D0,D1,D2,D3,D4,D5,D6,D7,D8,D9,D10,D11,D12,D13,D14,D15:	std_logic;
-	signal Q0,Q1,Q2,Q3,Q4,Q5,Q6,Q7,Q8,Q9,Q10,Q11,Q12,Q13,Q14,Q15:	std_logic;
+	signal D :	std_logic_vector (15 downto 0);
+	signal Q :	std_logic_vector (15 downto 0);
 begin
 
 -- control logic
@@ -78,193 +74,41 @@ begin
 
 -- outputs
 	
-	OUTPUT(0) <= Q0;
-	OUTPUT(1) <= Q1;
-	OUTPUT(2) <= Q2;
-	OUTPUT(3) <= Q3;
-	OUTPUT(4) <= Q4;
-	OUTPUT(5) <= Q5;
-	OUTPUT(6) <= Q6;
-	OUTPUT(7) <= Q7;
-	OUTPUT(8) <= Q8;
-	OUTPUT(9) <= Q9;
-	OUTPUT(10) <= Q10;
-	OUTPUT(11) <= Q11;
-	OUTPUT(12) <= Q12;
-	OUTPUT(13) <= Q13;
-	OUTPUT(14) <= Q14;
-	OUTPUT(15) <= Q15;
+	OUTPUT <= Q;
+
 
 -- initialisation
 
 INIT:	process(RESET,LOAD)
 begin
 	if RESET = '1' then
-	D0 <= CONST;
-	D1 <= CONST;
-	D2 <= CONST;
-	D3 <= CONST;
-	D4 <= CONST;
-	D5 <= CONST;
-	D6 <= CONST;
-	D7 <= CONST;
-	D8 <= CONST;
-	D9 <= CONST;
-	D10 <= CONST;
-	D11 <= CONST;
-	D12 <= CONST;
-	D13 <= CONST;
-	D14 <= CONST;
-	D15 <= CONST;
+	D <= (others => CONST);
 	else
-	D0 <= LOAD(0);
-	D1 <= LOAD(1);
-	D2 <= LOAD(2);
-	D3 <= LOAD(3);
-	D4 <= LOAD(4);
-	D5 <= LOAD(5);
-	D6 <= LOAD(6);
-	D7 <= LOAD(7);
-	D8 <= LOAD(8);
-	D9 <= LOAD(9);
-	D10 <= LOAD(10);
-	D11 <= LOAD(11);
-	D12 <= LOAD(12);
-	D13 <= LOAD(13);
-	D14 <= LOAD(14);
-	D15 <= LOAD(15);
+	D <= LOAD;
 	end if;
 end process INIT;
 
 -- storage
 
-	STORE0: STORE_BLOCK
-	port map(LOAD_IN => D0,
-				SHIFT_IN => CONST,
-				SHIFT => SHIFT_LSBS,
-				ENABLE => ENABLE_LSBS,
-				CLK => CLOCK,
-				OUTPUT => Q0);
-
-	STORE1: STORE_BLOCK
-	port map(LOAD_IN => D1,
-				SHIFT_IN => Q0,
-				SHIFT => SHIFT_LSBS,
-				ENABLE => ENABLE_LSBS,
-				CLK => CLOCK,
-				OUTPUT => Q1);
-
-	STORE2: STORE_BLOCK
-	port map(LOAD_IN => D2,
-				SHIFT_IN => Q1,
-				SHIFT => SHIFT_LSBS,
-				ENABLE => ENABLE_LSBS,
-				CLK => CLOCK,
-				OUTPUT => Q2);
-
-	STORE3: STORE_BLOCK
-	port map(LOAD_IN => D3,
-				SHIFT_IN => Q2,
-				SHIFT => SHIFT_LSBS,
-				ENABLE => ENABLE_LSBS,
-				CLK => CLOCK,
-				OUTPUT => Q3);
-
-	STORE4: STORE_BLOCK
-	port map(LOAD_IN => D4,
-				SHIFT_IN => Q3,
-				SHIFT => SHIFT_LSBS,
-				ENABLE => ENABLE_LSBS,
-				CLK => CLOCK,
-				OUTPUT => Q4);
-
-	STORE5: STORE_BLOCK
-	port map(LOAD_IN => D5,
-				SHIFT_IN => Q4,
-				SHIFT => SHIFT_LSBS,
-				ENABLE => ENABLE_LSBS,
-				CLK => CLOCK,
-				OUTPUT => Q5);
-
-	STORE6: STORE_BLOCK
-	port map(LOAD_IN => D6,
-				SHIFT_IN => Q5,
-				SHIFT => SHIFT_LSBS,
-				ENABLE => ENABLE_LSBS,
-				CLK => CLOCK,
-				OUTPUT => Q6);
-
-  	STORE7: STORE_BLOCK
-	port map(LOAD_IN => D7,
-				SHIFT_IN => Q6,
-				SHIFT => SHIFT_LSBS,
-				ENABLE => ENABLE_LSBS,
-				CLK => CLOCK,
-				OUTPUT => Q7);
-
- 	STORE8: STORE_BLOCK
-	port map(LOAD_IN => D8,
-				SHIFT_IN => Q7,
-				SHIFT => SHIFT_LSBS,
-				ENABLE => ENABLE_LSBS,
-				CLK => CLOCK,
-				OUTPUT => Q8);
-
-	STORE9: STORE_BLOCK
-	port map(LOAD_IN => D9,
-				SHIFT_IN => Q8,
-				SHIFT => SHIFT_LSBS,
-				ENABLE => ENABLE_LSBS,
-				CLK => CLOCK,
-				OUTPUT => Q9);
-
-	STORE10: STORE_BLOCK
-	port map(LOAD_IN => D10,
-				SHIFT_IN => Q9,
-				SHIFT => SHIFT_LSBS,
-				ENABLE => ENABLE_LSBS,
-				CLK => CLOCK,
-				OUTPUT => Q10);
-
- 	STORE11: STORE_BLOCK
-	port map(LOAD_IN => D11,
-				SHIFT_IN => Q10,
-				SHIFT => SHIFT_LSBS,
-				ENABLE => ENABLE_LSBS,
-				CLK => CLOCK,
-				OUTPUT => Q11);
-
-  	STORE12: STORE_BLOCK
-	port map(LOAD_IN => D12,
-				SHIFT_IN => Q11,
-				SHIFT => SHIFT_LSBS,
-				ENABLE => ENABLE_LSBS,
-				CLK => CLOCK,
-				OUTPUT => Q12);
-
-	STORE13: STORE_BLOCK
-	port map(LOAD_IN => D13,
-				SHIFT_IN => Q12,
-				SHIFT => SHIFT_LSBS,
-				ENABLE => ENABLE_LSBS,
-				CLK => CLOCK,
-				OUTPUT => Q13);
-
-	STORE14: STORE_BLOCK
-	port map(LOAD_IN => D14,
-				SHIFT_IN => Q13,
-				SHIFT => SHIFT_LSBS,
-				ENABLE => ENABLE_LSBS,
-				CLK => CLOCK,
-				OUTPUT => Q14);
-
-	STORE15: STORE_BLOCK
-	port map(LOAD_IN => D15,
-				SHIFT_IN => Q14,
-				SHIFT => SHIFT_ALL,
-				ENABLE => ENABLE_MSB,
-				CLK => CLOCK,
-				OUTPUT => Q15);
+STORAGE : process (CLOCK)
+	begin
+		if CLOCK'event and CLOCK = '1' then
+			if ENABLE_LSBS = '1' then
+				if	SHIFT_LSBS = '1' then
+					Q(14 downto 0) <= Q(13 downto 0) & CONST;
+				else
+					Q(14 downto 0) <= D(14 downto 0);
+				end if;
+			end if;
+			if ENABLE_MSB = '1' then
+				if SHIFT_ALL = '1' then
+					Q(15) <= Q(14);
+				else
+					Q(15) <= D(15);
+				end if;
+			end if;
+		end if;
+	end process STORAGE;
 
 
 

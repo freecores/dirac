@@ -1,6 +1,6 @@
 -- ***** BEGIN LICENSE BLOCK *****
 -- 
--- $Id: INPUT_CONTROL.vhd,v 1.1.1.1 2005-03-30 10:09:49 petebleackley Exp $ $Name: not supported by cvs2svn $
+-- $Id: INPUT_CONTROL.vhd,v 1.2 2005-05-27 16:00:28 petebleackley Exp $ $Name: not supported by cvs2svn $
 -- *
 -- * Version: MPL 1.1/GPL 2.0/LGPL 2.1
 -- *
@@ -46,37 +46,45 @@ use IEEE.STD_LOGIC_UNSIGNED.ALL;
 --library UNISIM;
 --use UNISIM.VComponents.all;
 
-entity INPUT_CONTROL is
+ entity INPUT_CONTROL is
+	generic(WIDTH : integer range 1 to 16 := 1);
     Port ( ENABLE : in std_logic;
-           DATA_IN : in std_logic;
+           DATA_IN : in std_logic_vector(WIDTH  - 1 downto 0);
            BUFFER_CONTROL : in std_logic;
            DEMAND : in std_logic;
            RESET : in std_logic;
            CLOCK : in std_logic;
            SENDING : out std_logic;
-           DATA_OUT : out std_logic);
+           DATA_OUT : out std_logic_vector(WIDTH - 1 downto 0));
 end INPUT_CONTROL;
 
 architecture RTL of INPUT_CONTROL is
 		component FIFO
+		generic( RANK : integer range 0 to 16;
+		WIDTH :	integer range 1 to 16);
 		port(		 WRITE_ENABLE : in std_logic;
-           DATA_IN : in std_logic;
+           DATA_IN : in std_logic_vector (WIDTH - 1 downto 0);
            READ_ENABLE : in std_logic;
            RESET : in std_logic;
            CLOCK : in std_logic;
-           DATA_OUT : out std_logic;
+           DATA_OUT : out std_logic_vector (WIDTH - 1 downto 0);
 			  EMPTY : out std_logic);
 		end component FIFO;
 		signal FIFO_WRITE_ENABLE :	std_logic;
 		signal FIFO_READ_ENABLE :	std_logic;
-		signal FIFO_DATA_IN : std_logic;
-		signal FIFO_DATA_OUT : std_logic;
+		signal FIFO_DATA_IN : std_logic_vector (WIDTH - 1 downto 0);
+		signal FIFO_DATA_OUT : std_logic_vector (WIDTH - 1 downto 0);
+		signal HELD : std_logic_vector (WIDTH - 1 downto 0);
+		signal OUTPUT :	std_logic_vector (WIDTH - 1 downto 0);
+		signal TRANSMIT : std_logic;
 		signal FIFO_EMPTY : std_logic;
 		signal USE_BUFFER : std_logic;
 		signal PUT_IN_BUFFER :	std_logic;
-begin
 
+begin
 STORAGE :	FIFO
+			generic map (RANK => 8,
+			WIDTH => WIDTH)
 			port map(WRITE_ENABLE => FIFO_WRITE_ENABLE,
 			DATA_IN => FIFO_DATA_IN,
 			READ_ENABLE => FIFO_READ_ENABLE,
@@ -86,22 +94,46 @@ STORAGE :	FIFO
 			EMPTY => FIFO_EMPTY);
 
 	FIFO_WRITE_ENABLE <= ENABLE and USE_BUFFER;
-	FIFO_DATA_IN <= DATA_IN and USE_BUFFER;
+
+USEFIFO:	for I in 0 to WIDTH - 1 generate
+		FIFO_DATA_IN(I) <= DATA_IN(I) and USE_BUFFER;
+	end generate;
 	FIFO_READ_ENABLE <= DEMAND	and USE_BUFFER;
 
 	PUT_IN_BUFFER <= ENABLE and BUFFER_CONTROL;
 	USE_BUFFER <= PUT_IN_BUFFER or not FIFO_EMPTY;
 
-OUTPUT_SELECT:	process(USE_BUFFER,DEMAND,FIFO_DATA_OUT,ENABLE,DATA_IN)
+OUTPUT_SELECT:	process(USE_BUFFER,DEMAND,FIFO_DATA_OUT,HELD,ENABLE,DATA_IN)
 begin
-	if USE_BUFFER = '1' then
-	SENDING <= DEMAND;
-	DATA_OUT <= FIFO_DATA_OUT;
+	if (USE_BUFFER = '1') then
+		TRANSMIT <= DEMAND;
+		if DEMAND = '1' then
+			OUTPUT <= FIFO_DATA_OUT;
+		else
+			OUTPUT <= HELD;
+		end if;
 	else
-	SENDING <= ENABLE;
-	DATA_OUT <= DATA_IN;
+		TRANSMIT <= ENABLE;
+		if ENABLE = '1' then
+			OUTPUT <= DATA_IN;
+		else
+			OUTPUT <= HELD;
+		end if;
 	end if;
 end process OUTPUT_SELECT;
 
+	SENDING <= TRANSMIT;
+	DATA_OUT <= OUTPUT;
+
+HOLD_DATA : process (CLOCK)
+	begin
+	if CLOCK'event and CLOCK = '1' then
+		if  RESET = '1' then
+			HELD <= (others => '0');
+		elsif TRANSMIT = '1' then
+			HELD <= OUTPUT;
+		end if;
+	end if;
+end process HOLD_DATA;
 
 end RTL;

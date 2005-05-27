@@ -1,6 +1,6 @@
 -- ***** BEGIN LICENSE BLOCK *****
 -- 
--- $Id: FOLLOW_COUNTER.vhd,v 1.1.1.1 2005-03-30 10:09:49 petebleackley Exp $ $Name: not supported by cvs2svn $
+-- $Id: FOLLOW_COUNTER.vhd,v 1.2 2005-05-27 16:00:30 petebleackley Exp $ $Name: not supported by cvs2svn $
 -- *
 -- * Version: MPL 1.1/GPL 2.0/LGPL 2.1
 -- *
@@ -54,117 +54,33 @@ entity FOLLOW_COUNTER is
 end FOLLOW_COUNTER;
 
 architecture RTL of FOLLOW_COUNTER is
-	component COUNT_UNIT
-	port(INCREMENT:	in std_logic;
-	DECREMENT:	in std_logic;
-	RESET : in std_logic;
-	CLOCK:	in std_logic;
-	OUTPUT: out std_logic;
-	INCREMENT_CARRY: out std_logic;
-	DECREMENT_CARRY: out std_logic);
-	end component COUNT_UNIT;
-	signal A,B,C,D,E,F,G,H:	std_logic;
-	signal AB,CD,EF,GH:	std_logic;
-	signal AD,EH:	std_logic;
-	signal NONZERO:	std_logic;
-	signal INC0,INC1,INC2,INC3,INC4,INC5,INC6,INC7: std_logic;
-	signal DEC0,DEC1,DEC2,DEC3,DEC4,DEC5,DEC6,DEC7:	std_logic;
-	signal DECREMENT:	std_logic;
+	signal NUMBER : std_logic_vector(7 downto 0);
 begin
+	COUNT : process (CLOCK)
+	begin
+		if CLOCK'event and CLOCK = '1' then
+			if RESET = '1' then
+				NUMBER <= "00000000";
+			elsif INCREMENT = '1' then
+				NUMBER <= NUMBER + "00000001";
+			elsif TEST = '1' then
+				if NUMBER > "00000000" then
+					NUMBER <= NUMBER - "00000001";
+				end if;
+			end if;
+		end if;
+	end process COUNT;
 
--- detect non-zero result
-
-	AB <= A or B;
-	CD <= C or D;
-	EF <= E or F;
-	GH <= G or H;
-
-	AD <= AB or CD;
-	EH <= EF or GH;
-
-	NONZERO <= 	AD or EH;
-
--- Output
-
-	OUTPUT <= DECREMENT;
-
--- Feedback
-
-	DECREMENT <= TEST and NONZERO;
-
--- Sequential arithmetic
-
-COUNT0:	COUNT_UNIT
-	port map(INCREMENT => INCREMENT,
-	DECREMENT => DECREMENT,
-	RESET => RESET,
-	CLOCK => CLOCK,
-	OUTPUT => A,
-	INCREMENT_CARRY => INC0,
-	DECREMENT_CARRY => DEC0);
-
-COUNT1:	COUNT_UNIT
-	port map(INCREMENT => INC0,
-	DECREMENT => DEC0,
-	RESET => RESET,
-	CLOCK => CLOCK,
-	OUTPUT => B,
-	INCREMENT_CARRY => INC1,
-	DECREMENT_CARRY => DEC1);
-
-COUNT2:	COUNT_UNIT
-	port map(INCREMENT => INC1,
-	DECREMENT => DEC1,
-	RESET => RESET,
-	CLOCK => CLOCK,
-	OUTPUT => C,
-	INCREMENT_CARRY => INC2,
-	DECREMENT_CARRY => DEC2);
-
-COUNT3:	COUNT_UNIT
-	port map(INCREMENT => INC2,
-	DECREMENT => DEC2,
-	RESET => RESET,
-	CLOCK => CLOCK,
-	OUTPUT => D,
-	INCREMENT_CARRY => INC3,
-	DECREMENT_CARRY => DEC3);
-
-COUNT4:	COUNT_UNIT
-	port map(INCREMENT => INC3,
-	DECREMENT => DEC3,
-	RESET => RESET,
-	CLOCK => CLOCK,
-	OUTPUT => E,
-	INCREMENT_CARRY => INC4,
-	DECREMENT_CARRY => DEC4);
-
-COUNT5:	COUNT_UNIT
-	port map(INCREMENT => INC4,
-	DECREMENT => DEC4,
-	RESET => RESET,
-	CLOCK => CLOCK,
-	OUTPUT => F,
-	INCREMENT_CARRY => INC5,
-	DECREMENT_CARRY => DEC5);
-
-COUNT6:	COUNT_UNIT
-	port map(INCREMENT => INC5,
-	DECREMENT => DEC5,
-	RESET => RESET,
-	CLOCK => CLOCK,
-	OUTPUT => G,
-	INCREMENT_CARRY => INC6,
-	DECREMENT_CARRY => DEC6);
-
-COUNT7:	COUNT_UNIT
-	port map(INCREMENT => INC6,
-	DECREMENT => DEC6,
-	RESET => RESET,
-	CLOCK => CLOCK,
-	OUTPUT => H,
-	INCREMENT_CARRY => INC7,
-	DECREMENT_CARRY => DEC7);
+	GET_OUTPUT :	process (TEST,NUMBER)
+	begin
+	if TEST = '1' and NUMBER > "00000000" then
+		OUTPUT <= '1';
+	else
+		OUTPUT <= '0';
+	end if;
+	end process GET_OUTPUT;
 
 
 end RTL;
+
+

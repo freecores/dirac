@@ -1,6 +1,6 @@
--- ***** BEGIN LICENSE BLOCK *****
+	 -- ***** BEGIN LICENSE BLOCK *****
 -- 
--- $Id: STORAGE_REGISTER.vhd,v 1.2 2005-05-27 16:00:29 petebleackley Exp $ $Name: not supported by cvs2svn $
+-- $Id: CONTEXT_MANAGER.vhd,v 1.1 2005-05-27 16:00:28 petebleackley Exp $ $Name: not supported by cvs2svn $
 -- *
 -- * Version: MPL 1.1/GPL 2.0/LGPL 2.1
 -- *
@@ -35,7 +35,6 @@
 -- * or the LGPL.
 -- * ***** END LICENSE BLOCK ***** */
 
-
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.STD_LOGIC_ARITH.ALL;
@@ -46,71 +45,33 @@ use IEEE.STD_LOGIC_UNSIGNED.ALL;
 --library UNISIM;
 --use UNISIM.VComponents.all;
 
-  entity STORAGE_REGISTER is
-    Port ( LOAD : in std_logic_vector(15 downto 0);
-	 		  SHIFT_IN : in std_logic; 
-           SET_VALUE : in std_logic;
-           SHIFT_ALL : in std_logic;
-           SHIFT_MOST : in std_logic;
-			  RESET : in std_logic;
+entity CONTEXT_MANAGER is
+    Port (	CONTEXT_NUMBER : in std_logic_vector(5 downto 0);
+           RESET : in std_logic;
            CLOCK : in std_logic;
-           OUTPUT : out std_logic_vector(15 downto 0));
-end entity STORAGE_REGISTER;
+           PROB : out std_logic_vector(9 downto 0));
+end CONTEXT_MANAGER;
 
-architecture RTL of STORAGE_REGISTER is
-
-	signal SHIFT_LSBS: std_logic;
-	signal SET_RESET: std_logic;
-	signal ENABLE_MSB: std_logic;
-	signal ENABLE_LSBS: std_logic;
-	signal D:	std_logic_vector(15 downto 0);
-	signal Q:	std_logic_vector(15 downto 0);
+architecture RTL of CONTEXT_MANAGER is
+	type MATRIX is array (63 downto 0) of std_logic_vector(9 downto 0);
+	signal PROBABILITY : MATRIX := ("1111111111","0011011010","1111000000",
+	"1100110000","0111110000","1001111100","0000010000","0000110011","1100110011",
+	"1101110111","0110011010","1000111000","0000001010","0000110011","1000110011",
+	"0101011011","1110000000","0100111101","1000001010","1110011011","0000001010",
+	"0101111000","1111000000","1111001101","0111001101","1101011100","0111110110",
+	"0110000011","1111110110","0101000110","1110011010","1110101110","0111000011",
+	"0110010110","1111001101","0011001101","1001100110","1100100101","0001100110",
+	"1110011010","0100110011","1111001101","0111001101","0011101111","1110011010",
+	"1111100011","0011001101","0101000000","1110000000","0011000000","1100000000",
+	"0110101011","1010101011","1110011010","0110011010","1001110010","0101010101",
+	"1000111001","0101010101","1100110011","0110011010","0100000000","1100000000",
+	"1000000000");
 begin
-
--- control logic
-	SET_RESET <= SET_VALUE or RESET;
-	ENABLE_MSB <= SET_RESET or SHIFT_ALL;
-	SHIFT_LSBS <= SHIFT_ALL or SHIFT_MOST;
-	ENABLE_LSBS <= SET_RESET or SHIFT_LSBS;
-
--- outputs
-	
-	OUTPUT <= Q;
-
-
--- initialisation
-
-INIT:	process(RESET,LOAD)
-begin
-	if RESET = '1' then
-		D <= "0000000000000000";
-	else
-		D <= LOAD;
+  OUTPUT : process (CLOCK)
+  begin
+  	if CLOCK'event and CLOCK = '1' then
+		PROB <= PROBABILITY(conv_integer(CONTEXT_NUMBER));
 	end if;
-end process INIT;
+	end process OUTPUT;
 
--- storage
-
-	STORE: process (CLOCK)
-	begin
-		if CLOCK'event and CLOCK = '1' then
-			if	ENABLE_LSBS = '1' then
-				if	SHIFT_LSBS = '1' then
-					Q(14 downto 0) <= Q(13 downto 0) & SHIFT_IN;
-				else
-					Q(14 downto 0) <= D(14 downto 0);
-				end if;
-			end if;
-			if ENABLE_MSB = '1' then
-				if SHIFT_ALL = '1' then
-					Q(15) <= Q(14);
-				else
-					Q(15) <= D(15);
-				end if;
-			end if;
-		end if;
-	end process STORE;
-
-
-end architecture RTL;
-
+end RTL;

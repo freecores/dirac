@@ -1,4 +1,1 @@
-vhdl work D_TYPE.vhd
-vhdl work COUNT_UNIT.vhd
-vhdl work ENABLEABLE_D_TYPE.vhd
 vhdl work FIFO.vhd

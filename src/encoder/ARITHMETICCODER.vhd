@@ -1,6 +1,6 @@
 -- ***** BEGIN LICENSE BLOCK *****
 -- 
--- $Id: ARITHMETICCODER.vhd,v 1.1.1.1 2005-03-30 10:09:49 petebleackley Exp $ $Name: not supported by cvs2svn $
+-- $Id: ARITHMETICCODER.vhd,v 1.2 2005-05-27 16:00:30 petebleackley Exp $ $Name: not supported by cvs2svn $
 -- *
 -- * Version: MPL 1.1/GPL 2.0/LGPL 2.1
 -- *
@@ -46,9 +46,10 @@ use IEEE.STD_LOGIC_UNSIGNED.ALL;
 --use UNISIM.VComponents.all;
 
 entity ARITHMETICCODER is
-	generic (PROB :	std_logic_vector (9 downto 0) := "1010101010");
     Port ( ENABLE : in std_logic;
            DATA_IN : in std_logic;
+			  CONTEXT_ENABLE : in std_logic;
+			  CONTEXT_IN : in std_logic_vector (5 downto 0);
 			  RESET : in std_logic;
            CLOCK : in std_logic;
            SENDING : out std_logic;
@@ -56,21 +57,7 @@ entity ARITHMETICCODER is
 end ARITHMETICCODER;
 
 architecture RTL of ARITHMETICCODER is
-	component D_TYPE
-	port(D:	in std_logic;
-	CLOCK:	in std_logic;
-	Q:	out std_logic);
-	end component D_TYPE; 
-	component INPUT_CONTROL
-	port(	  ENABLE : in std_logic;
-           DATA_IN : in std_logic;
-           BUFFER_CONTROL : in std_logic;
-           DEMAND : in std_logic;
-           RESET : in std_logic;
-           CLOCK : in std_logic;
-           SENDING : out std_logic;
-           DATA_OUT : out std_logic);
-	end component INPUT_CONTROL;
+ 
 	component LIMIT_REGISTER
 	generic(CONST: std_logic);
 	port(	  LOAD : in std_logic_vector(15 downto 0);
@@ -121,6 +108,23 @@ architecture RTL of ARITHMETICCODER is
            FOLLOW_COUNTER_TEST : out std_logic;
            SHIFT : out std_logic);
 	end component OUTPUT_UNIT;
+	component INPUT_CONTROL
+	generic( WIDTH : integer range 1 to 16);
+	port( ENABLE : in std_logic;
+           DATA_IN : in std_logic_vector(WIDTH - 1 downto 0);
+           BUFFER_CONTROL : in std_logic;
+           DEMAND : in std_logic;
+           RESET : in std_logic;
+           CLOCK : in std_logic;
+           SENDING : out std_logic;
+           DATA_OUT : out std_logic_vector(WIDTH - 1 downto 0));
+	end component INPUT_CONTROL;
+	component CONTEXT_MANAGER
+	port (  CONTEXT_NUMBER : in std_logic_vector(5 downto 0);
+           RESET : in std_logic;
+           CLOCK : in std_logic;
+           PROB : out std_logic_vector(9 downto 0));
+	end component CONTEXT_MANAGER;
 	signal HIGH_SET : std_logic;
 	signal LOW_SET	: std_logic;
 	signal SHIFT_ALL :	std_logic;
@@ -140,6 +144,7 @@ architecture RTL of ARITHMETICCODER is
 	signal DATA_AVAILABLE :	std_logic;
 	signal BUFFERED_DATA : std_logic;
 	signal BUFFER_INPUT :	std_logic;
+	signal NEWCONTEXT : std_logic;
 	signal ARITHMETIC_UNIT_DIFFERENCE_OUT0 : std_logic_vector (15 downto 0);
 	signal ARITHMETIC_UNIT_DIFFERENCE_OUT1 :	std_logic_vector(15 downto 0);
 	signal DIFFERENCE_IN : std_logic_vector (15 downto 0);
@@ -148,19 +153,39 @@ architecture RTL of ARITHMETICCODER is
 	signal DIFFERENCE_OUT : std_logic_vector (15 downto 0);
 	signal HIGH_OUT : std_logic_vector (15 downto 0);
 	signal LOW_OUT : std_logic_vector (15 downto 0);
+	signal PROB : std_logic_vector (9 downto 0);
+	signal CONTEXT_SELECT : std_logic_vector (5 downto 0);
+	signal PROB_AVAILABLE : std_logic;
+	signal BUFFERCONTEXT :	std_logic;
+	signal DATA_IN2 : std_logic_vector(0 downto 0);
+	signal BUFFERED_DATA2 : std_logic_vector(0 downto 0);
 
 begin
 -- input buffering
 INBUFFER:	INPUT_CONTROL
+	generic map(WIDTH => 1)
 	port map(ENABLE => ENABLE,
-	DATA_IN => DATA_IN,
+	DATA_IN => DATA_IN2,
 	BUFFER_CONTROL => BUFFER_INPUT,
 	DEMAND => ARITHMETIC_UNIT_DATA_LOAD,
 	RESET => RESET,
 	CLOCK => CLOCK,
 	SENDING => DATA_AVAILABLE,
-	DATA_OUT => BUFFERED_DATA);
+	DATA_OUT => BUFFERED_DATA2);
 
+	DATA_IN2(0) <= DATA_IN;
+	BUFFERED_DATA <= BUFFERED_DATA2(0);
+
+CONTEXT_BUFFER:	INPUT_CONTROL
+	generic map(WIDTH => 6)
+	port map(ENABLE => CONTEXT_ENABLE,
+	DATA_IN => CONTEXT_IN,
+	BUFFER_CONTROL =>	 BUFFERCONTEXT,
+	DEMAND => DATA_LOAD,
+	RESET => RESET,
+	CLOCK => CLOCK,
+	SENDING => NEWCONTEXT,
+	DATA_OUT => CONTEXT_SELECT);
 -- Specify the registers
 HIGH: LIMIT_REGISTER
 	generic map(CONST => '1')
@@ -257,16 +282,18 @@ OUTPUT:	OUTPUT_UNIT
 
 	CHECK <= DIFFERENCE_SHIFT_ALL or DATA_LOAD;
 
-CONVERGENCE_TEST_DELAY:	D_TYPE
-	port map( D => CHECK,
-	CLOCK => CLOCK,
-	Q => DELAYED_CHECK);
+CONVERGENCE_TEST_DELAY:	process (CLOCK)
+	begin
+	if CLOCK'event and CLOCK = '1' then
+		DELAYED_CHECK <= CHECK;
+	end if;
+	end process CONVERGENCE_TEST_DELAY;
 
 	CONVERGENCE_TEST <= DELAYED_CHECK or FOLLOW_COUNTER_TEST;
 
 -- Control logic for arithmetic unit
 	
-	ARITHMETIC_UNIT_ENABLE <= not(OUTPUT_ACTIVE or DIFFERENCE_SHIFT_ALL or DATA_LOAD);
+	ARITHMETIC_UNIT_ENABLE <= PROB_AVAILABLE and not(OUTPUT_ACTIVE or DIFFERENCE_SHIFT_ALL or DATA_LOAD);
 
 -- Control Logic for input control
 
@@ -283,4 +310,29 @@ NEWDIFF : process(BUFFERED_DATA,ARITHMETIC_UNIT_DIFFERENCE_OUT0,ARITHMETIC_UNIT_
 		end if;
 	end process NEWDIFF;
 
+-- Select the context
+
+PROBABILITY : CONTEXT_MANAGER
+			port map(CONTEXT_NUMBER => CONTEXT_SELECT,
+			RESET => RESET,
+			CLOCK => CLOCK,
+			PROB => PROB);
+
+ISPROBAVAILABLE : process (CLOCK)
+	begin
+	if (CLOCK'event and CLOCK = '1') then
+	if (RESET = '1' or (DATA_LOAD = '1' and NEWCONTEXT = '0')) then
+		PROB_AVAILABLE <= '0';
+	elsif (NEWCONTEXT = '1') then
+		PROB_AVAILABLE <= '1';
+	end if;
+	end if;
+end process ISPROBAVAILABLE;
+
+	  BUFFERCONTEXT <= PROB_AVAILABLE and not ARITHMETIC_UNIT_DATA_LOAD;
+
+--
+
 end RTL;
+
+

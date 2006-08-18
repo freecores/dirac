@@ -1,1 +1,4 @@
+vhdl work HALVING_MANAGER.vhd
+vhdl work UPDATER.vhd
+vhdl work DIVIDER.vhd
 vhdl work CONTEXT_MANAGER.vhd

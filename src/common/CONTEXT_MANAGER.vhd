@@ -1,6 +1,6 @@
 	 -- ***** BEGIN LICENSE BLOCK *****
 -- 
--- $Id: CONTEXT_MANAGER.vhd,v 1.1 2005-05-27 16:00:28 petebleackley Exp $ $Name: not supported by cvs2svn $
+-- $Id: CONTEXT_MANAGER.vhd,v 1.2 2006-08-18 14:29:32 petebleackley Exp $ $Name: not supported by cvs2svn $
 -- *
 -- * Version: MPL 1.1/GPL 2.0/LGPL 2.1
 -- *
@@ -47,31 +47,172 @@ use IEEE.STD_LOGIC_UNSIGNED.ALL;
 
 entity CONTEXT_MANAGER is
     Port (	CONTEXT_NUMBER : in std_logic_vector(5 downto 0);
+	 		SET : in std_logic;
+			UPDATE : in std_logic;
+			DATA_IN : in std_logic;
+			HALVECOUNTS : in std_logic;
            RESET : in std_logic;
            CLOCK : in std_logic;
-           PROB : out std_logic_vector(9 downto 0));
+           PROB : out std_logic_vector(9 downto 0);
+			  READY : out std_logic);
 end CONTEXT_MANAGER;
 
 architecture RTL of CONTEXT_MANAGER is
-	type MATRIX is array (63 downto 0) of std_logic_vector(9 downto 0);
-	signal PROBABILITY : MATRIX := ("1111111111","0011011010","1111000000",
-	"1100110000","0111110000","1001111100","0000010000","0000110011","1100110011",
-	"1101110111","0110011010","1000111000","0000001010","0000110011","1000110011",
-	"0101011011","1110000000","0100111101","1000001010","1110011011","0000001010",
-	"0101111000","1111000000","1111001101","0111001101","1101011100","0111110110",
-	"0110000011","1111110110","0101000110","1110011010","1110101110","0111000011",
-	"0110010110","1111001101","0011001101","1001100110","1100100101","0001100110",
-	"1110011010","0100110011","1111001101","0111001101","0011101111","1110011010",
-	"1111100011","0011001101","0101000000","1110000000","0011000000","1100000000",
-	"0110101011","1010101011","1110011010","0110011010","1001110010","0101010101",
-	"1000111001","0101010101","1100110011","0110011010","0100000000","1100000000",
-	"1000000000");
-begin
-  OUTPUT : process (CLOCK)
-  begin
-  	if CLOCK'event and CLOCK = '1' then
-		PROB <= PROBABILITY(conv_integer(CONTEXT_NUMBER));
-	end if;
-	end process OUTPUT;
+	
+	type MATRIX is array (45 downto 0) of std_logic_vector(19 downto 0);
+	signal PROBABILITY : MATRIX;						
+	constant HALF : std_logic_vector(19 downto 0) := "00000000010000000010";
+	signal FRACTION : std_logic_vector(19 downto 0);
+	signal FRACTION2 : std_logic_vector(19 downto 0);
+	signal RESET_FLAGS : std_logic_vector (63 downto 0);
+	signal NEWPROB : std_logic_vector(19 downto 0);
+	signal RATIO : std_logic_vector(19 downto 0);
+	signal UPDATE_PROB : std_logic;
+	signal PROB_CHANGED : std_logic;
+	signal LOAD_DATA : std_logic;
+	signal OLD_CONTEXT : std_logic_vector (5 downto 0);
+	signal READ_ADDRESS : std_logic_vector (5 downto 0);
+	signal DATA_FETCHED : std_logic;
+	signal CONTEXT_VALID : std_logic;
+	signal DATA_READY : std_logic_vector (1 downto 0);
 
+	component DIVIDER
+	port ( NUMERATOR : in std_logic_vector(9 downto 0);
+           DENOMINATOR : in std_logic_vector(9 downto 0);
+			  RESET : in std_logic;
+           CLOCK : in std_logic;
+           QUOTIENT : out std_logic_vector(9 downto 0));
+	end component DIVIDER;
+	component UPDATER
+	port 	( NUMERATOR : in std_logic_vector(9 downto 0);
+           DENOMINATOR : in std_logic_vector(9 downto 0);
+           ENABLE : in std_logic;
+           DATA_IN : in std_logic;
+           RESET : in std_logic;
+           CLOCK : in std_logic;
+           NUMERATOR_OUT : out std_logic_vector(9 downto 0);
+           DENOMINATOR_OUT : out std_logic_vector(9 downto 0);
+			  UPDATE : out std_logic);
+	end component UPDATER;
+	component HALVING_MANAGER
+	port ( TRIGGER_HALVING : in std_logic;
+           INPUT_READY : in std_logic;
+           NUMERATOR_IN : in std_logic_vector(9 downto 0);
+           DENOMINATOR_IN : in std_logic_vector(9 downto 0);
+			  CONTEXT : in std_logic_vector(5 downto 0);
+           RESET : in std_logic;
+           CLOCK : in std_logic;
+           NUMERATOR_OUT : out std_logic_vector(9 downto 0);
+           DENOMINATOR_OUT : out std_logic_vector(9 downto 0);
+           OUTPUT_READY : out std_logic);
+	end component HALVING_MANAGER;
+
+begin
+
+FLAGS: process(CLOCK)
+begin
+	if (CLOCK'event and CLOCK='1') then
+		if (RESET='1') then
+			RESET_FLAGS <= (others => '1');
+		elsif LOAD_DATA = '1' then
+				RESET_FLAGS(conv_integer(OLD_CONTEXT)) <= '0';
+		end if;
+	end if;
+end process FLAGS;
+
+LOAD_DATA <= UPDATE_PROB and UPDATE;
+
+
+MEMORY: process(CLOCK)
+begin
+	if (CLOCK'event and CLOCK='1') then
+		if SET='1' then
+			READ_ADDRESS <= CONTEXT_NUMBER;
+		end if;
+		if (LOAD_DATA = '1') then
+			PROBABILITY(conv_integer(OLD_CONTEXT)) <=	NEWPROB;
+		end if;
+	end if;
+end process MEMORY;
+RATIO <= PROBABILITY(conv_integer(READ_ADDRESS));
+
+CHOOSE_FRACTION : process (READ_ADDRESS,RESET_FLAGS,RATIO)
+begin
+	if (RESET_FLAGS(conv_integer(READ_ADDRESS))='1') then
+		FRACTION <= HALF;
+	else
+		FRACTION <= RATIO;
+	end if;
+end process CHOOSE_FRACTION;
+
+
+DIVISION : DIVIDER
+	port map (NUMERATOR => FRACTION2(19 downto 10),
+	DENOMINATOR => FRACTION2(9 downto 0),
+	RESET => RESET,
+	CLOCK => CLOCK,
+	QUOTIENT => PROB);
+
+PROBUPDATE : UPDATER
+	port map (NUMERATOR => FRACTION2(19 downto 10),
+	DENOMINATOR => FRACTION2(9 downto 0),
+	ENABLE => PROB_CHANGED,
+	DATA_IN => DATA_IN,
+	RESET => RESET,
+	CLOCK => CLOCK,
+	NUMERATOR_OUT => NEWPROB(19 downto 10),
+	DENOMINATOR_OUT => NEWPROB(9 downto 0),
+	UPDATE => UPDATE_PROB);
+
+REFRESH: HALVING_MANAGER
+	port map (TRIGGER_HALVING => HALVECOUNTS,
+	INPUT_READY => DATA_FETCHED,
+	NUMERATOR_IN => FRACTION(19 downto 10),
+	DENOMINATOR_IN => FRACTION(9 downto 0),
+	CONTEXT => CONTEXT_NUMBER,
+	RESET => RESET,
+	CLOCK => CLOCK,
+	NUMERATOR_OUT => FRACTION2(19 downto 10),
+	DENOMINATOR_OUT => FRACTION2(9 downto 0),
+	OUTPUT_READY => PROB_CHANGED);
+
+
+DELAY_CONTEXT : process (CLOCK)
+begin
+	if CLOCK'event and CLOCK = '1' then
+			OLD_CONTEXT <= CONTEXT_NUMBER;
+	end if;
+end process DELAY_CONTEXT;
+
+
+IS_DATA_READY : process (CLOCK)
+begin
+	if CLOCK'event and CLOCK='1' then
+		if RESET='1' then
+			DATA_READY <= "00";
+		else
+			DATA_READY <= DATA_READY(0) & PROB_CHANGED;
+		end if;
+	end if;
+end process IS_DATA_READY;
+
+CONTEXT_LOADED : process (CLOCK)
+begin
+	if CLOCK'event and CLOCK='1' then
+		if RESET='1' then
+			CONTEXT_VALID <= '0';
+		elsif SET = '1' then
+			CONTEXT_VALID <= '1';
+		elsif UPDATE =	'1' then
+			CONTEXT_VALID <= '0';
+		end if;
+	end if;
+end process CONTEXT_LOADED;
+
+DATA_FETCHED <= CONTEXT_VALID and not SET;
+
+
+READY <= (DATA_READY(1) and DATA_READY (0));-- and not SET;
+
+			
 end RTL;

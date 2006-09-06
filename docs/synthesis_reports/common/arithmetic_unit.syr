@@ -1,0 +1,332 @@
+Release 7.1.04i - xst H.42
+Copyright (c) 1995-2005 Xilinx, Inc.  All rights reserved.
+--> Parameter TMPDIR set to __projnav
+CPU : 0.00 / 0.34 s | Elapsed : 0.00 / 1.00 s
+ 
+--> Parameter xsthdpdir set to ./xst
+CPU : 0.00 / 0.34 s | Elapsed : 0.00 / 1.00 s
+ 
+--> Reading design: arithmetic_unit.prj
+
+TABLE OF CONTENTS
+  1) Synthesis Options Summary
+  2) HDL Compilation
+  3) HDL Analysis
+  4) HDL Synthesis
+  5) Advanced HDL Synthesis
+     5.1) HDL Synthesis Report
+  6) Low Level Synthesis
+  7) Final Report
+     7.1) Device utilization summary
+     7.2) TIMING REPORT
+
+
+=========================================================================
+*                      Synthesis Options Summary                        *
+=========================================================================
+---- Source Parameters
+Input File Name                    : "arithmetic_unit.prj"
+Input Format                       : mixed
+Ignore Synthesis Constraint File   : NO
+
+---- Target Parameters
+Output File Name                   : "arithmetic_unit"
+Output Format                      : NGC
+Target Device                      : xc2v250-6-cs144
+
+---- Source Options
+Top Module Name                    : arithmetic_unit
+Automatic FSM Extraction           : YES
+FSM Encoding Algorithm             : Auto
+FSM Style                          : lut
+RAM Extraction                     : Yes
+RAM Style                          : Auto
+ROM Extraction                     : Yes
+ROM Style                          : Auto
+Mux Extraction                     : YES
+Mux Style                          : Auto
+Decoder Extraction                 : YES
+Priority Encoder Extraction        : YES
+Shift Register Extraction          : YES
+Logical Shifter Extraction         : YES
+XOR Collapsing                     : YES
+Resource Sharing                   : YES
+Multiplier Style                   : auto
+Automatic Register Balancing       : No
+
+---- Target Options
+Add IO Buffers                     : YES
+Global Maximum Fanout              : 500
+Add Generic Clock Buffer(BUFG)     : 16
+Register Duplication               : YES
+Equivalent register Removal        : YES
+Slice Packing                      : YES
+Pack IO Registers into IOBs        : auto
+
+---- General Options
+Optimization Goal                  : Speed
+Optimization Effort                : 1
+Keep Hierarchy                     : NO
+Global Optimization                : AllClockNets
+RTL Output                         : Yes
+Write Timing Constraints           : NO
+Hierarchy Separator                : _
+Bus Delimiter                      : <>
+Case Specifier                     : maintain
+Slice Utilization Ratio            : 100
+Slice Utilization Ratio Delta      : 5
+
+---- Other Options
+lso                                : arithmetic_unit.lso
+Read Cores                         : YES
+cross_clock_analysis               : NO
+verilog2001                        : YES
+safe_implementation                : No
+Optimize Instantiated Primitives   : NO
+tristate2logic                     : Yes
+use_clock_enable                   : Yes
+use_sync_set                       : Yes
+use_sync_reset                     : Yes
+enable_auto_floorplanning          : No
+
+=========================================================================
+
+
+=========================================================================
+*                          HDL Compilation                              *
+=========================================================================
+Compiling vhdl file "C:/Xilinx/bin/ArithmeticDecoder/../ArithmeticCoder/ARITHMETIC_UNIT.vhd" in Library work.
+Architecture rtl of Entity arithmetic_unit is up to date.
+
+=========================================================================
+*                            HDL Analysis                               *
+=========================================================================
+Analyzing Entity <arithmetic_unit> (Architecture <rtl>).
+Entity <arithmetic_unit> analyzed. Unit <arithmetic_unit> generated.
+
+
+=========================================================================
+*                           HDL Synthesis                               *
+=========================================================================
+
+Synthesizing Unit <arithmetic_unit>.
+    Related source file is "C:/Xilinx/bin/ArithmeticDecoder/../ArithmeticCoder/ARITHMETIC_UNIT.vhd".
+WARNING:Xst:646 - Signal <PRODUCT<9:0>> is assigned but never used.
+WARNING:Xst:646 - Signal <DIFFERENCE3<16>> is assigned but never used.
+WARNING:Xst:646 - Signal <DIFFERENCE4<16>> is assigned but never used.
+WARNING:Xst:646 - Signal <RESULT0<16>> is assigned but never used.
+    Found 17x10-bit multiplier for signal <$n0000> created at line 48.
+    Found 1-bit register for signal <DELAY1>.
+    Found 17-bit register for signal <DIFFERENCE1>.
+    Found 17-bit adder for signal <DIFFERENCE2>.
+    Found 17-bit subtractor for signal <DIFFERENCE3>.
+    Found 17-bit subtractor for signal <DIFFERENCE4>.
+    Found 17-bit register for signal <LOW2>.
+    Found 27-bit register for signal <PRODUCT>.
+    Found 17-bit adder for signal <RESULT>.
+    Found 17-bit subtractor for signal <RESULT0>.
+    Summary:
+	inferred  62 D-type flip-flop(s).
+	inferred   5 Adder/Subtractor(s).
+	inferred   1 Multiplier(s).
+Unit <arithmetic_unit> synthesized.
+
+
+=========================================================================
+*                       Advanced HDL Synthesis                          *
+=========================================================================
+
+Advanced RAM inference ...
+Advanced multiplier inference ...
+    Found registered multiplier on signal <_n0000>:
+	- 1 register level(s) found in a register connected to the multiplier macro ouput.
+	  Pushing register(s) into the multiplier macro.
+Advanced Registered AddSub inference ...
+Dynamic shift register inference ...
+
+=========================================================================
+HDL Synthesis Report
+
+Macro Statistics
+# Multipliers                      : 1
+ 17x10-bit registered multiplier   : 1
+# Adders/Subtractors               : 5
+ 17-bit adder                      : 2
+ 17-bit subtractor                 : 3
+# Registers                        : 3
+ 1-bit register                    : 1
+ 17-bit register                   : 2
+
+=========================================================================
+
+=========================================================================
+*                         Low Level Synthesis                           *
+=========================================================================
+WARNING:Xst:1710 - FF/Latch  <LOW2_16> (without init value) has a constant value of 0 in block <arithmetic_unit>.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch  <DIFFERENCE1_16> (without init value) has a constant value of 0 in block <arithmetic_unit>.
+
+Optimizing unit <arithmetic_unit> ...
+Loading device for application Rf_Device from file '2v250.nph' in environment C:/Xilinx.
+
+Mapping all equations...
+Building and optimizing final netlist ...
+Found area constraint ratio of 100 (+ 5) on block arithmetic_unit, actual ratio is 3.
+
+=========================================================================
+*                            Final Report                               *
+=========================================================================
+Final Results
+RTL Top Level Output File Name     : arithmetic_unit.ngr
+Top Level Output File Name         : arithmetic_unit
+Output Format                      : NGC
+Optimization Goal                  : Speed
+Keep Hierarchy                     : NO
+
+Design Statistics
+# IOs                              : 110
+
+Macro Statistics :
+# Registers                        : 3
+#      1-bit register              : 1
+#      17-bit register             : 2
+# Adders/Subtractors               : 5
+#      17-bit adder                : 2
+#      17-bit subtractor           : 3
+# Multipliers                      : 1
+#      17x10-bit registered multiplier: 1
+
+Cell Usage :
+# BELS                             : 236
+#      GND                         : 1
+#      INV                         : 31
+#      LUT1                        : 16
+#      LUT2                        : 33
+#      MUXCY                       : 76
+#      VCC                         : 1
+#      XORCY                       : 78
+# FlipFlops/Latches                : 33
+#      FDE                         : 32
+#      FDR                         : 1
+# Clock Buffers                    : 1
+#      BUFGP                       : 1
+# IO Buffers                       : 109
+#      IBUF                        : 44
+#      OBUF                        : 65
+# MULTs                            : 1
+#      MULT18X18S                  : 1
+=========================================================================
+
+Device utilization summary:
+---------------------------
+
+Selected Device : 2v250cs144-6 
+
+ Number of Slices:                      59  out of   1536     3%  
+ Number of Slice Flip Flops:            33  out of   3072     1%  
+ Number of 4 input LUTs:                49  out of   3072     1%  
+ Number of bonded IOBs:                110  out of     92   119% (*) 
+ Number of MULT18X18s:                   1  out of     24     4%  
+ Number of GCLKs:                        1  out of     16     6%  
+
+WARNING:Xst:1336 -  (*) More than 100% of Device resources are used
+
+
+=========================================================================
+TIMING REPORT
+
+NOTE: THESE TIMING NUMBERS ARE ONLY A SYNTHESIS ESTIMATE.
+      FOR ACCURATE TIMING INFORMATION PLEASE REFER TO THE TRACE REPORT
+      GENERATED AFTER PLACE-and-ROUTE.
+
+Clock Information:
+------------------
+-----------------------------------+------------------------+-------+
+Clock Signal                       | Clock buffer(FF name)  | Load  |
+-----------------------------------+------------------------+-------+
+CLOCK                              | BUFGP                  | 34    |
+-----------------------------------+------------------------+-------+
+
+Timing Summary:
+---------------
+Speed Grade: -6
+
+   Minimum period: No path found
+   Minimum input arrival time before clock: 6.731ns
+   Maximum output required time after clock: 10.035ns
+   Maximum combinational path delay: No path found
+
+Timing Detail:
+--------------
+All values displayed in nanoseconds (ns)
+
+=========================================================================
+Timing constraint: Default OFFSET IN BEFORE for Clock 'CLOCK'
+  Total number of paths / destination ports: 228 / 93
+-------------------------------------------------------------------------
+Offset:              6.731ns (Levels of Logic = 17)
+  Source:            DIFFERENCE<1> (PAD)
+  Destination:       Mmult__n00001_inst_mult_0 (MULT)
+  Destination Clock: CLOCK rising
+
+  Data Path: DIFFERENCE<1> to Mmult__n00001_inst_mult_0
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     IBUF:I->O             2   0.653   0.744  DIFFERENCE_1_IBUF (DIFFERENCE_1_IBUF)
+     LUT1:I0->O            1   0.347   0.000  DIFFERENCE_1_IBUF_rt (DIFFERENCE_1_IBUF_rt)
+     MUXCY:S->O            1   0.235   0.000  arithmetic_unit_DIFFERENCE2<1>cy (arithmetic_unit_DIFFERENCE2<1>_cyo)
+     MUXCY:CI->O           1   0.042   0.000  arithmetic_unit_DIFFERENCE2<2>cy (arithmetic_unit_DIFFERENCE2<2>_cyo)
+     MUXCY:CI->O           1   0.042   0.000  arithmetic_unit_DIFFERENCE2<3>cy (arithmetic_unit_DIFFERENCE2<3>_cyo)
+     MUXCY:CI->O           1   0.042   0.000  arithmetic_unit_DIFFERENCE2<4>cy (arithmetic_unit_DIFFERENCE2<4>_cyo)
+     MUXCY:CI->O           1   0.042   0.000  arithmetic_unit_DIFFERENCE2<5>cy (arithmetic_unit_DIFFERENCE2<5>_cyo)
+     MUXCY:CI->O           1   0.042   0.000  arithmetic_unit_DIFFERENCE2<6>cy (arithmetic_unit_DIFFERENCE2<6>_cyo)
+     MUXCY:CI->O           1   0.042   0.000  arithmetic_unit_DIFFERENCE2<7>cy (arithmetic_unit_DIFFERENCE2<7>_cyo)
+     MUXCY:CI->O           1   0.042   0.000  arithmetic_unit_DIFFERENCE2<8>cy (arithmetic_unit_DIFFERENCE2<8>_cyo)
+     MUXCY:CI->O           1   0.042   0.000  arithmetic_unit_DIFFERENCE2<9>cy (arithmetic_unit_DIFFERENCE2<9>_cyo)
+     MUXCY:CI->O           1   0.042   0.000  arithmetic_unit_DIFFERENCE2<10>cy (arithmetic_unit_DIFFERENCE2<10>_cyo)
+     MUXCY:CI->O           1   0.042   0.000  arithmetic_unit_DIFFERENCE2<11>cy (arithmetic_unit_DIFFERENCE2<11>_cyo)
+     MUXCY:CI->O           1   0.042   0.000  arithmetic_unit_DIFFERENCE2<12>cy (arithmetic_unit_DIFFERENCE2<12>_cyo)
+     MUXCY:CI->O           1   0.042   0.000  arithmetic_unit_DIFFERENCE2<13>cy (arithmetic_unit_DIFFERENCE2<13>_cyo)
+     MUXCY:CI->O           1   0.042   0.000  arithmetic_unit_DIFFERENCE2<14>cy (arithmetic_unit_DIFFERENCE2<14>_cyo)
+     XORCY:CI->O           1   0.824   0.382  arithmetic_unit_DIFFERENCE2<15>_xor (DIFFERENCE2<15>)
+     MULT18X18S:A15            3.000          Mmult__n00001_inst_mult_0
+    ----------------------------------------
+    Total                      6.731ns (5.605ns logic, 1.126ns route)
+                                       (83.3% logic, 16.7% route)
+
+=========================================================================
+Timing constraint: Default OFFSET OUT AFTER for Clock 'CLOCK'
+  Total number of paths / destination ports: 3233 / 65
+-------------------------------------------------------------------------
+Offset:              10.035ns (Levels of Logic = 7)
+  Source:            Mmult__n00001_inst_mult_0 (MULT)
+  Destination:       RESULT_OUT0<15> (PAD)
+  Source Clock:      CLOCK rising
+
+  Data Path: Mmult__n00001_inst_mult_0 to RESULT_OUT0<15>
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     MULT18X18S:C->P23     3   1.879   0.700  Mmult__n00001_inst_mult_0 (PRODUCT<23>)
+     LUT2:I1->O            1   0.347   0.000  arithmetic_unit_RESULT_OUT1<13>lut (N54)
+     MUXCY:S->O            1   0.235   0.000  arithmetic_unit_RESULT_OUT1<13>cy (arithmetic_unit_RESULT_OUT1<13>_cyo)
+     XORCY:CI->O           2   0.824   0.518  arithmetic_unit_RESULT_OUT1<14>_xor (RESULT_OUT1_14_OBUF)
+     INV:I->O              1   0.347   0.000  arithmetic_unit_RESULT_OUT0<14>lut_INV_0 (N70)
+     MUXCY:S->O            0   0.235   0.000  arithmetic_unit_RESULT_OUT0<14>cy (arithmetic_unit_RESULT_OUT0<14>_cyo)
+     XORCY:CI->O           1   0.824   0.383  arithmetic_unit_RESULT_OUT0<15>_xor (RESULT_OUT0_15_OBUF)
+     OBUF:I->O                 3.743          RESULT_OUT0_15_OBUF (RESULT_OUT0<15>)
+    ----------------------------------------
+    Total                     10.035ns (8.434ns logic, 1.601ns route)
+                                       (84.0% logic, 16.0% route)
+
+=========================================================================
+CPU : 4.94 / 5.31 s | Elapsed : 5.00 / 6.00 s
+ 
+--> 
+
+Total memory usage is 100604 kilobytes
+
+Number of errors   :    0 (   0 filtered)
+Number of warnings :    7 (   0 filtered)
+Number of infos    :    0 (   0 filtered)
+

@@ -1,41 +1,3 @@
--- ***** BEGIN LICENSE BLOCK *****
--- 
--- $Id: ARITHMETICDECODER.vhd,v 1.2 2005-05-27 16:00:29 petebleackley Exp $ $Name: not supported by cvs2svn $
--- *
--- * Version: MPL 1.1/GPL 2.0/LGPL 2.1
--- *
--- * The contents of this file are subject to the Mozilla Public License
--- * Version 1.1 (the "License"); you may not use this file except in compliance
--- * with the License. You may obtain a copy of the License at
--- * http://www.mozilla.org/MPL/
--- *
--- * Software distributed under the License is distributed on an "AS IS" basis,
--- * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License for
--- * the specific language governing rights and limitations under the License.
--- *
--- * The Original Code is BBC Research and Development code.
--- *
--- * The Initial Developer of the Original Code is the British Broadcasting
--- * Corporation.
--- * Portions created by the Initial Developer are Copyright (C) 2004.
--- * All Rights Reserved.
--- *
--- * Contributor(s): Peter Bleackley (Original author)
--- *
--- * Alternatively, the contents of this file may be used under the terms of
--- * the GNU General Public License Version 2 (the "GPL"), or the GNU Lesser
--- * Public License Version 2.1 (the "LGPL"), in which case the provisions of
--- * the GPL or the LGPL are applicable instead of those above. If you wish to
--- * allow use of your version of this file only under the terms of the either
--- * the GPL or LGPL and not to allow others to use your version of this file
--- * under the MPL, indicate your decision by deleting the provisions above
--- * and replace them with the notice and other provisions required by the GPL
--- * or LGPL. If you do not delete the provisions above, a recipient may use
--- * your version of this file under the terms of any one of the MPL, the GPL
--- * or the LGPL.
--- * ***** END LICENSE BLOCK ***** */
-
-
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.STD_LOGIC_ARITH.ALL;
@@ -51,6 +13,7 @@ entity ARITHMETICDECODER is
            DATA_IN : in std_logic;
 			  NEWCONTEXT :	in std_logic;
 			  CONTEXT_SELECT : in std_logic_vector (5 downto 0);
+			  HALVECOUNTS : in std_logic;
 			  RESET : in std_logic;
            CLOCK : in std_logic;
            SENDING : out std_logic;
@@ -108,10 +71,15 @@ architecture RTL of ARITHMETICDECODER is
 			  DATA_OUT : out std_logic);
 	end component SYMBOL_DETECTOR;
 	component CONTEXT_MANAGER
-	port ( CONTEXT_NUMBER : in std_logic_vector(5 downto 0);
+	port (	CONTEXT_NUMBER : in std_logic_vector(5 downto 0);
+	 		SET : in std_logic;
+			UPDATE : in std_logic;
+			DATA_IN : in std_logic;
+			HALVECOUNTS : in std_logic;
            RESET : in std_logic;
            CLOCK : in std_logic;
-           PROB : out std_logic_vector(9 downto 0));
+           PROB : out std_logic_vector(9 downto 0);
+			  READY : out std_logic);
 	end component CONTEXT_MANAGER;
 	signal HIGH_SET : std_logic;
 	signal LOW_SET	: std_logic;
@@ -129,6 +97,7 @@ architecture RTL of ARITHMETICDECODER is
 	signal BUFFERED_DATA : std_logic;
 	signal SYMBOL :	std_logic;
 	signal HOLD : std_logic;
+	signal PROB_AVAILABLE : std_logic;
 	signal DIFFERENCE_IN : std_logic_vector (15 downto 0);
 	signal ARITHMETIC_UNIT_RESULT_OUT0 :	std_logic_vector (15 downto 0);
 	signal ARITHMETIC_UNIT_RESULT_OUT1 :	std_logic_vector (15 downto 0);
@@ -141,6 +110,7 @@ architecture RTL of ARITHMETICDECODER is
 	signal PROB :	std_logic_vector (9 downto 0);
 	signal DATA_IN2 : std_logic_vector(0 downto 0);
 	signal BUFFERED_DATA2 :	std_logic_vector(0 downto 0);
+
 
 begin
 -- input buffering
@@ -162,9 +132,14 @@ INBUFFER:	INPUT_CONTROL
 
  PROBABILITY : CONTEXT_MANAGER
 			port map(CONTEXT_NUMBER => CONTEXT_SELECT,
+			SET => NEWCONTEXT,
+			UPDATE =>DATA_LOAD,
+			DATA_IN => SYMBOL,
+			HALVECOUNTS => HALVECOUNTS,
 			RESET => RESET,
 			CLOCK => CLOCK,
-			PROB => PROB);
+			PROB => PROB,
+			READY => PROB_AVAILABLE);
 
 -- Specify the registers
   HIGH:	STORAGE_REGISTER
@@ -254,20 +229,11 @@ OUTPUT:	SYMBOL_DETECTOR
 
 	DIFFERENCE_SHIFT_ALL <= SHIFT_ALL or SHIFT_MOST;
 
--- Control logic for convergence check
-
---	CHECK <= DIFFERENCE_SHIFT_ALL or DATA_LOAD or RESET;
-
--- CONVERGENCE_TEST_DELAY:	D_TYPE
---	port map( D => CHECK,
---	CLOCK => CLOCK,
---	Q => CONVERGENCE_TEST);
-
   CONVERGENCE_TEST <= not DATA_LOAD;
 
 -- Control logic for arithmetic unit
 	
-	ARITHMETIC_UNIT_ENABLE <=  not(GET_DATA or DATA_LOAD or NEWCONTEXT);
+	ARITHMETIC_UNIT_ENABLE <=  PROB_AVAILABLE and not(GET_DATA or DATA_LOAD or NEWCONTEXT);
 
 -- Control Logic for input control
 	SHIFT_ALL <= TRIGGER_INPUT and DATA_AVAILABLE;
@@ -282,7 +248,5 @@ NEWDIFF : process(SYMBOL,ARITHMETIC_UNIT_DIFFERENCE_OUT0,ARITHMETIC_UNIT_DIFFERE
 			DIFFERENCE_IN <= ARITHMETIC_UNIT_DIFFERENCE_OUT0;
 		end if;
 	end process NEWDIFF;
-
-
 
 end RTL;

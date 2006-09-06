@@ -1,0 +1,256 @@
+Release 7.1.04i - xst H.42
+Copyright (c) 1995-2005 Xilinx, Inc.  All rights reserved.
+--> Parameter TMPDIR set to __projnav
+CPU : 0.00 / 0.34 s | Elapsed : 0.00 / 0.00 s
+ 
+--> Parameter xsthdpdir set to ./xst
+CPU : 0.00 / 0.34 s | Elapsed : 0.00 / 0.00 s
+ 
+--> Reading design: symbol_detector.prj
+
+TABLE OF CONTENTS
+  1) Synthesis Options Summary
+  2) HDL Compilation
+  3) HDL Analysis
+  4) HDL Synthesis
+  5) Advanced HDL Synthesis
+     5.1) HDL Synthesis Report
+  6) Low Level Synthesis
+  7) Final Report
+     7.1) Device utilization summary
+     7.2) TIMING REPORT
+
+
+=========================================================================
+*                      Synthesis Options Summary                        *
+=========================================================================
+---- Source Parameters
+Input File Name                    : "symbol_detector.prj"
+Input Format                       : mixed
+Ignore Synthesis Constraint File   : NO
+
+---- Target Parameters
+Output File Name                   : "symbol_detector"
+Output Format                      : NGC
+Target Device                      : xc2v250-6-cs144
+
+---- Source Options
+Top Module Name                    : symbol_detector
+Automatic FSM Extraction           : YES
+FSM Encoding Algorithm             : Auto
+FSM Style                          : lut
+RAM Extraction                     : Yes
+RAM Style                          : Auto
+ROM Extraction                     : Yes
+ROM Style                          : Auto
+Mux Extraction                     : YES
+Mux Style                          : Auto
+Decoder Extraction                 : YES
+Priority Encoder Extraction        : YES
+Shift Register Extraction          : YES
+Logical Shifter Extraction         : YES
+XOR Collapsing                     : YES
+Resource Sharing                   : YES
+Multiplier Style                   : auto
+Automatic Register Balancing       : No
+
+---- Target Options
+Add IO Buffers                     : YES
+Global Maximum Fanout              : 500
+Add Generic Clock Buffer(BUFG)     : 16
+Register Duplication               : YES
+Equivalent register Removal        : YES
+Slice Packing                      : YES
+Pack IO Registers into IOBs        : auto
+
+---- General Options
+Optimization Goal                  : Speed
+Optimization Effort                : 1
+Keep Hierarchy                     : NO
+Global Optimization                : AllClockNets
+RTL Output                         : Yes
+Write Timing Constraints           : NO
+Hierarchy Separator                : _
+Bus Delimiter                      : <>
+Case Specifier                     : maintain
+Slice Utilization Ratio            : 100
+Slice Utilization Ratio Delta      : 5
+
+---- Other Options
+lso                                : symbol_detector.lso
+Read Cores                         : YES
+cross_clock_analysis               : NO
+verilog2001                        : YES
+safe_implementation                : No
+Optimize Instantiated Primitives   : NO
+tristate2logic                     : Yes
+use_clock_enable                   : Yes
+use_sync_set                       : Yes
+use_sync_reset                     : Yes
+enable_auto_floorplanning          : No
+
+=========================================================================
+
+
+=========================================================================
+*                          HDL Compilation                              *
+=========================================================================
+Compiling vhdl file "C:/Xilinx/bin/ArithmeticDecoder/SYMBOL_DETECTOR.vhd" in Library work.
+Architecture rtl of Entity symbol_detector is up to date.
+
+=========================================================================
+*                            HDL Analysis                               *
+=========================================================================
+Analyzing Entity <symbol_detector> (Architecture <rtl>).
+Entity <symbol_detector> analyzed. Unit <symbol_detector> generated.
+
+
+=========================================================================
+*                           HDL Synthesis                               *
+=========================================================================
+
+Synthesizing Unit <symbol_detector>.
+    Related source file is "C:/Xilinx/bin/ArithmeticDecoder/SYMBOL_DETECTOR.vhd".
+    Found 16-bit comparator greatequal for signal <$n0001> created at line 23.
+    Summary:
+	inferred   1 Comparator(s).
+Unit <symbol_detector> synthesized.
+
+
+=========================================================================
+*                       Advanced HDL Synthesis                          *
+=========================================================================
+
+Advanced RAM inference ...
+Advanced multiplier inference ...
+Advanced Registered AddSub inference ...
+Dynamic shift register inference ...
+
+=========================================================================
+HDL Synthesis Report
+
+Macro Statistics
+# Comparators                      : 1
+ 16-bit comparator greatequal      : 1
+
+=========================================================================
+
+=========================================================================
+*                         Low Level Synthesis                           *
+=========================================================================
+
+Optimizing unit <symbol_detector> ...
+Loading device for application Rf_Device from file '2v250.nph' in environment C:/Xilinx.
+
+Mapping all equations...
+Building and optimizing final netlist ...
+Found area constraint ratio of 100 (+ 5) on block symbol_detector, actual ratio is 0.
+
+=========================================================================
+*                            Final Report                               *
+=========================================================================
+Final Results
+RTL Top Level Output File Name     : symbol_detector.ngr
+Top Level Output File Name         : symbol_detector
+Output Format                      : NGC
+Optimization Goal                  : Speed
+Keep Hierarchy                     : NO
+
+Design Statistics
+# IOs                              : 34
+
+Macro Statistics :
+# Comparators                      : 1
+#      16-bit comparator greatequal: 1
+
+Cell Usage :
+# BELS                             : 34
+#      LUT2                        : 17
+#      MUXCY                       : 16
+#      VCC                         : 1
+# IO Buffers                       : 34
+#      IBUF                        : 33
+#      OBUF                        : 1
+=========================================================================
+
+Device utilization summary:
+---------------------------
+
+Selected Device : 2v250cs144-6 
+
+ Number of Slices:                       9  out of   1536     0%  
+ Number of 4 input LUTs:                17  out of   3072     0%  
+ Number of bonded IOBs:                 34  out of     92    36%  
+
+
+=========================================================================
+TIMING REPORT
+
+NOTE: THESE TIMING NUMBERS ARE ONLY A SYNTHESIS ESTIMATE.
+      FOR ACCURATE TIMING INFORMATION PLEASE REFER TO THE TRACE REPORT
+      GENERATED AFTER PLACE-and-ROUTE.
+
+Clock Information:
+------------------
+No clock signals found in this design
+
+Timing Summary:
+---------------
+Speed Grade: -6
+
+   Minimum period: No path found
+   Minimum input arrival time before clock: No path found
+   Maximum output required time after clock: No path found
+   Maximum combinational path delay: 8.052ns
+
+Timing Detail:
+--------------
+All values displayed in nanoseconds (ns)
+
+=========================================================================
+Timing constraint: Default path analysis
+  Total number of paths / destination ports: 49 / 1
+-------------------------------------------------------------------------
+Delay:               8.052ns (Levels of Logic = 20)
+  Source:            DATA_IN<0> (PAD)
+  Destination:       DATA_OUT (PAD)
+
+  Data Path: DATA_IN<0> to DATA_OUT
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     IBUF:I->O             1   0.653   0.608  DATA_IN_0_IBUF (DATA_IN_0_IBUF)
+     LUT2:I0->O            1   0.347   0.000  XNor_stagelut (N2)
+     MUXCY:S->O            1   0.235   0.000  XNor_stagecy (XNor_stage_cyo)
+     MUXCY:CI->O           1   0.042   0.000  XNor_stagecy_rn_0 (XNor_stage_cyo1)
+     MUXCY:CI->O           1   0.042   0.000  XNor_stagecy_rn_1 (XNor_stage_cyo2)
+     MUXCY:CI->O           1   0.042   0.000  XNor_stagecy_rn_2 (XNor_stage_cyo3)
+     MUXCY:CI->O           1   0.042   0.000  XNor_stagecy_rn_3 (XNor_stage_cyo4)
+     MUXCY:CI->O           1   0.042   0.000  XNor_stagecy_rn_4 (XNor_stage_cyo5)
+     MUXCY:CI->O           1   0.042   0.000  XNor_stagecy_rn_5 (XNor_stage_cyo6)
+     MUXCY:CI->O           1   0.042   0.000  XNor_stagecy_rn_6 (XNor_stage_cyo7)
+     MUXCY:CI->O           1   0.042   0.000  XNor_stagecy_rn_7 (XNor_stage_cyo8)
+     MUXCY:CI->O           1   0.042   0.000  XNor_stagecy_rn_8 (XNor_stage_cyo9)
+     MUXCY:CI->O           1   0.042   0.000  XNor_stagecy_rn_9 (XNor_stage_cyo10)
+     MUXCY:CI->O           1   0.042   0.000  XNor_stagecy_rn_10 (XNor_stage_cyo11)
+     MUXCY:CI->O           1   0.042   0.000  XNor_stagecy_rn_11 (XNor_stage_cyo12)
+     MUXCY:CI->O           1   0.042   0.000  XNor_stagecy_rn_12 (XNor_stage_cyo13)
+     MUXCY:CI->O           1   0.042   0.000  XNor_stagecy_rn_13 (XNor_stage_cyo14)
+     MUXCY:CI->O           1   0.601   0.548  XNor_stagecy_rn_14 (_n0001)
+     LUT2:I1->O            1   0.347   0.383  _n00001 (DATA_OUT_OBUF)
+     OBUF:I->O                 3.743          DATA_OUT_OBUF (DATA_OUT)
+    ----------------------------------------
+    Total                      8.052ns (6.514ns logic, 1.538ns route)
+                                       (80.9% logic, 19.1% route)
+
+=========================================================================
+CPU : 4.19 / 4.56 s | Elapsed : 4.00 / 4.00 s
+ 
+--> 
+
+Total memory usage is 100604 kilobytes
+
+Number of errors   :    0 (   0 filtered)
+Number of warnings :    0 (   0 filtered)
+Number of infos    :    0 (   0 filtered)
+

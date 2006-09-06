@@ -1,0 +1,390 @@
+Release 7.1.04i - xst H.42
+Copyright (c) 1995-2005 Xilinx, Inc.  All rights reserved.
+--> Parameter TMPDIR set to __projnav
+CPU : 0.00 / 0.34 s | Elapsed : 0.00 / 0.00 s
+ 
+--> Parameter xsthdpdir set to ./xst
+CPU : 0.00 / 0.34 s | Elapsed : 0.00 / 0.00 s
+ 
+--> Reading design: exp_golomb_decoder.prj
+
+TABLE OF CONTENTS
+  1) Synthesis Options Summary
+  2) HDL Compilation
+  3) HDL Analysis
+  4) HDL Synthesis
+  5) Advanced HDL Synthesis
+     5.1) HDL Synthesis Report
+  6) Low Level Synthesis
+  7) Final Report
+     7.1) Device utilization summary
+     7.2) TIMING REPORT
+
+
+=========================================================================
+*                      Synthesis Options Summary                        *
+=========================================================================
+---- Source Parameters
+Input File Name                    : "exp_golomb_decoder.prj"
+Input Format                       : mixed
+Ignore Synthesis Constraint File   : NO
+
+---- Target Parameters
+Output File Name                   : "exp_golomb_decoder"
+Output Format                      : NGC
+Target Device                      : xc2v2000-6-bg575
+
+---- Source Options
+Top Module Name                    : exp_golomb_decoder
+Automatic FSM Extraction           : YES
+FSM Encoding Algorithm             : Auto
+FSM Style                          : lut
+RAM Extraction                     : Yes
+RAM Style                          : Auto
+ROM Extraction                     : Yes
+ROM Style                          : Auto
+Mux Extraction                     : YES
+Mux Style                          : Auto
+Decoder Extraction                 : YES
+Priority Encoder Extraction        : YES
+Shift Register Extraction          : YES
+Logical Shifter Extraction         : YES
+XOR Collapsing                     : YES
+Resource Sharing                   : YES
+Multiplier Style                   : auto
+Automatic Register Balancing       : No
+
+---- Target Options
+Add IO Buffers                     : YES
+Global Maximum Fanout              : 500
+Add Generic Clock Buffer(BUFG)     : 16
+Register Duplication               : YES
+Equivalent register Removal        : YES
+Slice Packing                      : YES
+Pack IO Registers into IOBs        : auto
+
+---- General Options
+Optimization Goal                  : Speed
+Optimization Effort                : 1
+Keep Hierarchy                     : NO
+Global Optimization                : AllClockNets
+RTL Output                         : Yes
+Write Timing Constraints           : NO
+Hierarchy Separator                : /
+Bus Delimiter                      : <>
+Case Specifier                     : maintain
+Slice Utilization Ratio            : 100
+Slice Utilization Ratio Delta      : 5
+
+---- Other Options
+lso                                : exp_golomb_decoder.lso
+Read Cores                         : YES
+cross_clock_analysis               : NO
+verilog2001                        : YES
+safe_implementation                : No
+Optimize Instantiated Primitives   : NO
+tristate2logic                     : Yes
+use_clock_enable                   : Yes
+use_sync_set                       : Yes
+use_sync_reset                     : Yes
+enable_auto_floorplanning          : No
+
+=========================================================================
+
+
+=========================================================================
+*                          HDL Compilation                              *
+=========================================================================
+Compiling vhdl file "C:/Xilinx/bin/exp-golomb-decoder/EXP_GOLOMB_DECODER.vhd" in Library work.
+Entity <exp_golomb_decoder> compiled.
+Entity <exp_golomb_decoder> (Architecture <rtl>) compiled.
+
+=========================================================================
+*                            HDL Analysis                               *
+=========================================================================
+Analyzing Entity <exp_golomb_decoder> (Architecture <rtl>).
+Entity <exp_golomb_decoder> analyzed. Unit <exp_golomb_decoder> generated.
+
+
+=========================================================================
+*                           HDL Synthesis                               *
+=========================================================================
+
+Synthesizing Unit <exp_golomb_decoder>.
+    Related source file is "C:/Xilinx/bin/exp-golomb-decoder/EXP_GOLOMB_DECODER.vhd".
+    Found 5-bit comparator equal for signal <$n0005> created at line 83.
+    Found 32-bit register for signal <DATA_1>.
+    Found 32-bit register for signal <DATA_2>.
+    Found 32-bit register for signal <DATA_STORE>.
+    Found 1-bit register for signal <MODE>.
+    Found 5-bit up counter for signal <NUMBITS_1>.
+    Found 5-bit up counter for signal <NUMBITS_2>.
+    Found 32-bit adder for signal <SUM>.
+    Summary:
+	inferred   2 Counter(s).
+	inferred  97 D-type flip-flop(s).
+	inferred   1 Adder/Subtractor(s).
+	inferred   1 Comparator(s).
+Unit <exp_golomb_decoder> synthesized.
+
+
+=========================================================================
+*                       Advanced HDL Synthesis                          *
+=========================================================================
+
+Advanced RAM inference ...
+Advanced multiplier inference ...
+Advanced Registered AddSub inference ...
+Dynamic shift register inference ...
+
+=========================================================================
+HDL Synthesis Report
+
+Macro Statistics
+# Adders/Subtractors               : 1
+ 32-bit adder                      : 1
+# Counters                         : 2
+ 5-bit up counter                  : 2
+# Registers                        : 66
+ 1-bit register                    : 65
+ 32-bit register                   : 1
+# Comparators                      : 1
+ 5-bit comparator equal            : 1
+
+=========================================================================
+
+=========================================================================
+*                         Low Level Synthesis                           *
+=========================================================================
+
+Optimizing unit <exp_golomb_decoder> ...
+Loading device for application Rf_Device from file '2v2000.nph' in environment C:/Xilinx.
+
+Mapping all equations...
+Building and optimizing final netlist ...
+Found area constraint ratio of 100 (+ 5) on block exp_golomb_decoder, actual ratio is 0.
+
+=========================================================================
+*                            Final Report                               *
+=========================================================================
+Final Results
+RTL Top Level Output File Name     : exp_golomb_decoder.ngr
+Top Level Output File Name         : exp_golomb_decoder
+Output Format                      : NGC
+Optimization Goal                  : Speed
+Keep Hierarchy                     : NO
+
+Design Statistics
+# IOs                              : 37
+
+Macro Statistics :
+# Registers                        : 68
+#      1-bit register              : 65
+#      32-bit register             : 1
+#      5-bit register              : 2
+# Adders/Subtractors               : 1
+#      32-bit adder                : 1
+# Comparators                      : 1
+#      5-bit comparator equal      : 1
+
+Cell Usage :
+# BELS                             : 159
+#      GND                         : 1
+#      INV                         : 2
+#      LUT2                        : 4
+#      LUT2_L                      : 33
+#      LUT3                        : 40
+#      LUT3_D                      : 1
+#      LUT4                        : 11
+#      LUT4_D                      : 2
+#      LUT4_L                      : 2
+#      MUXCY                       : 31
+#      VCC                         : 1
+#      XORCY                       : 31
+# FlipFlops/Latches                : 107
+#      FDRE                        : 107
+# Clock Buffers                    : 1
+#      BUFGP                       : 1
+# IO Buffers                       : 36
+#      IBUF                        : 3
+#      OBUF                        : 33
+=========================================================================
+
+Device utilization summary:
+---------------------------
+
+Selected Device : 2v2000bg575-6 
+
+ Number of Slices:                      64  out of  10752     0%  
+ Number of Slice Flip Flops:           107  out of  21504     0%  
+ Number of 4 input LUTs:                93  out of  21504     0%  
+ Number of bonded IOBs:                 37  out of    408     9%  
+ Number of GCLKs:                        1  out of     16     6%  
+
+
+=========================================================================
+TIMING REPORT
+
+NOTE: THESE TIMING NUMBERS ARE ONLY A SYNTHESIS ESTIMATE.
+      FOR ACCURATE TIMING INFORMATION PLEASE REFER TO THE TRACE REPORT
+      GENERATED AFTER PLACE-and-ROUTE.
+
+Clock Information:
+------------------
+-----------------------------------+------------------------+-------+
+Clock Signal                       | Clock buffer(FF name)  | Load  |
+-----------------------------------+------------------------+-------+
+CLOCK                              | BUFGP                  | 107   |
+-----------------------------------+------------------------+-------+
+
+Timing Summary:
+---------------
+Speed Grade: -6
+
+   Minimum period: 4.169ns (Maximum Frequency: 239.894MHz)
+   Minimum input arrival time before clock: 2.955ns
+   Maximum output required time after clock: 8.894ns
+   Maximum combinational path delay: No path found
+
+Timing Detail:
+--------------
+All values displayed in nanoseconds (ns)
+
+=========================================================================
+Timing constraint: Default period analysis for Clock 'CLOCK'
+  Clock period: 4.169ns (frequency: 239.894MHz)
+  Total number of paths / destination ports: 2896 / 286
+-------------------------------------------------------------------------
+Delay:               4.169ns (Levels of Logic = 33)
+  Source:            DATA_1_0 (FF)
+  Destination:       DATA_STORE_31 (FF)
+  Source Clock:      CLOCK rising
+  Destination Clock: CLOCK rising
+
+  Data Path: DATA_1_0 to DATA_STORE_31
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDRE:C->Q             3   0.449   0.760  DATA_1_0 (DATA_1_0)
+     LUT2_L:I0->LO         2   0.347   0.000  exp_golomb_decoder_SUM<0>lut (SUM<0>)
+     MUXCY:S->O            1   0.235   0.000  exp_golomb_decoder_SUM<0>cy (exp_golomb_decoder_SUM<0>_cyo)
+     MUXCY:CI->O           1   0.042   0.000  exp_golomb_decoder_SUM<1>cy (exp_golomb_decoder_SUM<1>_cyo)
+     MUXCY:CI->O           1   0.042   0.000  exp_golomb_decoder_SUM<2>cy (exp_golomb_decoder_SUM<2>_cyo)
+     MUXCY:CI->O           1   0.042   0.000  exp_golomb_decoder_SUM<3>cy (exp_golomb_decoder_SUM<3>_cyo)
+     MUXCY:CI->O           1   0.042   0.000  exp_golomb_decoder_SUM<4>cy (exp_golomb_decoder_SUM<4>_cyo)
+     MUXCY:CI->O           1   0.042   0.000  exp_golomb_decoder_SUM<5>cy (exp_golomb_decoder_SUM<5>_cyo)
+     MUXCY:CI->O           1   0.042   0.000  exp_golomb_decoder_SUM<6>cy (exp_golomb_decoder_SUM<6>_cyo)
+     MUXCY:CI->O           1   0.042   0.000  exp_golomb_decoder_SUM<7>cy (exp_golomb_decoder_SUM<7>_cyo)
+     MUXCY:CI->O           1   0.042   0.000  exp_golomb_decoder_SUM<8>cy (exp_golomb_decoder_SUM<8>_cyo)
+     MUXCY:CI->O           1   0.042   0.000  exp_golomb_decoder_SUM<9>cy (exp_golomb_decoder_SUM<9>_cyo)
+     MUXCY:CI->O           1   0.042   0.000  exp_golomb_decoder_SUM<10>cy (exp_golomb_decoder_SUM<10>_cyo)
+     MUXCY:CI->O           1   0.042   0.000  exp_golomb_decoder_SUM<11>cy (exp_golomb_decoder_SUM<11>_cyo)
+     MUXCY:CI->O           1   0.042   0.000  exp_golomb_decoder_SUM<12>cy (exp_golomb_decoder_SUM<12>_cyo)
+     MUXCY:CI->O           1   0.042   0.000  exp_golomb_decoder_SUM<13>cy (exp_golomb_decoder_SUM<13>_cyo)
+     MUXCY:CI->O           1   0.042   0.000  exp_golomb_decoder_SUM<14>cy (exp_golomb_decoder_SUM<14>_cyo)
+     MUXCY:CI->O           1   0.042   0.000  exp_golomb_decoder_SUM<15>cy (exp_golomb_decoder_SUM<15>_cyo)
+     MUXCY:CI->O           1   0.042   0.000  exp_golomb_decoder_SUM<16>cy (exp_golomb_decoder_SUM<16>_cyo)
+     MUXCY:CI->O           1   0.042   0.000  exp_golomb_decoder_SUM<17>cy (exp_golomb_decoder_SUM<17>_cyo)
+     MUXCY:CI->O           1   0.042   0.000  exp_golomb_decoder_SUM<18>cy (exp_golomb_decoder_SUM<18>_cyo)
+     MUXCY:CI->O           1   0.042   0.000  exp_golomb_decoder_SUM<19>cy (exp_golomb_decoder_SUM<19>_cyo)
+     MUXCY:CI->O           1   0.042   0.000  exp_golomb_decoder_SUM<20>cy (exp_golomb_decoder_SUM<20>_cyo)
+     MUXCY:CI->O           1   0.042   0.000  exp_golomb_decoder_SUM<21>cy (exp_golomb_decoder_SUM<21>_cyo)
+     MUXCY:CI->O           1   0.042   0.000  exp_golomb_decoder_SUM<22>cy (exp_golomb_decoder_SUM<22>_cyo)
+     MUXCY:CI->O           1   0.042   0.000  exp_golomb_decoder_SUM<23>cy (exp_golomb_decoder_SUM<23>_cyo)
+     MUXCY:CI->O           1   0.042   0.000  exp_golomb_decoder_SUM<24>cy (exp_golomb_decoder_SUM<24>_cyo)
+     MUXCY:CI->O           1   0.042   0.000  exp_golomb_decoder_SUM<25>cy (exp_golomb_decoder_SUM<25>_cyo)
+     MUXCY:CI->O           1   0.042   0.000  exp_golomb_decoder_SUM<26>cy (exp_golomb_decoder_SUM<26>_cyo)
+     MUXCY:CI->O           1   0.042   0.000  exp_golomb_decoder_SUM<27>cy (exp_golomb_decoder_SUM<27>_cyo)
+     MUXCY:CI->O           1   0.042   0.000  exp_golomb_decoder_SUM<28>cy (exp_golomb_decoder_SUM<28>_cyo)
+     MUXCY:CI->O           1   0.042   0.000  exp_golomb_decoder_SUM<29>cy (exp_golomb_decoder_SUM<29>_cyo)
+     MUXCY:CI->O           0   0.042   0.000  exp_golomb_decoder_SUM<30>cy (exp_golomb_decoder_SUM<30>_cyo)
+     XORCY:CI->O           2   0.824   0.000  exp_golomb_decoder_SUM<31>_xor (SUM<31>)
+     FDRE:D                    0.293          DATA_STORE_31
+    ----------------------------------------
+    Total                      4.169ns (3.408ns logic, 0.760ns route)
+                                       (81.8% logic, 18.2% route)
+
+=========================================================================
+Timing constraint: Default OFFSET IN BEFORE for Clock 'CLOCK'
+  Total number of paths / destination ports: 221 / 183
+-------------------------------------------------------------------------
+Offset:              2.955ns (Levels of Logic = 2)
+  Source:            RESET (PAD)
+  Destination:       DATA_2_9 (FF)
+  Destination Clock: CLOCK rising
+
+  Data Path: RESET to DATA_2_9
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     IBUF:I->O            40   0.653   1.044  RESET_IBUF (RESET_IBUF)
+     LUT4:I0->O           12   0.347   0.689  _n00021_7 (_n000216)
+     FDRE:R                    0.222          DATA_2_9
+    ----------------------------------------
+    Total                      2.955ns (1.222ns logic, 1.733ns route)
+                                       (41.4% logic, 58.6% route)
+
+=========================================================================
+Timing constraint: Default OFFSET OUT AFTER for Clock 'CLOCK'
+  Total number of paths / destination ports: 1947 / 33
+-------------------------------------------------------------------------
+Offset:              8.894ns (Levels of Logic = 35)
+  Source:            DATA_1_0 (FF)
+  Destination:       DATA_OUT<31> (PAD)
+  Source Clock:      CLOCK rising
+
+  Data Path: DATA_1_0 to DATA_OUT<31>
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDRE:C->Q             3   0.449   0.760  DATA_1_0 (DATA_1_0)
+     LUT2_L:I0->LO         2   0.347   0.000  exp_golomb_decoder_SUM<0>lut (SUM<0>)
+     MUXCY:S->O            1   0.235   0.000  exp_golomb_decoder_SUM<0>cy (exp_golomb_decoder_SUM<0>_cyo)
+     MUXCY:CI->O           1   0.042   0.000  exp_golomb_decoder_SUM<1>cy (exp_golomb_decoder_SUM<1>_cyo)
+     MUXCY:CI->O           1   0.042   0.000  exp_golomb_decoder_SUM<2>cy (exp_golomb_decoder_SUM<2>_cyo)
+     MUXCY:CI->O           1   0.042   0.000  exp_golomb_decoder_SUM<3>cy (exp_golomb_decoder_SUM<3>_cyo)
+     MUXCY:CI->O           1   0.042   0.000  exp_golomb_decoder_SUM<4>cy (exp_golomb_decoder_SUM<4>_cyo)
+     MUXCY:CI->O           1   0.042   0.000  exp_golomb_decoder_SUM<5>cy (exp_golomb_decoder_SUM<5>_cyo)
+     MUXCY:CI->O           1   0.042   0.000  exp_golomb_decoder_SUM<6>cy (exp_golomb_decoder_SUM<6>_cyo)
+     MUXCY:CI->O           1   0.042   0.000  exp_golomb_decoder_SUM<7>cy (exp_golomb_decoder_SUM<7>_cyo)
+     MUXCY:CI->O           1   0.042   0.000  exp_golomb_decoder_SUM<8>cy (exp_golomb_decoder_SUM<8>_cyo)
+     MUXCY:CI->O           1   0.042   0.000  exp_golomb_decoder_SUM<9>cy (exp_golomb_decoder_SUM<9>_cyo)
+     MUXCY:CI->O           1   0.042   0.000  exp_golomb_decoder_SUM<10>cy (exp_golomb_decoder_SUM<10>_cyo)
+     MUXCY:CI->O           1   0.042   0.000  exp_golomb_decoder_SUM<11>cy (exp_golomb_decoder_SUM<11>_cyo)
+     MUXCY:CI->O           1   0.042   0.000  exp_golomb_decoder_SUM<12>cy (exp_golomb_decoder_SUM<12>_cyo)
+     MUXCY:CI->O           1   0.042   0.000  exp_golomb_decoder_SUM<13>cy (exp_golomb_decoder_SUM<13>_cyo)
+     MUXCY:CI->O           1   0.042   0.000  exp_golomb_decoder_SUM<14>cy (exp_golomb_decoder_SUM<14>_cyo)
+     MUXCY:CI->O           1   0.042   0.000  exp_golomb_decoder_SUM<15>cy (exp_golomb_decoder_SUM<15>_cyo)
+     MUXCY:CI->O           1   0.042   0.000  exp_golomb_decoder_SUM<16>cy (exp_golomb_decoder_SUM<16>_cyo)
+     MUXCY:CI->O           1   0.042   0.000  exp_golomb_decoder_SUM<17>cy (exp_golomb_decoder_SUM<17>_cyo)
+     MUXCY:CI->O           1   0.042   0.000  exp_golomb_decoder_SUM<18>cy (exp_golomb_decoder_SUM<18>_cyo)
+     MUXCY:CI->O           1   0.042   0.000  exp_golomb_decoder_SUM<19>cy (exp_golomb_decoder_SUM<19>_cyo)
+     MUXCY:CI->O           1   0.042   0.000  exp_golomb_decoder_SUM<20>cy (exp_golomb_decoder_SUM<20>_cyo)
+     MUXCY:CI->O           1   0.042   0.000  exp_golomb_decoder_SUM<21>cy (exp_golomb_decoder_SUM<21>_cyo)
+     MUXCY:CI->O           1   0.042   0.000  exp_golomb_decoder_SUM<22>cy (exp_golomb_decoder_SUM<22>_cyo)
+     MUXCY:CI->O           1   0.042   0.000  exp_golomb_decoder_SUM<23>cy (exp_golomb_decoder_SUM<23>_cyo)
+     MUXCY:CI->O           1   0.042   0.000  exp_golomb_decoder_SUM<24>cy (exp_golomb_decoder_SUM<24>_cyo)
+     MUXCY:CI->O           1   0.042   0.000  exp_golomb_decoder_SUM<25>cy (exp_golomb_decoder_SUM<25>_cyo)
+     MUXCY:CI->O           1   0.042   0.000  exp_golomb_decoder_SUM<26>cy (exp_golomb_decoder_SUM<26>_cyo)
+     MUXCY:CI->O           1   0.042   0.000  exp_golomb_decoder_SUM<27>cy (exp_golomb_decoder_SUM<27>_cyo)
+     MUXCY:CI->O           1   0.042   0.000  exp_golomb_decoder_SUM<28>cy (exp_golomb_decoder_SUM<28>_cyo)
+     MUXCY:CI->O           1   0.042   0.000  exp_golomb_decoder_SUM<29>cy (exp_golomb_decoder_SUM<29>_cyo)
+     MUXCY:CI->O           0   0.042   0.000  exp_golomb_decoder_SUM<30>cy (exp_golomb_decoder_SUM<30>_cyo)
+     XORCY:CI->O           2   0.824   0.546  exp_golomb_decoder_SUM<31>_xor (SUM<31>)
+     LUT3:I2->O            1   0.347   0.383  DATA_OUT<31>1 (DATA_OUT_31_OBUF)
+     OBUF:I->O                 3.743          DATA_OUT_31_OBUF (DATA_OUT<31>)
+    ----------------------------------------
+    Total                      8.894ns (7.205ns logic, 1.689ns route)
+                                       (81.0% logic, 19.0% route)
+
+=========================================================================
+CPU : 6.84 / 7.22 s | Elapsed : 7.00 / 7.00 s
+ 
+--> 
+
+Total memory usage is 121148 kilobytes
+
+Number of errors   :    0 (   0 filtered)
+Number of warnings :    0 (   0 filtered)
+Number of infos    :    0 (   0 filtered)
+

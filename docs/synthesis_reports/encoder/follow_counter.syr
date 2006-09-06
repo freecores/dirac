@@ -1,0 +1,339 @@
+Release 7.1.04i - xst H.42
+Copyright (c) 1995-2005 Xilinx, Inc.  All rights reserved.
+--> Parameter TMPDIR set to __projnav
+CPU : 0.00 / 0.33 s | Elapsed : 0.00 / 0.00 s
+ 
+--> Parameter xsthdpdir set to ./xst
+CPU : 0.00 / 0.33 s | Elapsed : 0.00 / 0.00 s
+ 
+--> Reading design: follow_counter.prj
+
+TABLE OF CONTENTS
+  1) Synthesis Options Summary
+  2) HDL Compilation
+  3) HDL Analysis
+  4) HDL Synthesis
+  5) Advanced HDL Synthesis
+     5.1) HDL Synthesis Report
+  6) Low Level Synthesis
+  7) Final Report
+     7.1) Device utilization summary
+     7.2) TIMING REPORT
+
+
+=========================================================================
+*                      Synthesis Options Summary                        *
+=========================================================================
+---- Source Parameters
+Input File Name                    : "follow_counter.prj"
+Input Format                       : mixed
+Ignore Synthesis Constraint File   : NO
+
+---- Target Parameters
+Output File Name                   : "follow_counter"
+Output Format                      : NGC
+Target Device                      : xc2v2000-6-bg575
+
+---- Source Options
+Top Module Name                    : follow_counter
+Automatic FSM Extraction           : YES
+FSM Encoding Algorithm             : Auto
+FSM Style                          : lut
+RAM Extraction                     : Yes
+RAM Style                          : Auto
+ROM Extraction                     : Yes
+ROM Style                          : Auto
+Mux Extraction                     : YES
+Mux Style                          : Auto
+Decoder Extraction                 : YES
+Priority Encoder Extraction        : YES
+Shift Register Extraction          : YES
+Logical Shifter Extraction         : YES
+XOR Collapsing                     : YES
+Resource Sharing                   : YES
+Multiplier Style                   : auto
+Automatic Register Balancing       : No
+
+---- Target Options
+Add IO Buffers                     : YES
+Global Maximum Fanout              : 500
+Add Generic Clock Buffer(BUFG)     : 16
+Register Duplication               : YES
+Equivalent register Removal        : YES
+Slice Packing                      : YES
+Pack IO Registers into IOBs        : auto
+
+---- General Options
+Optimization Goal                  : Speed
+Optimization Effort                : 2
+Keep Hierarchy                     : NO
+Global Optimization                : AllClockNets
+RTL Output                         : Yes
+Write Timing Constraints           : NO
+Hierarchy Separator                : _
+Bus Delimiter                      : <>
+Case Specifier                     : maintain
+Slice Utilization Ratio            : 100
+Slice Utilization Ratio Delta      : 5
+
+---- Other Options
+lso                                : follow_counter.lso
+Read Cores                         : YES
+cross_clock_analysis               : NO
+verilog2001                        : YES
+safe_implementation                : No
+Optimize Instantiated Primitives   : NO
+tristate2logic                     : Yes
+use_clock_enable                   : Yes
+use_sync_set                       : Yes
+use_sync_reset                     : Yes
+enable_auto_floorplanning          : No
+
+=========================================================================
+
+
+=========================================================================
+*                          HDL Compilation                              *
+=========================================================================
+Compiling vhdl file "C:/Xilinx/bin/ArithmeticCoder/FOLLOW_COUNTER.vhd" in Library work.
+Architecture rtl of Entity follow_counter is up to date.
+
+=========================================================================
+*                            HDL Analysis                               *
+=========================================================================
+Analyzing Entity <follow_counter> (Architecture <rtl>).
+Entity <follow_counter> analyzed. Unit <follow_counter> generated.
+
+
+=========================================================================
+*                           HDL Synthesis                               *
+=========================================================================
+
+Synthesizing Unit <follow_counter>.
+    Related source file is "C:/Xilinx/bin/ArithmeticCoder/FOLLOW_COUNTER.vhd".
+    Found 8-bit comparator lessequal for signal <$n0003> created at line 30.
+    Found 8-bit comparator greater for signal <$n0004> created at line 39.
+    Found 8-bit updown counter for signal <NUMBER>.
+    Summary:
+	inferred   1 Counter(s).
+	inferred   2 Comparator(s).
+Unit <follow_counter> synthesized.
+
+
+=========================================================================
+*                       Advanced HDL Synthesis                          *
+=========================================================================
+
+Advanced RAM inference ...
+Advanced multiplier inference ...
+Advanced Registered AddSub inference ...
+Dynamic shift register inference ...
+
+=========================================================================
+HDL Synthesis Report
+
+Macro Statistics
+# Counters                         : 1
+ 8-bit updown counter              : 1
+# Comparators                      : 2
+ 8-bit comparator greater          : 1
+ 8-bit comparator lessequal        : 1
+
+=========================================================================
+
+=========================================================================
+*                         Low Level Synthesis                           *
+=========================================================================
+WARNING:Xst:1988 - Unit <follow_counter>: instances <Mcompar__n0004>, <Mcompar__n0003> of unit <LPM_COMPARE_2> and unit <LPM_COMPARE_1> are dual, second instance is removed
+
+Optimizing unit <follow_counter> ...
+Loading device for application Rf_Device from file '2v2000.nph' in environment C:/Xilinx.
+
+Mapping all equations...
+Building and optimizing final netlist ...
+Found area constraint ratio of 100 (+ 5) on block follow_counter, actual ratio is 0.
+
+=========================================================================
+*                            Final Report                               *
+=========================================================================
+Final Results
+RTL Top Level Output File Name     : follow_counter.ngr
+Top Level Output File Name         : follow_counter
+Output Format                      : NGC
+Optimization Goal                  : Speed
+Keep Hierarchy                     : NO
+
+Design Statistics
+# IOs                              : 5
+
+Macro Statistics :
+# Registers                        : 1
+#      8-bit register              : 1
+# Adders/Subtractors               : 1
+#      8-bit addsub                : 1
+# Comparators                      : 2
+#      8-bit comparator greater    : 1
+#      8-bit comparator lessequal  : 1
+
+Cell Usage :
+# BELS                             : 29
+#      LUT2                        : 3
+#      LUT3                        : 1
+#      LUT3_L                      : 8
+#      LUT4                        : 1
+#      LUT4_D                      : 1
+#      MUXCY                       : 7
+#      XORCY                       : 8
+# FlipFlops/Latches                : 8
+#      FDRE                        : 8
+# Clock Buffers                    : 1
+#      BUFGP                       : 1
+# IO Buffers                       : 4
+#      IBUF                        : 3
+#      OBUF                        : 1
+=========================================================================
+
+Device utilization summary:
+---------------------------
+
+Selected Device : 2v2000bg575-6 
+
+ Number of Slices:                       7  out of  10752     0%  
+ Number of Slice Flip Flops:             8  out of  21504     0%  
+ Number of 4 input LUTs:                14  out of  21504     0%  
+ Number of bonded IOBs:                  5  out of    408     1%  
+ Number of GCLKs:                        1  out of     16     6%  
+
+
+=========================================================================
+TIMING REPORT
+
+NOTE: THESE TIMING NUMBERS ARE ONLY A SYNTHESIS ESTIMATE.
+      FOR ACCURATE TIMING INFORMATION PLEASE REFER TO THE TRACE REPORT
+      GENERATED AFTER PLACE-and-ROUTE.
+
+Clock Information:
+------------------
+-----------------------------------+------------------------+-------+
+Clock Signal                       | Clock buffer(FF name)  | Load  |
+-----------------------------------+------------------------+-------+
+CLOCK                              | BUFGP                  | 8     |
+-----------------------------------+------------------------+-------+
+
+Timing Summary:
+---------------
+Speed Grade: -6
+
+   Minimum period: 3.586ns (Maximum Frequency: 278.901MHz)
+   Minimum input arrival time before clock: 3.673ns
+   Maximum output required time after clock: 7.321ns
+   Maximum combinational path delay: 6.022ns
+
+Timing Detail:
+--------------
+All values displayed in nanoseconds (ns)
+
+=========================================================================
+Timing constraint: Default period analysis for Clock 'CLOCK'
+  Clock period: 3.586ns (frequency: 278.901MHz)
+  Total number of paths / destination ports: 128 / 16
+-------------------------------------------------------------------------
+Delay:               3.586ns (Levels of Logic = 3)
+  Source:            NUMBER_2 (FF)
+  Destination:       NUMBER_6 (FF)
+  Source Clock:      CLOCK rising
+  Destination Clock: CLOCK rising
+
+  Data Path: NUMBER_2 to NUMBER_6
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDRE:C->Q             2   0.449   0.743  NUMBER_2 (NUMBER_2)
+     LUT4:I0->O            1   0.347   0.414  _n000419 (CHOICE19)
+     LUT4_D:I3->LO         1   0.347   0.127  _n0004112 (N15)
+     LUT3:I2->O            8   0.347   0.621  _n00091 (_n0009)
+     FDRE:CE                   0.190          NUMBER_0
+    ----------------------------------------
+    Total                      3.586ns (1.680ns logic, 1.905ns route)
+                                       (46.9% logic, 53.1% route)
+
+=========================================================================
+Timing constraint: Default OFFSET IN BEFORE for Clock 'CLOCK'
+  Total number of paths / destination ports: 112 / 24
+-------------------------------------------------------------------------
+Offset:              3.673ns (Levels of Logic = 10)
+  Source:            INCREMENT (PAD)
+  Destination:       NUMBER_7 (FF)
+  Destination Clock: CLOCK rising
+
+  Data Path: INCREMENT to NUMBER_7
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     IBUF:I->O            10   0.653   0.879  INCREMENT_IBUF (INCREMENT_IBUF)
+     LUT2:I0->O            1   0.347   0.383  NUMBER__n00021 (NUMBER__n0002)
+     MUXCY:CI->O           1   0.042   0.000  follow_counter_NUMBER__n0000<0>cy (follow_counter_NUMBER__n0000<0>_cyo)
+     MUXCY:CI->O           1   0.042   0.000  follow_counter_NUMBER__n0000<1>cy (follow_counter_NUMBER__n0000<1>_cyo)
+     MUXCY:CI->O           1   0.042   0.000  follow_counter_NUMBER__n0000<2>cy (follow_counter_NUMBER__n0000<2>_cyo)
+     MUXCY:CI->O           1   0.042   0.000  follow_counter_NUMBER__n0000<3>cy (follow_counter_NUMBER__n0000<3>_cyo)
+     MUXCY:CI->O           1   0.042   0.000  follow_counter_NUMBER__n0000<4>cy (follow_counter_NUMBER__n0000<4>_cyo)
+     MUXCY:CI->O           1   0.042   0.000  follow_counter_NUMBER__n0000<5>cy (follow_counter_NUMBER__n0000<5>_cyo)
+     MUXCY:CI->O           0   0.042   0.000  follow_counter_NUMBER__n0000<6>cy (follow_counter_NUMBER__n0000<6>_cyo)
+     XORCY:CI->O           1   0.824   0.000  follow_counter_NUMBER__n0000<7>_xor (NUMBER__n0000<7>)
+     FDRE:D                    0.293          NUMBER_7
+    ----------------------------------------
+    Total                      3.673ns (2.411ns logic, 1.262ns route)
+                                       (65.6% logic, 34.4% route)
+
+=========================================================================
+Timing constraint: Default OFFSET OUT AFTER for Clock 'CLOCK'
+  Total number of paths / destination ports: 8 / 1
+-------------------------------------------------------------------------
+Offset:              7.321ns (Levels of Logic = 4)
+  Source:            NUMBER_2 (FF)
+  Destination:       OUTPUT (PAD)
+  Source Clock:      CLOCK rising
+
+  Data Path: NUMBER_2 to OUTPUT
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDRE:C->Q             2   0.449   0.743  NUMBER_2 (NUMBER_2)
+     LUT4:I0->O            1   0.347   0.415  _n000419 (CHOICE19)
+     LUT4_D:I3->O          1   0.347   0.548  _n0004112 (_n0004)
+     LUT2:I1->O            1   0.347   0.383  _n00021 (OUTPUT_OBUF)
+     OBUF:I->O                 3.743          OUTPUT_OBUF (OUTPUT)
+    ----------------------------------------
+    Total                      7.321ns (5.233ns logic, 2.088ns route)
+                                       (71.5% logic, 28.5% route)
+
+=========================================================================
+Timing constraint: Default path analysis
+  Total number of paths / destination ports: 1 / 1
+-------------------------------------------------------------------------
+Delay:               6.022ns (Levels of Logic = 3)
+  Source:            TEST (PAD)
+  Destination:       OUTPUT (PAD)
+
+  Data Path: TEST to OUTPUT
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     IBUF:I->O            11   0.653   0.897  TEST_IBUF (TEST_IBUF)
+     LUT2:I0->O            1   0.347   0.383  _n00021 (OUTPUT_OBUF)
+     OBUF:I->O                 3.743          OUTPUT_OBUF (OUTPUT)
+    ----------------------------------------
+    Total                      6.022ns (4.743ns logic, 1.279ns route)
+                                       (78.8% logic, 21.2% route)
+
+=========================================================================
+CPU : 4.63 / 4.98 s | Elapsed : 5.00 / 5.00 s
+ 
+--> 
+
+Total memory usage is 121148 kilobytes
+
+Number of errors   :    0 (   0 filtered)
+Number of warnings :    1 (   0 filtered)
+Number of infos    :    0 (   0 filtered)
+

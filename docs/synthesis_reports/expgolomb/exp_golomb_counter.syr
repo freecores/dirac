@@ -1,0 +1,361 @@
+Release 7.1.04i - xst H.42
+Copyright (c) 1995-2005 Xilinx, Inc.  All rights reserved.
+--> Parameter TMPDIR set to __projnav
+CPU : 0.00 / 2.44 s | Elapsed : 0.00 / 2.00 s
+ 
+--> Parameter xsthdpdir set to ./xst
+CPU : 0.00 / 2.44 s | Elapsed : 0.00 / 2.00 s
+ 
+--> Reading design: exp_golomb_counter.prj
+
+TABLE OF CONTENTS
+  1) Synthesis Options Summary
+  2) HDL Compilation
+  3) HDL Analysis
+  4) HDL Synthesis
+  5) Advanced HDL Synthesis
+     5.1) HDL Synthesis Report
+  6) Low Level Synthesis
+  7) Final Report
+     7.1) Device utilization summary
+     7.2) TIMING REPORT
+
+
+=========================================================================
+*                      Synthesis Options Summary                        *
+=========================================================================
+---- Source Parameters
+Input File Name                    : "exp_golomb_counter.prj"
+Input Format                       : mixed
+Ignore Synthesis Constraint File   : NO
+
+---- Target Parameters
+Output File Name                   : "exp_golomb_counter"
+Output Format                      : NGC
+Target Device                      : xc2v2000-6-bg575
+
+---- Source Options
+Top Module Name                    : exp_golomb_counter
+Automatic FSM Extraction           : YES
+FSM Encoding Algorithm             : Auto
+FSM Style                          : lut
+RAM Extraction                     : Yes
+RAM Style                          : Auto
+ROM Extraction                     : Yes
+ROM Style                          : Auto
+Mux Extraction                     : YES
+Mux Style                          : Auto
+Decoder Extraction                 : YES
+Priority Encoder Extraction        : YES
+Shift Register Extraction          : YES
+Logical Shifter Extraction         : YES
+XOR Collapsing                     : YES
+Resource Sharing                   : YES
+Multiplier Style                   : auto
+Automatic Register Balancing       : No
+
+---- Target Options
+Add IO Buffers                     : YES
+Global Maximum Fanout              : 500
+Add Generic Clock Buffer(BUFG)     : 16
+Register Duplication               : YES
+Equivalent register Removal        : YES
+Slice Packing                      : YES
+Pack IO Registers into IOBs        : auto
+
+---- General Options
+Optimization Goal                  : Speed
+Optimization Effort                : 1
+Keep Hierarchy                     : NO
+Global Optimization                : AllClockNets
+RTL Output                         : Yes
+Write Timing Constraints           : NO
+Hierarchy Separator                : /
+Bus Delimiter                      : <>
+Case Specifier                     : maintain
+Slice Utilization Ratio            : 100
+Slice Utilization Ratio Delta      : 5
+
+---- Other Options
+lso                                : exp_golomb_counter.lso
+Read Cores                         : YES
+cross_clock_analysis               : NO
+verilog2001                        : YES
+safe_implementation                : No
+Optimize Instantiated Primitives   : NO
+tristate2logic                     : Yes
+use_clock_enable                   : Yes
+use_sync_set                       : Yes
+use_sync_reset                     : Yes
+enable_auto_floorplanning          : No
+
+=========================================================================
+
+
+=========================================================================
+*                          HDL Compilation                              *
+=========================================================================
+Compiling vhdl file "C:/Xilinx/bin/exp_golomb_counter/EXP_GOLOMB_COUNTER.vhd" in Library work.
+Architecture rtl of Entity exp_golomb_counter is up to date.
+
+=========================================================================
+*                            HDL Analysis                               *
+=========================================================================
+Analyzing Entity <exp_golomb_counter> (Architecture <rtl>).
+WARNING:Xst:790 - "C:/Xilinx/bin/exp_golomb_counter/EXP_GOLOMB_COUNTER.vhd" line 155: Index value(s) does not match array range, simulation mismatch.
+Entity <exp_golomb_counter> analyzed. Unit <exp_golomb_counter> generated.
+
+
+=========================================================================
+*                           HDL Synthesis                               *
+=========================================================================
+
+Synthesizing Unit <exp_golomb_counter>.
+    Related source file is "C:/Xilinx/bin/exp_golomb_counter/EXP_GOLOMB_COUNTER.vhd".
+    Found 1-bit register for signal <DATA_OUT>.
+    Found 1-bit 33-to-1 multiplexer for signal <$n0035> created at line 155.
+    Found 1-bit 4-to-1 multiplexer for signal <$n0036>.
+    Found 6-bit comparator equal for signal <$n0042> created at line 146.
+    Found 6-bit comparator not equal for signal <$n0043> created at line 146.
+    Found 33-bit adder for signal <DATA2>.
+    Found 6-bit register for signal <LOG>.
+    Found 6-bit updown counter for signal <OUT_ADDRESS>.
+    Found 1-bit register for signal <OUTPUT_ACTIVE>.
+    Found 1-bit register for signal <UPDOWN>.
+    Summary:
+	inferred   1 Counter(s).
+	inferred   3 D-type flip-flop(s).
+	inferred   1 Adder/Subtractor(s).
+	inferred   2 Comparator(s).
+	inferred   2 Multiplexer(s).
+Unit <exp_golomb_counter> synthesized.
+
+
+=========================================================================
+*                       Advanced HDL Synthesis                          *
+=========================================================================
+
+Advanced RAM inference ...
+Advanced multiplier inference ...
+Advanced Registered AddSub inference ...
+Dynamic shift register inference ...
+
+=========================================================================
+HDL Synthesis Report
+
+Macro Statistics
+# Adders/Subtractors               : 1
+ 33-bit adder                      : 1
+# Counters                         : 1
+ 6-bit updown counter              : 1
+# Registers                        : 4
+ 1-bit register                    : 3
+ 6-bit register                    : 1
+# Comparators                      : 2
+ 6-bit comparator equal            : 1
+ 6-bit comparator not equal        : 1
+# Multiplexers                     : 2
+ 1-bit 33-to-1 multiplexer         : 1
+ 1-bit 4-to-1 multiplexer          : 1
+
+=========================================================================
+
+=========================================================================
+*                         Low Level Synthesis                           *
+=========================================================================
+WARNING:Xst:1988 - Unit <exp_golomb_counter>: instances <Mcompar__n0043>, <Mcompar__n0042> of unit <LPM_COMPARE_2> and unit <LPM_COMPARE_1> are dual, second instance is removed
+
+Optimizing unit <exp_golomb_counter> ...
+Loading device for application Rf_Device from file '2v2000.nph' in environment C:/Xilinx.
+
+Mapping all equations...
+Building and optimizing final netlist ...
+Found area constraint ratio of 100 (+ 5) on block exp_golomb_counter, actual ratio is 0.
+FlipFlop OUTPUT_ACTIVE has been replicated 1 time(s) to handle iob=true attribute.
+
+=========================================================================
+*                            Final Report                               *
+=========================================================================
+Final Results
+RTL Top Level Output File Name     : exp_golomb_counter.ngr
+Top Level Output File Name         : exp_golomb_counter
+Output Format                      : NGC
+Optimization Goal                  : Speed
+Keep Hierarchy                     : NO
+
+Design Statistics
+# IOs                              : 37
+
+Macro Statistics :
+# Registers                        : 10
+#      1-bit register              : 9
+#      6-bit register              : 1
+# Multiplexers                     : 2
+#      1-bit 33-to-1 multiplexer   : 1
+#      1-bit 4-to-1 multiplexer    : 1
+# Adders/Subtractors               : 2
+#      33-bit adder                : 1
+#      6-bit addsub                : 1
+# Comparators                      : 2
+#      6-bit comparator equal      : 1
+#      6-bit comparator not equal  : 1
+
+Cell Usage :
+# BELS                             : 196
+#      GND                         : 1
+#      INV                         : 1
+#      LUT1                        : 31
+#      LUT2                        : 4
+#      LUT2_L                      : 5
+#      LUT3                        : 7
+#      LUT3_L                      : 16
+#      LUT4                        : 31
+#      LUT4_L                      : 6
+#      MUXCY                       : 40
+#      MUXF5                       : 9
+#      MUXF6                       : 4
+#      MUXF7                       : 2
+#      MUXF8                       : 1
+#      VCC                         : 1
+#      XORCY                       : 37
+# FlipFlops/Latches                : 16
+#      FDRE                        : 8
+#      FDRS                        : 5
+#      FDRSE                       : 2
+#      FDS                         : 1
+# Clock Buffers                    : 1
+#      BUFGP                       : 1
+# IO Buffers                       : 36
+#      IBUF                        : 34
+#      OBUF                        : 2
+=========================================================================
+
+Device utilization summary:
+---------------------------
+
+Selected Device : 2v2000bg575-6 
+
+ Number of Slices:                      54  out of  10752     0%  
+ Number of Slice Flip Flops:            16  out of  21504     0%  
+ Number of 4 input LUTs:               100  out of  21504     0%  
+ Number of bonded IOBs:                 37  out of    408     9%  
+ Number of GCLKs:                        1  out of     16     6%  
+
+
+=========================================================================
+TIMING REPORT
+
+NOTE: THESE TIMING NUMBERS ARE ONLY A SYNTHESIS ESTIMATE.
+      FOR ACCURATE TIMING INFORMATION PLEASE REFER TO THE TRACE REPORT
+      GENERATED AFTER PLACE-and-ROUTE.
+
+Clock Information:
+------------------
+-----------------------------------+------------------------+-------+
+Clock Signal                       | Clock buffer(FF name)  | Load  |
+-----------------------------------+------------------------+-------+
+CLOCK                              | BUFGP                  | 16    |
+-----------------------------------+------------------------+-------+
+
+Timing Summary:
+---------------
+Speed Grade: -6
+
+   Minimum period: 4.224ns (Maximum Frequency: 236.770MHz)
+   Minimum input arrival time before clock: 11.608ns
+   Maximum output required time after clock: 4.575ns
+   Maximum combinational path delay: No path found
+
+Timing Detail:
+--------------
+All values displayed in nanoseconds (ns)
+
+=========================================================================
+Timing constraint: Default period analysis for Clock 'CLOCK'
+  Clock period: 4.224ns (frequency: 236.770MHz)
+  Total number of paths / destination ports: 233 / 17
+-------------------------------------------------------------------------
+Delay:               4.224ns (Levels of Logic = 6)
+  Source:            OUT_ADDRESS_0 (FF)
+  Destination:       DATA_OUT (FF)
+  Source Clock:      CLOCK rising
+  Destination Clock: CLOCK rising
+
+  Data Path: OUT_ADDRESS_0 to DATA_OUT
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDRE:C->Q            19   0.449   0.792  OUT_ADDRESS_0 (OUT_ADDRESS_0)
+     LUT3_L:I2->LO         1   0.347   0.000  OUT_ADDRESS<0>13 (MUX_BLOCK_N13)
+     MUXF5:I0->O           1   0.345   0.000  OUT_ADDRESS<1>_rn_5 (MUX_BLOCK_OUT_ADDRESS<1>_MUXF56)
+     MUXF6:I1->O           1   0.354   0.000  OUT_ADDRESS<2>_rn_2 (MUX_BLOCK_OUT_ADDRESS<2>_MUXF63)
+     MUXF7:I0->O           1   0.354   0.000  OUT_ADDRESS<3>_rn_0 (MUX_BLOCK_OUT_ADDRESS<3>_MUXF71)
+     MUXF8:I0->O           1   0.354   0.382  OUT_ADDRESS<4> (MUX_BLOCK_OUT_ADDRESS<4>_MUXF8)
+     MUXF5:S->O            1   0.553   0.000  _n0058<2>1111 (_n0036)
+     FDRE:D                    0.293          DATA_OUT
+    ----------------------------------------
+    Total                      4.224ns (3.049ns logic, 1.174ns route)
+                                       (72.2% logic, 27.8% route)
+
+=========================================================================
+Timing constraint: Default OFFSET IN BEFORE for Clock 'CLOCK'
+  Total number of paths / destination ports: 3250 / 29
+-------------------------------------------------------------------------
+Offset:              11.608ns (Levels of Logic = 14)
+  Source:            DATA_IN<1> (PAD)
+  Destination:       LOG_0 (FF)
+  Destination Clock: CLOCK rising
+
+  Data Path: DATA_IN<1> to LOG_0
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     IBUF:I->O             1   0.653   0.608  DATA_IN_1_IBUF (DATA_IN_1_IBUF)
+     LUT1:I0->O            1   0.347   0.000  DATA_IN_1_IBUF_rt (DATA_IN_1_IBUF_rt)
+     MUXCY:S->O            1   0.235   0.000  exp_golomb_counter_DATA2<1>cy (exp_golomb_counter_DATA2<1>_cyo)
+     XORCY:CI->O           3   0.824   0.701  exp_golomb_counter_DATA2<2>_xor (DATA2<2>)
+     LUT4:I1->O            1   0.347   0.410  _n0037<0>24 (CHOICE501)
+     LUT4:I2->O            1   0.347   0.608  _n0037<0>42 (CHOICE504)
+     LUT4:I0->O            1   0.347   0.410  _n0037<0>75 (CHOICE507)
+     LUT4:I2->O            1   0.347   0.608  _n0037<0>120 (CHOICE510)
+     LUT4:I0->O            1   0.347   0.410  _n0037<0>170 (CHOICE513)
+     LUT4:I2->O            1   0.347   0.608  _n0037<0>219 (CHOICE516)
+     LUT4:I0->O            1   0.347   0.410  _n0037<0>269 (CHOICE519)
+     LUT4:I2->O            1   0.347   0.607  _n0037<0>318 (CHOICE522)
+     LUT4:I0->O            1   0.347   0.410  _n0037<0>368 (CHOICE525)
+     LUT3:I2->O            1   0.347   0.000  _n0037<0>4171 (N375)
+     FDRS:D                    0.293          LOG_0
+    ----------------------------------------
+    Total                     11.608ns (5.822ns logic, 5.786ns route)
+                                       (50.2% logic, 49.8% route)
+
+=========================================================================
+Timing constraint: Default OFFSET OUT AFTER for Clock 'CLOCK'
+  Total number of paths / destination ports: 2 / 2
+-------------------------------------------------------------------------
+Offset:              4.575ns (Levels of Logic = 1)
+  Source:            DATA_OUT (FF)
+  Destination:       DATA_OUT (PAD)
+  Source Clock:      CLOCK rising
+
+  Data Path: DATA_OUT to DATA_OUT
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDRE:C->Q             1   0.449   0.383  DATA_OUT (DATA_OUT_OBUF)
+     OBUF:I->O                 3.743          DATA_OUT_OBUF (DATA_OUT)
+    ----------------------------------------
+    Total                      4.575ns (4.192ns logic, 0.383ns route)
+                                       (91.6% logic, 8.4% route)
+
+=========================================================================
+CPU : 7.20 / 9.72 s | Elapsed : 7.00 / 9.00 s
+ 
+--> 
+
+Total memory usage is 121148 kilobytes
+
+Number of errors   :    0 (   0 filtered)
+Number of warnings :    2 (   0 filtered)
+Number of infos    :    0 (   0 filtered)
+

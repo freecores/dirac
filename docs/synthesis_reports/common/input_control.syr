@@ -1,0 +1,391 @@
+Release 7.1.04i - xst H.42
+Copyright (c) 1995-2005 Xilinx, Inc.  All rights reserved.
+--> Parameter TMPDIR set to __projnav
+CPU : 0.00 / 0.34 s | Elapsed : 0.00 / 1.00 s
+ 
+--> Parameter xsthdpdir set to ./xst
+CPU : 0.00 / 0.34 s | Elapsed : 0.00 / 1.00 s
+ 
+--> Reading design: input_control.prj
+
+TABLE OF CONTENTS
+  1) Synthesis Options Summary
+  2) HDL Compilation
+  3) HDL Analysis
+  4) HDL Synthesis
+  5) Advanced HDL Synthesis
+     5.1) HDL Synthesis Report
+  6) Low Level Synthesis
+  7) Final Report
+     7.1) Device utilization summary
+     7.2) TIMING REPORT
+
+
+=========================================================================
+*                      Synthesis Options Summary                        *
+=========================================================================
+---- Source Parameters
+Input File Name                    : "input_control.prj"
+Input Format                       : mixed
+Ignore Synthesis Constraint File   : NO
+
+---- Target Parameters
+Output File Name                   : "input_control"
+Output Format                      : NGC
+Target Device                      : xc2v250-6-cs144
+
+---- Source Options
+Top Module Name                    : input_control
+Automatic FSM Extraction           : YES
+FSM Encoding Algorithm             : Auto
+FSM Style                          : lut
+RAM Extraction                     : Yes
+RAM Style                          : Auto
+ROM Extraction                     : Yes
+ROM Style                          : Auto
+Mux Extraction                     : YES
+Mux Style                          : Auto
+Decoder Extraction                 : YES
+Priority Encoder Extraction        : YES
+Shift Register Extraction          : YES
+Logical Shifter Extraction         : YES
+XOR Collapsing                     : YES
+Resource Sharing                   : YES
+Multiplier Style                   : auto
+Automatic Register Balancing       : No
+
+---- Target Options
+Add IO Buffers                     : YES
+Global Maximum Fanout              : 500
+Add Generic Clock Buffer(BUFG)     : 16
+Register Duplication               : YES
+Equivalent register Removal        : YES
+Slice Packing                      : YES
+Pack IO Registers into IOBs        : auto
+
+---- General Options
+Optimization Goal                  : Speed
+Optimization Effort                : 1
+Keep Hierarchy                     : NO
+Global Optimization                : AllClockNets
+RTL Output                         : Yes
+Write Timing Constraints           : NO
+Hierarchy Separator                : _
+Bus Delimiter                      : <>
+Case Specifier                     : maintain
+Slice Utilization Ratio            : 100
+Slice Utilization Ratio Delta      : 5
+
+---- Other Options
+lso                                : input_control.lso
+Read Cores                         : YES
+cross_clock_analysis               : NO
+verilog2001                        : YES
+safe_implementation                : No
+Optimize Instantiated Primitives   : NO
+tristate2logic                     : Yes
+use_clock_enable                   : Yes
+use_sync_set                       : Yes
+use_sync_reset                     : Yes
+enable_auto_floorplanning          : No
+
+=========================================================================
+
+
+=========================================================================
+*                          HDL Compilation                              *
+=========================================================================
+Compiling vhdl file "C:/Xilinx/bin/ArithmeticDecoder/../ArithmeticCoder/FIFO.vhd" in Library work.
+Architecture rtl of Entity fifo is up to date.
+Compiling vhdl file "C:/Xilinx/bin/ArithmeticDecoder/../ArithmeticCoder/INPUT_CONTROL.vhd" in Library work.
+Architecture rtl of Entity input_control is up to date.
+
+=========================================================================
+*                            HDL Analysis                               *
+=========================================================================
+Analyzing Entity <input_control> (Architecture <rtl>).
+Entity <input_control> analyzed. Unit <input_control> generated.
+
+Analyzing generic Entity <FIFO> (Architecture <rtl>).
+	RANK = 8
+	WIDTH = 1
+Entity <FIFO> analyzed. Unit <FIFO> generated.
+
+
+=========================================================================
+*                           HDL Synthesis                               *
+=========================================================================
+
+Synthesizing Unit <FIFO>.
+    Related source file is "C:/Xilinx/bin/ArithmeticDecoder/../ArithmeticCoder/FIFO.vhd".
+    Found 256x1-bit dual-port distributed RAM for signal <GET_OUTPUT>.
+    -----------------------------------------------------------------------
+    | aspect ratio       | 256-word x 1-bit                    |          |
+    | clock              | connected to signal <CLOCK>         | rise     |
+    | write enable       | connected to signal <WRITE_ENABLE>  | high     |
+    | address            | connected to signal <WRITE_ADDRESS> |          |
+    | dual address       | connected to signal <READ_ADDRESS>  |          |
+    | data in            | connected to signal <DATA_IN>       |          |
+    | data out           | not connected                       |          |
+    | dual data out      | connected to signal <DATA_OUT>      |          |
+    | ram_style          | Auto                                |          |
+    -----------------------------------------------------------------------
+INFO:Xst:1442 - HDL ADVISOR - The RAM contents appears to be read asynchronously. A synchronous read would allow you to take advantage of available block RAM resources, for optimized device usage and improved timings. Please refer to your documentation for coding guidelines.
+    Found 8-bit comparator equal for signal <$n0003> created at line 69.
+    Found 8-bit up counter for signal <READ_ADDRESS>.
+    Found 8-bit up counter for signal <WRITE_ADDRESS>.
+    Summary:
+	inferred   1 RAM(s).
+	inferred   2 Counter(s).
+	inferred   1 Comparator(s).
+Unit <FIFO> synthesized.
+
+
+Synthesizing Unit <input_control>.
+    Related source file is "C:/Xilinx/bin/ArithmeticDecoder/../ArithmeticCoder/INPUT_CONTROL.vhd".
+    Found 1-bit register for signal <HELD<0>>.
+    Found 1-bit 4-to-1 multiplexer for signal <OUTPUT<0>>.
+    Summary:
+	inferred   1 D-type flip-flop(s).
+	inferred   1 Multiplexer(s).
+Unit <input_control> synthesized.
+
+
+=========================================================================
+*                       Advanced HDL Synthesis                          *
+=========================================================================
+
+Advanced RAM inference ...
+Advanced multiplier inference ...
+Advanced Registered AddSub inference ...
+Dynamic shift register inference ...
+
+=========================================================================
+HDL Synthesis Report
+
+Macro Statistics
+# LUT RAMs                         : 1
+ 256x1-bit dual-port distributed RAM: 1
+# Counters                         : 2
+ 8-bit up counter                  : 2
+# Registers                        : 1
+ 1-bit register                    : 1
+# Comparators                      : 1
+ 8-bit comparator equal            : 1
+# Multiplexers                     : 1
+ 1-bit 4-to-1 multiplexer          : 1
+
+=========================================================================
+
+=========================================================================
+*                         Low Level Synthesis                           *
+=========================================================================
+
+Optimizing unit <input_control> ...
+
+Optimizing unit <FIFO> ...
+Loading device for application Rf_Device from file '2v250.nph' in environment C:/Xilinx.
+
+Mapping all equations...
+Building and optimizing final netlist ...
+Found area constraint ratio of 100 (+ 5) on block input_control, actual ratio is 2.
+FlipFlop STORAGE_WRITE_ADDRESS_0 has been replicated 1 time(s)
+FlipFlop STORAGE_WRITE_ADDRESS_2 has been replicated 1 time(s)
+
+=========================================================================
+*                            Final Report                               *
+=========================================================================
+Final Results
+RTL Top Level Output File Name     : input_control.ngr
+Top Level Output File Name         : input_control
+Output Format                      : NGC
+Optimization Goal                  : Speed
+Keep Hierarchy                     : NO
+
+Design Statistics
+# IOs                              : 8
+
+Macro Statistics :
+# RAM                              : 1
+#      256x1-bit dual-port distributed RAM: 1
+# Registers                        : 3
+#      1-bit register              : 1
+#      8-bit register              : 2
+# Multiplexers                     : 1
+#      1-bit 4-to-1 multiplexer    : 1
+# Adders/Subtractors               : 2
+#      8-bit adder                 : 2
+# Comparators                      : 1
+#      8-bit comparator equal      : 1
+
+Cell Usage :
+# BELS                             : 70
+#      GND                         : 1
+#      INV                         : 2
+#      LUT1                        : 4
+#      LUT1_L                      : 10
+#      LUT2                        : 2
+#      LUT3                        : 4
+#      LUT3_D                      : 1
+#      LUT3_L                      : 2
+#      LUT4                        : 5
+#      LUT4_L                      : 5
+#      MUXCY                       : 18
+#      MUXF5                       : 1
+#      VCC                         : 1
+#      XORCY                       : 14
+# FlipFlops/Latches                : 19
+#      FDRE                        : 19
+# RAMS                             : 4
+#      RAM64X1D                    : 4
+# Clock Buffers                    : 1
+#      BUFGP                       : 1
+# IO Buffers                       : 7
+#      IBUF                        : 5
+#      OBUF                        : 2
+=========================================================================
+
+Device utilization summary:
+---------------------------
+
+Selected Device : 2v250cs144-6 
+
+ Number of Slices:                      42  out of   1536     2%  
+ Number of Slice Flip Flops:            19  out of   3072     0%  
+ Number of 4 input LUTs:                49  out of   3072     1%  
+ Number of bonded IOBs:                  8  out of     92     8%  
+ Number of GCLKs:                        1  out of     16     6%  
+
+
+=========================================================================
+TIMING REPORT
+
+NOTE: THESE TIMING NUMBERS ARE ONLY A SYNTHESIS ESTIMATE.
+      FOR ACCURATE TIMING INFORMATION PLEASE REFER TO THE TRACE REPORT
+      GENERATED AFTER PLACE-and-ROUTE.
+
+Clock Information:
+------------------
+-----------------------------------+------------------------+-------+
+Clock Signal                       | Clock buffer(FF name)  | Load  |
+-----------------------------------+------------------------+-------+
+CLOCK                              | BUFGP                  | 23    |
+-----------------------------------+------------------------+-------+
+
+Timing Summary:
+---------------
+Speed Grade: -6
+
+   Minimum period: 5.493ns (Maximum Frequency: 182.050MHz)
+   Minimum input arrival time before clock: 3.689ns
+   Maximum output required time after clock: 9.654ns
+   Maximum combinational path delay: 6.977ns
+
+Timing Detail:
+--------------
+All values displayed in nanoseconds (ns)
+
+=========================================================================
+Timing constraint: Default period analysis for Clock 'CLOCK'
+  Clock period: 5.493ns (frequency: 182.050MHz)
+  Total number of paths / destination ports: 611 / 94
+-------------------------------------------------------------------------
+Delay:               5.493ns (Levels of Logic = 7)
+  Source:            STORAGE_READ_ADDRESS_1 (FF)
+  Destination:       STORAGE_Mram_GET_OUTPUT_inst_ramx1d_1 (RAM)
+  Source Clock:      CLOCK rising
+  Destination Clock: CLOCK rising
+
+  Data Path: STORAGE_READ_ADDRESS_1 to STORAGE_Mram_GET_OUTPUT_inst_ramx1d_1
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDRE:C->Q            18   0.449   0.922  STORAGE_READ_ADDRESS_1 (STORAGE_READ_ADDRESS_1)
+     LUT4_L:I1->LO         1   0.347   0.000  STORAGE_Eq_stagelut (STORAGE_N4)
+     MUXCY:S->O            1   0.235   0.000  STORAGE_Eq_stagecy (STORAGE_Eq_stage_cyo)
+     MUXCY:CI->O           1   0.042   0.000  STORAGE_Eq_stagecy_rn_0 (STORAGE_Eq_stage_cyo1)
+     MUXCY:CI->O           1   0.042   0.000  STORAGE_Eq_stagecy_rn_1 (STORAGE_Eq_stage_cyo2)
+     MUXCY:CI->O           7   0.601   0.631  STORAGE_Eq_stagecy_rn_2 (FIFO_EMPTY)
+     LUT3_D:I2->O         13   0.347   0.733  FIFO_WRITE_ENABLE1 (FIFO_WRITE_ENABLE)
+     LUT3:I2->O            1   0.347   0.382  STORAGE_Mram_GET_OUTPUT_inst_lut2_41 (STORAGE_Mram_GET_OUTPUT_inst_lut2_4)
+     RAM64X1D:WE               0.416          STORAGE_Mram_GET_OUTPUT_inst_ramx1d_0
+    ----------------------------------------
+    Total                      5.493ns (2.826ns logic, 2.667ns route)
+                                       (51.4% logic, 48.6% route)
+
+=========================================================================
+Timing constraint: Default OFFSET IN BEFORE for Clock 'CLOCK'
+  Total number of paths / destination ports: 73 / 47
+-------------------------------------------------------------------------
+Offset:              3.689ns (Levels of Logic = 3)
+  Source:            BUFFER_CONTROL (PAD)
+  Destination:       STORAGE_Mram_GET_OUTPUT_inst_ramx1d_1 (RAM)
+  Destination Clock: CLOCK rising
+
+  Data Path: BUFFER_CONTROL to STORAGE_Mram_GET_OUTPUT_inst_ramx1d_1
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     IBUF:I->O             6   0.653   0.811  BUFFER_CONTROL_IBUF (BUFFER_CONTROL_IBUF)
+     LUT3_D:I0->O         13   0.347   0.733  FIFO_WRITE_ENABLE1 (FIFO_WRITE_ENABLE)
+     LUT3:I2->O            1   0.347   0.382  STORAGE_Mram_GET_OUTPUT_inst_lut2_41 (STORAGE_Mram_GET_OUTPUT_inst_lut2_4)
+     RAM64X1D:WE               0.416          STORAGE_Mram_GET_OUTPUT_inst_ramx1d_0
+    ----------------------------------------
+    Total                      3.689ns (1.763ns logic, 1.926ns route)
+                                       (47.8% logic, 52.2% route)
+
+=========================================================================
+Timing constraint: Default OFFSET OUT AFTER for Clock 'CLOCK'
+  Total number of paths / destination ports: 96 / 2
+-------------------------------------------------------------------------
+Offset:              9.654ns (Levels of Logic = 6)
+  Source:            STORAGE_READ_ADDRESS_0 (FF)
+  Destination:       DATA_OUT<0> (PAD)
+  Source Clock:      CLOCK rising
+
+  Data Path: STORAGE_READ_ADDRESS_0 to DATA_OUT<0>
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDRE:C->Q            18   0.449   0.757  STORAGE_READ_ADDRESS_0 (STORAGE_READ_ADDRESS_0)
+     RAM64X1D:DPRA0->DPO    1   1.236   0.548  STORAGE_Mram_GET_OUTPUT_inst_ramx1d_1 (STORAGE_Mram_GET_OUTPUT__net9)
+     LUT3_L:I1->LO         1   0.347   0.000  STORAGE_Mram_GET_OUTPUT_inst_mux_f5_1111_G (N48)
+     MUXF5:I1->O           2   0.345   0.744  STORAGE_Mram_GET_OUTPUT_inst_mux_f5_1111 (FIFO_DATA_OUT)
+     LUT4:I0->O            1   0.347   0.410  DATA_OUT19 (CHOICE40)
+     LUT4:I2->O            1   0.347   0.383  DATA_OUT44 (DATA_OUT)
+     OBUF:I->O                 3.743          DATA_OUT_0_OBUF (DATA_OUT<0>)
+    ----------------------------------------
+    Total                      9.654ns (6.814ns logic, 2.840ns route)
+                                       (70.6% logic, 29.4% route)
+
+=========================================================================
+Timing constraint: Default path analysis
+  Total number of paths / destination ports: 11 / 2
+-------------------------------------------------------------------------
+Delay:               6.977ns (Levels of Logic = 4)
+  Source:            DEMAND (PAD)
+  Destination:       DATA_OUT<0> (PAD)
+
+  Data Path: DEMAND to DATA_OUT<0>
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     IBUF:I->O             2   0.653   0.744  DEMAND_IBUF (DEMAND_IBUF)
+     LUT4:I0->O            3   0.347   0.760  SENDING1 (SENDING_OBUF)
+     LUT4:I0->O            1   0.347   0.383  DATA_OUT44 (DATA_OUT)
+     OBUF:I->O                 3.743          DATA_OUT_0_OBUF (DATA_OUT<0>)
+    ----------------------------------------
+    Total                      6.977ns (5.090ns logic, 1.887ns route)
+                                       (73.0% logic, 27.0% route)
+
+=========================================================================
+CPU : 5.14 / 5.51 s | Elapsed : 5.00 / 6.00 s
+ 
+--> 
+
+Total memory usage is 100604 kilobytes
+
+Number of errors   :    0 (   0 filtered)
+Number of warnings :    0 (   0 filtered)
+Number of infos    :    1 (   0 filtered)
+

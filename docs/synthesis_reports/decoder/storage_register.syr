@@ -1,0 +1,298 @@
+Release 7.1.04i - xst H.42
+Copyright (c) 1995-2005 Xilinx, Inc.  All rights reserved.
+--> Parameter TMPDIR set to __projnav
+CPU : 0.00 / 0.33 s | Elapsed : 0.00 / 0.00 s
+ 
+--> Parameter xsthdpdir set to ./xst
+CPU : 0.00 / 0.33 s | Elapsed : 0.00 / 0.00 s
+ 
+--> Reading design: storage_register.prj
+
+TABLE OF CONTENTS
+  1) Synthesis Options Summary
+  2) HDL Compilation
+  3) HDL Analysis
+  4) HDL Synthesis
+  5) Advanced HDL Synthesis
+     5.1) HDL Synthesis Report
+  6) Low Level Synthesis
+  7) Final Report
+     7.1) Device utilization summary
+     7.2) TIMING REPORT
+
+
+=========================================================================
+*                      Synthesis Options Summary                        *
+=========================================================================
+---- Source Parameters
+Input File Name                    : "storage_register.prj"
+Input Format                       : mixed
+Ignore Synthesis Constraint File   : NO
+
+---- Target Parameters
+Output File Name                   : "storage_register"
+Output Format                      : NGC
+Target Device                      : xc2v250-6-cs144
+
+---- Source Options
+Top Module Name                    : storage_register
+Automatic FSM Extraction           : YES
+FSM Encoding Algorithm             : Auto
+FSM Style                          : lut
+RAM Extraction                     : Yes
+RAM Style                          : Auto
+ROM Extraction                     : Yes
+ROM Style                          : Auto
+Mux Extraction                     : YES
+Mux Style                          : Auto
+Decoder Extraction                 : YES
+Priority Encoder Extraction        : YES
+Shift Register Extraction          : YES
+Logical Shifter Extraction         : YES
+XOR Collapsing                     : YES
+Resource Sharing                   : YES
+Multiplier Style                   : auto
+Automatic Register Balancing       : No
+
+---- Target Options
+Add IO Buffers                     : YES
+Global Maximum Fanout              : 500
+Add Generic Clock Buffer(BUFG)     : 16
+Register Duplication               : YES
+Equivalent register Removal        : YES
+Slice Packing                      : YES
+Pack IO Registers into IOBs        : auto
+
+---- General Options
+Optimization Goal                  : Speed
+Optimization Effort                : 1
+Keep Hierarchy                     : NO
+Global Optimization                : AllClockNets
+RTL Output                         : Yes
+Write Timing Constraints           : NO
+Hierarchy Separator                : _
+Bus Delimiter                      : <>
+Case Specifier                     : maintain
+Slice Utilization Ratio            : 100
+Slice Utilization Ratio Delta      : 5
+
+---- Other Options
+lso                                : storage_register.lso
+Read Cores                         : YES
+cross_clock_analysis               : NO
+verilog2001                        : YES
+safe_implementation                : No
+Optimize Instantiated Primitives   : NO
+tristate2logic                     : Yes
+use_clock_enable                   : Yes
+use_sync_set                       : Yes
+use_sync_reset                     : Yes
+enable_auto_floorplanning          : No
+
+=========================================================================
+
+
+=========================================================================
+*                          HDL Compilation                              *
+=========================================================================
+Compiling vhdl file "C:/Xilinx/bin/ArithmeticDecoder/STORAGE_REGISTER.vhd" in Library work.
+Architecture rtl of Entity storage_register is up to date.
+
+=========================================================================
+*                            HDL Analysis                               *
+=========================================================================
+Analyzing Entity <storage_register> (Architecture <rtl>).
+Entity <storage_register> analyzed. Unit <storage_register> generated.
+
+
+=========================================================================
+*                           HDL Synthesis                               *
+=========================================================================
+
+Synthesizing Unit <storage_register>.
+    Related source file is "C:/Xilinx/bin/ArithmeticDecoder/STORAGE_REGISTER.vhd".
+    Found 16-bit 4-to-1 multiplexer for signal <$n0001>.
+    Found 16-bit register for signal <Q>.
+    Summary:
+	inferred  16 D-type flip-flop(s).
+	inferred  16 Multiplexer(s).
+Unit <storage_register> synthesized.
+
+
+=========================================================================
+*                       Advanced HDL Synthesis                          *
+=========================================================================
+
+Advanced RAM inference ...
+Advanced multiplier inference ...
+Advanced Registered AddSub inference ...
+Dynamic shift register inference ...
+
+=========================================================================
+HDL Synthesis Report
+
+Macro Statistics
+# Registers                        : 1
+ 16-bit register                   : 1
+# Multiplexers                     : 1
+ 16-bit 4-to-1 multiplexer         : 1
+
+=========================================================================
+
+=========================================================================
+*                         Low Level Synthesis                           *
+=========================================================================
+
+Optimizing unit <storage_register> ...
+Loading device for application Rf_Device from file '2v250.nph' in environment C:/Xilinx.
+
+Mapping all equations...
+Building and optimizing final netlist ...
+Found area constraint ratio of 100 (+ 5) on block storage_register, actual ratio is 0.
+FlipFlop Q_0 has been replicated 1 time(s) to handle iob=true attribute.
+
+=========================================================================
+*                            Final Report                               *
+=========================================================================
+Final Results
+RTL Top Level Output File Name     : storage_register.ngr
+Top Level Output File Name         : storage_register
+Output Format                      : NGC
+Optimization Goal                  : Speed
+Keep Hierarchy                     : NO
+
+Design Statistics
+# IOs                              : 38
+
+Macro Statistics :
+# Registers                        : 1
+#      16-bit register             : 1
+# Multiplexers                     : 1
+#      16-bit 4-to-1 multiplexer   : 1
+
+Cell Usage :
+# BELS                             : 18
+#      LUT3                        : 2
+#      LUT3_L                      : 16
+# FlipFlops/Latches                : 17
+#      FDRE                        : 17
+# Clock Buffers                    : 1
+#      BUFGP                       : 1
+# IO Buffers                       : 37
+#      IBUF                        : 21
+#      OBUF                        : 16
+=========================================================================
+
+Device utilization summary:
+---------------------------
+
+Selected Device : 2v250cs144-6 
+
+ Number of Slices:                      10  out of   1536     0%  
+ Number of Slice Flip Flops:            17  out of   3072     0%  
+ Number of 4 input LUTs:                18  out of   3072     0%  
+ Number of bonded IOBs:                 38  out of     92    41%  
+ Number of GCLKs:                        1  out of     16     6%  
+
+
+=========================================================================
+TIMING REPORT
+
+NOTE: THESE TIMING NUMBERS ARE ONLY A SYNTHESIS ESTIMATE.
+      FOR ACCURATE TIMING INFORMATION PLEASE REFER TO THE TRACE REPORT
+      GENERATED AFTER PLACE-and-ROUTE.
+
+Clock Information:
+------------------
+-----------------------------------+------------------------+-------+
+Clock Signal                       | Clock buffer(FF name)  | Load  |
+-----------------------------------+------------------------+-------+
+CLOCK                              | BUFGP                  | 17    |
+-----------------------------------+------------------------+-------+
+
+Timing Summary:
+---------------
+Speed Grade: -6
+
+   Minimum period: 2.247ns (Maximum Frequency: 445.137MHz)
+   Minimum input arrival time before clock: 2.911ns
+   Maximum output required time after clock: 4.711ns
+   Maximum combinational path delay: No path found
+
+Timing Detail:
+--------------
+All values displayed in nanoseconds (ns)
+
+=========================================================================
+Timing constraint: Default period analysis for Clock 'CLOCK'
+  Clock period: 2.247ns (frequency: 445.137MHz)
+  Total number of paths / destination ports: 16 / 15
+-------------------------------------------------------------------------
+Delay:               2.247ns (Levels of Logic = 2)
+  Source:            Q_15 (FF)
+  Destination:       Q_15 (FF)
+  Source Clock:      CLOCK rising
+  Destination Clock: CLOCK rising
+
+  Data Path: Q_15 to Q_15
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDRE:C->Q             2   0.449   0.684  Q_15 (Q_15)
+     LUT3_L:I1->LO         1   0.347   0.127  _n0001<15>1 (N13)
+     LUT3_L:I2->LO         1   0.347   0.000  _n0001<15>2 (_n0001<15>)
+     FDRE:D                    0.293          Q_15
+    ----------------------------------------
+    Total                      2.247ns (1.436ns logic, 0.811ns route)
+                                       (63.9% logic, 36.1% route)
+
+=========================================================================
+Timing constraint: Default OFFSET IN BEFORE for Clock 'CLOCK'
+  Total number of paths / destination ports: 105 / 51
+-------------------------------------------------------------------------
+Offset:              2.911ns (Levels of Logic = 2)
+  Source:            SET_VALUE (PAD)
+  Destination:       Q_14 (FF)
+  Destination Clock: CLOCK rising
+
+  Data Path: SET_VALUE to Q_14
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     IBUF:I->O            17   0.653   0.973  SET_VALUE_IBUF (SET_VALUE_IBUF)
+     LUT3:I0->O           17   0.347   0.748  _n00051 (_n0005)
+     FDRE:CE                   0.190          Q_0
+    ----------------------------------------
+    Total                      2.911ns (1.190ns logic, 1.721ns route)
+                                       (40.9% logic, 59.1% route)
+
+=========================================================================
+Timing constraint: Default OFFSET OUT AFTER for Clock 'CLOCK'
+  Total number of paths / destination ports: 16 / 16
+-------------------------------------------------------------------------
+Offset:              4.711ns (Levels of Logic = 1)
+  Source:            Q_15 (FF)
+  Destination:       OUTPUT<15> (PAD)
+  Source Clock:      CLOCK rising
+
+  Data Path: Q_15 to OUTPUT<15>
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDRE:C->Q             2   0.449   0.518  Q_15 (Q_15)
+     OBUF:I->O                 3.743          OUTPUT_15_OBUF (OUTPUT<15>)
+    ----------------------------------------
+    Total                      4.711ns (4.192ns logic, 0.518ns route)
+                                       (89.0% logic, 11.0% route)
+
+=========================================================================
+CPU : 4.30 / 4.66 s | Elapsed : 4.00 / 4.00 s
+ 
+--> 
+
+Total memory usage is 100604 kilobytes
+
+Number of errors   :    0 (   0 filtered)
+Number of warnings :    0 (   0 filtered)
+Number of infos    :    0 (   0 filtered)
+

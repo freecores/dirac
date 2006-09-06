@@ -1,0 +1,13 @@
+vhdl work ../common/FIFO.vhd
+vhdl work ../common/INPUT_CONTROL.vhd
+vhdl work ../encoder/STORAGE_REGISTER.vhd
+vhdl work ../common/ARITHMETIC_UNIT.vhd
+vhdl work ../common/CONVERGENCE_CHECK.vhd
+vhdl work ../common/UPDATER.vhd
+vhdl work ../common/HALVING_MANAGER.vhd
+vhdl work ../common/Divider.vhd
+vhdl work ../common/CONTEXT_MANAGER.vhd
+vhdl work ../decoder/SYMBOL_DETECTOR.vhd
+vhdl work ../decoder/ARITHMETICDECODER.vhd
+vhdl work ../expgolomb/EXP_GOLOMB_DECODER.vhd
+vhdl work ArithmeticCoderTestbench.vhd

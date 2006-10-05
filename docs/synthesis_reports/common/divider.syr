@@ -1,10 +1,10 @@
 Release 7.1.04i - xst H.42
 Copyright (c) 1995-2005 Xilinx, Inc.  All rights reserved.
 --> Parameter TMPDIR set to __projnav
-CPU : 0.00 / 0.34 s | Elapsed : 0.00 / 0.00 s
+CPU : 0.00 / 0.36 s | Elapsed : 0.00 / 0.00 s
  
 --> Parameter xsthdpdir set to ./xst
-CPU : 0.00 / 0.34 s | Elapsed : 0.00 / 0.00 s
+CPU : 0.00 / 0.36 s | Elapsed : 0.00 / 0.00 s
  
 --> Reading design: divider.prj
 
@@ -32,7 +32,7 @@ Ignore Synthesis Constraint File   : NO
 ---- Target Parameters
 Output File Name                   : "divider"
 Output Format                      : NGC
-Target Device                      : xc2v250-6-cs144
+Target Device                      : xc2v2000-6-bg575
 
 ---- Source Options
 Top Module Name                    : divider
@@ -65,7 +65,7 @@ Pack IO Registers into IOBs        : auto
 
 ---- General Options
 Optimization Goal                  : Speed
-Optimization Effort                : 1
+Optimization Effort                : 2
 Keep Hierarchy                     : NO
 Global Optimization                : AllClockNets
 RTL Output                         : Yes
@@ -95,14 +95,14 @@ enable_auto_floorplanning          : No
 =========================================================================
 *                          HDL Compilation                              *
 =========================================================================
-Compiling vhdl file "C:/Xilinx/bin/ArithmeticDecoder/../ArithmeticCoder/Divider.vhd" in Library work.
+Compiling vhdl file "C:/Xilinx/bin/ArithmeticCoder/Divider.vhd" in Library work.
 Architecture rtl of Entity divider is up to date.
 
 =========================================================================
 *                            HDL Analysis                               *
 =========================================================================
 Analyzing Entity <divider> (Architecture <rtl>).
-WARNING:Xst:790 - "C:/Xilinx/bin/ArithmeticDecoder/../ArithmeticCoder/Divider.vhd" line 1079: Index value(s) does not match array range, simulation mismatch.
+WARNING:Xst:790 - "C:/Xilinx/bin/ArithmeticCoder/Divider.vhd" line 308: Index value(s) does not match array range, simulation mismatch.
 Entity <divider> analyzed. Unit <divider> generated.
 
 
@@ -111,23 +111,20 @@ Entity <divider> analyzed. Unit <divider> generated.
 =========================================================================
 
 Synthesizing Unit <divider>.
-    Related source file is "C:/Xilinx/bin/ArithmeticDecoder/../ArithmeticCoder/Divider.vhd".
-WARNING:Xst:646 - Signal <TOTAL<41:32>> is assigned but never used.
-WARNING:Xst:646 - Signal <TOTAL<21:0>> is assigned but never used.
-    Found 1022x32-bit ROM for signal <$n0002> created at line 1079.
-    Found 16x10-bit multiplier for signal <$n0003> created at line 1086.
-    Found 16x10-bit multiplier for signal <$n0004> created at line 1093.
-    Found 10-bit subtractor for signal <INDEX>.
-    Found 10-bit register for signal <NUMERATOR2>.
-    Found 26-bit register for signal <PRODUCT1>.
-    Found 26-bit register for signal <PRODUCT2>.
-    Found 32-bit register for signal <RECIPROCAL>.
-    Found 42-bit adder for signal <TOTAL>.
+    Related source file is "C:/Xilinx/bin/ArithmeticCoder/Divider.vhd".
+WARNING:Xst:646 - Signal <PRODUCT<23:16>> is assigned but never used.
+WARNING:Xst:646 - Signal <PRODUCT<7:0>> is assigned but never used.
+    Found 254x16-bit ROM for signal <$n0002> created at line 308.
+    Found 16x8-bit multiplier for signal <$n0003> created at line 315.
+    Found 8-bit subtractor for signal <INDEX>.
+    Found 8-bit register for signal <NUMERATOR2>.
+    Found 24-bit register for signal <PRODUCT>.
+    Found 16-bit register for signal <RECIPROCAL>.
     Summary:
 	inferred   1 ROM(s).
-	inferred  84 D-type flip-flop(s).
-	inferred   2 Adder/Subtractor(s).
-	inferred   2 Multiplier(s).
+	inferred  40 D-type flip-flop(s).
+	inferred   1 Adder/Subtractor(s).
+	inferred   1 Multiplier(s).
 Unit <divider> synthesized.
 
 
@@ -142,9 +139,6 @@ Advanced multiplier inference ...
     Found registered multiplier on signal <_n0003>:
 	- 1 register level(s) found in a register connected to the multiplier macro ouput.
 	  Pushing register(s) into the multiplier macro.
-    Found registered multiplier on signal <_n0004>:
-	- 1 register level(s) found in a register connected to the multiplier macro ouput.
-	  Pushing register(s) into the multiplier macro.
 Advanced Registered AddSub inference ...
 Dynamic shift register inference ...
 
@@ -153,14 +147,13 @@ HDL Synthesis Report
 
 Macro Statistics
 # Block RAMs                       : 1
- 1022x32-bit single-port block RAM : 1
-# Multipliers                      : 2
- 16x10-bit registered multiplier   : 2
-# Adders/Subtractors               : 2
- 10-bit subtractor                 : 1
- 42-bit adder                      : 1
+ 254x16-bit single-port block RAM  : 1
+# Multipliers                      : 1
+ 16x8-bit registered multiplier    : 1
+# Adders/Subtractors               : 1
+ 8-bit subtractor                  : 1
 # Registers                        : 1
- 10-bit register                   : 1
+ 8-bit register                    : 1
 
 =========================================================================
 
@@ -169,11 +162,11 @@ Macro Statistics
 =========================================================================
 
 Optimizing unit <divider> ...
-Loading device for application Rf_Device from file '2v250.nph' in environment C:/Xilinx.
+Loading device for application Rf_Device from file '2v2000.nph' in environment C:/Xilinx.
 
 Mapping all equations...
 Building and optimizing final netlist ...
-Found area constraint ratio of 100 (+ 5) on block divider, actual ratio is 1.
+Found area constraint ratio of 100 (+ 5) on block divider, actual ratio is 0.
 
 =========================================================================
 *                            Final Report                               *
@@ -186,52 +179,50 @@ Optimization Goal                  : Speed
 Keep Hierarchy                     : NO
 
 Design Statistics
-# IOs                              : 32
+# IOs                              : 26
 
 Macro Statistics :
 # RAM                              : 1
-#      1022x32-bit single-port block RAM: 1
-# Registers                        : 10
-#      1-bit register              : 10
-# Adders/Subtractors               : 2
-#      10-bit subtractor           : 1
-#      42-bit adder                : 1
-# Multipliers                      : 2
-#      16x10-bit registered multiplier: 2
+#      254x16-bit single-port block RAM: 1
+# Registers                        : 8
+#      1-bit register              : 8
+# Adders/Subtractors               : 1
+#      8-bit subtractor            : 1
+# Multipliers                      : 1
+#      16x8-bit registered multiplier: 1
 
 Cell Usage :
-# BELS                             : 69
+# BELS                             : 13
 #      GND                         : 1
-#      LUT1                        : 5
-#      LUT2                        : 20
-#      MUXCY                       : 23
+#      LUT2                        : 4
+#      LUT3                        : 2
+#      LUT4                        : 5
 #      VCC                         : 1
-#      XORCY                       : 19
-# FlipFlops/Latches                : 10
-#      FDR                         : 9
+# FlipFlops/Latches                : 8
+#      FDR                         : 7
 #      FDS                         : 1
-# RAMS                             : 2
-#      RAMB16_S18                  : 2
+# RAMS                             : 1
+#      RAMB16_S36                  : 1
 # Clock Buffers                    : 1
 #      BUFGP                       : 1
-# IO Buffers                       : 31
-#      IBUF                        : 21
-#      OBUF                        : 10
-# MULTs                            : 2
-#      MULT18X18S                  : 2
+# IO Buffers                       : 25
+#      IBUF                        : 17
+#      OBUF                        : 8
+# MULTs                            : 1
+#      MULT18X18S                  : 1
 =========================================================================
 
 Device utilization summary:
 ---------------------------
 
-Selected Device : 2v250cs144-6 
+Selected Device : 2v2000bg575-6 
 
- Number of Slices:                      19  out of   1536     1%  
- Number of Slice Flip Flops:            10  out of   3072     0%  
- Number of 4 input LUTs:                25  out of   3072     0%  
- Number of bonded IOBs:                 32  out of     92    34%  
- Number of BRAMs:                        2  out of     24     8%  
- Number of MULT18X18s:                   2  out of     24     8%  
+ Number of Slices:                       6  out of  10752     0%  
+ Number of Slice Flip Flops:             8  out of  21504     0%  
+ Number of 4 input LUTs:                11  out of  21504     0%  
+ Number of bonded IOBs:                 26  out of    408     6%  
+ Number of BRAMs:                        1  out of     56     1%  
+ Number of MULT18X18s:                   1  out of     56     1%  
  Number of GCLKs:                        1  out of     16     6%  
 
 
@@ -247,16 +238,16 @@ Clock Information:
 -----------------------------------+------------------------+-------+
 Clock Signal                       | Clock buffer(FF name)  | Load  |
 -----------------------------------+------------------------+-------+
-CLOCK                              | BUFGP                  | 12    |
+CLOCK                              | BUFGP                  | 9     |
 -----------------------------------+------------------------+-------+
 
 Timing Summary:
 ---------------
 Speed Grade: -6
 
-   Minimum period: 3.967ns (Maximum Frequency: 252.048MHz)
-   Minimum input arrival time before clock: 1.644ns
-   Maximum output required time after clock: 8.362ns
+   Minimum period: 3.832ns (Maximum Frequency: 260.994MHz)
+   Minimum input arrival time before clock: 1.615ns
+   Maximum output required time after clock: 5.229ns
    Maximum combinational path delay: No path found
 
 Timing Detail:
@@ -265,77 +256,69 @@ All values displayed in nanoseconds (ns)
 
 =========================================================================
 Timing constraint: Default period analysis for Clock 'CLOCK'
-  Clock period: 3.967ns (frequency: 252.048MHz)
-  Total number of paths / destination ports: 20 / 20
+  Clock period: 3.832ns (frequency: 260.994MHz)
+  Total number of paths / destination ports: 8 / 8
 -------------------------------------------------------------------------
-Delay:               3.967ns (Levels of Logic = 0)
-  Source:            NUMERATOR2_9 (FF)
-  Destination:       Mmult__n00041_inst_mult_0 (MULT)
+Delay:               3.832ns (Levels of Logic = 0)
+  Source:            NUMERATOR2_7 (FF)
+  Destination:       Mmult__n00031_inst_mult_0 (MULT)
   Source Clock:      CLOCK rising
   Destination Clock: CLOCK rising
 
-  Data Path: NUMERATOR2_9 to Mmult__n00041_inst_mult_0
+  Data Path: NUMERATOR2_7 to Mmult__n00031_inst_mult_0
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
-     FDR:C->Q              2   0.449   0.519  NUMERATOR2_9 (NUMERATOR2_9)
-     MULT18X18S:B9             3.000          Mmult__n00041_inst_mult_0
+     FDR:C->Q              1   0.449   0.382  NUMERATOR2_7 (NUMERATOR2_7)
+     MULT18X18S:B7             3.000          Mmult__n00031_inst_mult_0
     ----------------------------------------
-    Total                      3.967ns (3.449ns logic, 0.519ns route)
-                                       (86.9% logic, 13.1% route)
+    Total                      3.832ns (3.449ns logic, 0.382ns route)
+                                       (90.0% logic, 10.0% route)
 
 =========================================================================
 Timing constraint: Default OFFSET IN BEFORE for Clock 'CLOCK'
-  Total number of paths / destination ports: 20 / 20
+  Total number of paths / destination ports: 16 / 16
 -------------------------------------------------------------------------
-Offset:              1.644ns (Levels of Logic = 1)
+Offset:              1.615ns (Levels of Logic = 1)
   Source:            RESET (PAD)
-  Destination:       NUMERATOR2_7 (FF)
+  Destination:       NUMERATOR2_5 (FF)
   Destination Clock: CLOCK rising
 
-  Data Path: RESET to NUMERATOR2_7
+  Data Path: RESET to NUMERATOR2_5
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
-     IBUF:I->O            20   0.653   0.769  RESET_IBUF (RESET_IBUF)
+     IBUF:I->O            16   0.653   0.740  RESET_IBUF (RESET_IBUF)
      FDR:R                     0.222          NUMERATOR2_2
     ----------------------------------------
-    Total                      1.644ns (0.875ns logic, 0.769ns route)
-                                       (53.2% logic, 46.8% route)
+    Total                      1.615ns (0.875ns logic, 0.740ns route)
+                                       (54.2% logic, 45.8% route)
 
 =========================================================================
 Timing constraint: Default OFFSET OUT AFTER for Clock 'CLOCK'
-  Total number of paths / destination ports: 299 / 10
+  Total number of paths / destination ports: 8 / 8
 -------------------------------------------------------------------------
-Offset:              8.362ns (Levels of Logic = 9)
-  Source:            Mmult__n00041_inst_mult_0 (MULT)
-  Destination:       QUOTIENT<9> (PAD)
+Offset:              5.229ns (Levels of Logic = 1)
+  Source:            Mmult__n00031_inst_mult_0 (MULT)
+  Destination:       QUOTIENT<7> (PAD)
   Source Clock:      CLOCK rising
 
-  Data Path: Mmult__n00041_inst_mult_0 to QUOTIENT<9>
+  Data Path: Mmult__n00031_inst_mult_0 to QUOTIENT<7>
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
-     MULT18X18S:C->P25     1   2.073   0.548  Mmult__n00041_inst_mult_0 (PRODUCT2<25>)
-     LUT2:I1->O            1   0.347   0.000  divider_QUOTIENT<3>lut (N23)
-     MUXCY:S->O            1   0.235   0.000  divider_QUOTIENT<3>cy (divider_QUOTIENT<3>_cyo)
-     MUXCY:CI->O           1   0.042   0.000  divider_QUOTIENT<4>cy (divider_QUOTIENT<4>_cyo)
-     MUXCY:CI->O           1   0.042   0.000  divider_QUOTIENT<5>cy (divider_QUOTIENT<5>_cyo)
-     MUXCY:CI->O           1   0.042   0.000  divider_QUOTIENT<6>cy (divider_QUOTIENT<6>_cyo)
-     MUXCY:CI->O           1   0.042   0.000  divider_QUOTIENT<7>cy (divider_QUOTIENT<7>_cyo)
-     MUXCY:CI->O           0   0.042   0.000  divider_QUOTIENT<8>cy (divider_QUOTIENT<8>_cyo)
-     XORCY:CI->O           1   0.824   0.383  divider_QUOTIENT<9>_xor (QUOTIENT_9_OBUF)
-     OBUF:I->O                 3.743          QUOTIENT_9_OBUF (QUOTIENT<9>)
+     MULT18X18S:C->P15     1   1.103   0.383  Mmult__n00031_inst_mult_0 (QUOTIENT_7_OBUF)
+     OBUF:I->O                 3.743          QUOTIENT_7_OBUF (QUOTIENT<7>)
     ----------------------------------------
-    Total                      8.362ns (7.432ns logic, 0.930ns route)
-                                       (88.9% logic, 11.1% route)
+    Total                      5.229ns (4.846ns logic, 0.383ns route)
+                                       (92.7% logic, 7.3% route)
 
 =========================================================================
-CPU : 5.28 / 5.66 s | Elapsed : 5.00 / 5.00 s
+CPU : 4.83 / 5.22 s | Elapsed : 5.00 / 5.00 s
  
 --> 
 
-Total memory usage is 101628 kilobytes
+Total memory usage is 121148 kilobytes
 
 Number of errors   :    0 (   0 filtered)
 Number of warnings :    3 (   0 filtered)

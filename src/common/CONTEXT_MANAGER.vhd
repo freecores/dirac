@@ -1,6 +1,6 @@
 	 -- ***** BEGIN LICENSE BLOCK *****
 -- 
--- $Id: CONTEXT_MANAGER.vhd,v 1.2 2006-08-18 14:29:32 petebleackley Exp $ $Name: not supported by cvs2svn $
+-- $Id: CONTEXT_MANAGER.vhd,v 1.3 2006-10-05 16:17:11 petebleackley Exp $ $Name: not supported by cvs2svn $
 -- *
 -- * Version: MPL 1.1/GPL 2.0/LGPL 2.1
 -- *
@@ -53,20 +53,20 @@ entity CONTEXT_MANAGER is
 			HALVECOUNTS : in std_logic;
            RESET : in std_logic;
            CLOCK : in std_logic;
-           PROB : out std_logic_vector(9 downto 0);
+           PROB : out std_logic_vector(7 downto 0);
 			  READY : out std_logic);
 end CONTEXT_MANAGER;
 
 architecture RTL of CONTEXT_MANAGER is
 	
-	type MATRIX is array (45 downto 0) of std_logic_vector(19 downto 0);
-	signal PROBABILITY : MATRIX;						
-	constant HALF : std_logic_vector(19 downto 0) := "00000000010000000010";
-	signal FRACTION : std_logic_vector(19 downto 0);
-	signal FRACTION2 : std_logic_vector(19 downto 0);
-	signal RESET_FLAGS : std_logic_vector (63 downto 0);
-	signal NEWPROB : std_logic_vector(19 downto 0);
-	signal RATIO : std_logic_vector(19 downto 0);
+	type MATRIX is array (45 downto 0) of std_logic_vector(15 downto 0);
+	signal PROBABILITY : MATRIX;																																																																					
+	constant HALF : std_logic_vector(15 downto 0) := "0000000100000010";
+	signal FRACTION : std_logic_vector(15 downto 0);
+	signal FRACTION2 : std_logic_vector(15 downto 0);
+	signal RESET_FLAGS : std_logic_vector (45 downto 0);
+	signal NEWPROB : std_logic_vector(15 downto 0);
+	signal RATIO : std_logic_vector(15 downto 0);
 	signal UPDATE_PROB : std_logic;
 	signal PROB_CHANGED : std_logic;
 	signal LOAD_DATA : std_logic;
@@ -77,33 +77,33 @@ architecture RTL of CONTEXT_MANAGER is
 	signal DATA_READY : std_logic_vector (1 downto 0);
 
 	component DIVIDER
-	port ( NUMERATOR : in std_logic_vector(9 downto 0);
-           DENOMINATOR : in std_logic_vector(9 downto 0);
+	port ( NUMERATOR : in std_logic_vector(7 downto 0);
+           DENOMINATOR : in std_logic_vector(7 downto 0);
 			  RESET : in std_logic;
            CLOCK : in std_logic;
-           QUOTIENT : out std_logic_vector(9 downto 0));
+           QUOTIENT : out std_logic_vector(7 downto 0));
 	end component DIVIDER;
 	component UPDATER
-	port 	( NUMERATOR : in std_logic_vector(9 downto 0);
-           DENOMINATOR : in std_logic_vector(9 downto 0);
+	port 	( NUMERATOR : in std_logic_vector(7 downto 0);
+           DENOMINATOR : in std_logic_vector(7 downto 0);
            ENABLE : in std_logic;
            DATA_IN : in std_logic;
            RESET : in std_logic;
            CLOCK : in std_logic;
-           NUMERATOR_OUT : out std_logic_vector(9 downto 0);
-           DENOMINATOR_OUT : out std_logic_vector(9 downto 0);
+           NUMERATOR_OUT : out std_logic_vector(7 downto 0);
+           DENOMINATOR_OUT : out std_logic_vector(7 downto 0);
 			  UPDATE : out std_logic);
 	end component UPDATER;
 	component HALVING_MANAGER
 	port ( TRIGGER_HALVING : in std_logic;
            INPUT_READY : in std_logic;
-           NUMERATOR_IN : in std_logic_vector(9 downto 0);
-           DENOMINATOR_IN : in std_logic_vector(9 downto 0);
+           NUMERATOR_IN : in std_logic_vector(7 downto 0);
+           DENOMINATOR_IN : in std_logic_vector(7 downto 0);
 			  CONTEXT : in std_logic_vector(5 downto 0);
            RESET : in std_logic;
            CLOCK : in std_logic;
-           NUMERATOR_OUT : out std_logic_vector(9 downto 0);
-           DENOMINATOR_OUT : out std_logic_vector(9 downto 0);
+           NUMERATOR_OUT : out std_logic_vector(7 downto 0);
+           DENOMINATOR_OUT : out std_logic_vector(7 downto 0);
            OUTPUT_READY : out std_logic);
 	end component HALVING_MANAGER;
 
@@ -147,33 +147,33 @@ end process CHOOSE_FRACTION;
 
 
 DIVISION : DIVIDER
-	port map (NUMERATOR => FRACTION2(19 downto 10),
-	DENOMINATOR => FRACTION2(9 downto 0),
+	port map (NUMERATOR => FRACTION2(15 downto 8),
+	DENOMINATOR => FRACTION2(7 downto 0),
 	RESET => RESET,
 	CLOCK => CLOCK,
 	QUOTIENT => PROB);
 
 PROBUPDATE : UPDATER
-	port map (NUMERATOR => FRACTION2(19 downto 10),
-	DENOMINATOR => FRACTION2(9 downto 0),
+	port map (NUMERATOR => FRACTION2(15 downto 8),
+	DENOMINATOR => FRACTION2(7 downto 0),
 	ENABLE => PROB_CHANGED,
 	DATA_IN => DATA_IN,
 	RESET => RESET,
 	CLOCK => CLOCK,
-	NUMERATOR_OUT => NEWPROB(19 downto 10),
-	DENOMINATOR_OUT => NEWPROB(9 downto 0),
+	NUMERATOR_OUT => NEWPROB(15 downto 8),
+	DENOMINATOR_OUT => NEWPROB(7 downto 0),
 	UPDATE => UPDATE_PROB);
 
 REFRESH: HALVING_MANAGER
 	port map (TRIGGER_HALVING => HALVECOUNTS,
 	INPUT_READY => DATA_FETCHED,
-	NUMERATOR_IN => FRACTION(19 downto 10),
-	DENOMINATOR_IN => FRACTION(9 downto 0),
+	NUMERATOR_IN => FRACTION(15 downto 8),
+	DENOMINATOR_IN => FRACTION(7 downto 0),
 	CONTEXT => CONTEXT_NUMBER,
 	RESET => RESET,
 	CLOCK => CLOCK,
-	NUMERATOR_OUT => FRACTION2(19 downto 10),
-	DENOMINATOR_OUT => FRACTION2(9 downto 0),
+	NUMERATOR_OUT => FRACTION2(15 downto 8),
+	DENOMINATOR_OUT => FRACTION2(7 downto 0),
 	OUTPUT_READY => PROB_CHANGED);
 
 

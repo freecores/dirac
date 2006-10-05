@@ -1,10 +1,10 @@
 Release 7.1.04i - xst H.42
 Copyright (c) 1995-2005 Xilinx, Inc.  All rights reserved.
 --> Parameter TMPDIR set to __projnav
-CPU : 0.00 / 0.33 s | Elapsed : 0.00 / 1.00 s
+CPU : 0.00 / 2.52 s | Elapsed : 0.00 / 2.00 s
  
 --> Parameter xsthdpdir set to ./xst
-CPU : 0.00 / 0.33 s | Elapsed : 0.00 / 1.00 s
+CPU : 0.00 / 2.52 s | Elapsed : 0.00 / 2.00 s
  
 --> Reading design: updater.prj
 
@@ -32,7 +32,7 @@ Ignore Synthesis Constraint File   : NO
 ---- Target Parameters
 Output File Name                   : "updater"
 Output Format                      : NGC
-Target Device                      : xc2v250-6-cs144
+Target Device                      : xc2v2000-6-bg575
 
 ---- Source Options
 Top Module Name                    : updater
@@ -65,7 +65,7 @@ Pack IO Registers into IOBs        : auto
 
 ---- General Options
 Optimization Goal                  : Speed
-Optimization Effort                : 1
+Optimization Effort                : 2
 Keep Hierarchy                     : NO
 Global Optimization                : AllClockNets
 RTL Output                         : Yes
@@ -95,8 +95,9 @@ enable_auto_floorplanning          : No
 =========================================================================
 *                          HDL Compilation                              *
 =========================================================================
-Compiling vhdl file "C:/Xilinx/bin/ArithmeticDecoder/../ArithmeticCoder/UPDATER.vhd" in Library work.
-Architecture rtl of Entity updater is up to date.
+Compiling vhdl file "C:/Xilinx/bin/ArithmeticCoder/UPDATER.vhd" in Library work.
+Entity <updater> compiled.
+Entity <updater> (Architecture <rtl>) compiled.
 
 =========================================================================
 *                            HDL Analysis                               *
@@ -110,25 +111,24 @@ Entity <updater> analyzed. Unit <updater> generated.
 =========================================================================
 
 Synthesizing Unit <updater>.
-    Related source file is "C:/Xilinx/bin/ArithmeticDecoder/../ArithmeticCoder/UPDATER.vhd".
-WARNING:Xst:1780 - Signal <HALVING_ALLOWED> is never used or assigned.
-    Found 10-bit 4-to-1 multiplexer for signal <NUMERATOR_OUT>.
-    Found 10-bit 4-to-1 multiplexer for signal <DENOMINATOR_OUT>.
+    Related source file is "C:/Xilinx/bin/ArithmeticCoder/UPDATER.vhd".
+    Found 8-bit 4-to-1 multiplexer for signal <NUMERATOR_OUT>.
+    Found 8-bit 4-to-1 multiplexer for signal <DENOMINATOR_OUT>.
     Found 1-bit register for signal <UPDATE>.
-    Found 10-bit adder for signal <$n0009> created at line 51.
-    Found 10-bit adder for signal <$n0011> created at line 73.
-    Found 10-bit adder for signal <$n0012> created at line 84.
-    Found 10-bit adder for signal <$n0013> created at line 62.
-    Found 10-bit register for signal <DENOMINATOR2>.
-    Found 10-bit register for signal <NUMERATOR1>.
-    Found 10-bit register for signal <NUMERATOR2>.
-    Found 10-bit register for signal <NUMERATOR3>.
-    Found 10-bit register for signal <NUMERATOR4>.
+    Found 8-bit adder for signal <$n0009> created at line 50.
+    Found 8-bit adder for signal <$n0011> created at line 72.
+    Found 8-bit adder for signal <$n0012> created at line 83.
+    Found 8-bit adder for signal <$n0013> created at line 61.
+    Found 8-bit register for signal <DENOMINATOR2>.
+    Found 8-bit register for signal <NUMERATOR1>.
+    Found 8-bit register for signal <NUMERATOR2>.
+    Found 8-bit register for signal <NUMERATOR3>.
+    Found 8-bit register for signal <NUMERATOR4>.
     Found 1-bit xor2 for signal <UPDATE_SWITCH>.
     Summary:
 	inferred   1 D-type flip-flop(s).
 	inferred   4 Adder/Subtractor(s).
-	inferred  20 Multiplexer(s).
+	inferred  16 Multiplexer(s).
 Unit <updater> synthesized.
 
 
@@ -146,12 +146,12 @@ HDL Synthesis Report
 
 Macro Statistics
 # Adders/Subtractors               : 4
- 10-bit adder                      : 4
+ 8-bit adder                       : 4
 # Registers                        : 6
  1-bit register                    : 1
- 10-bit register                   : 5
+ 8-bit register                    : 5
 # Multiplexers                     : 2
- 10-bit 4-to-1 multiplexer         : 2
+ 8-bit 4-to-1 multiplexer          : 2
 # Xors                             : 1
  1-bit xor2                        : 1
 
@@ -162,11 +162,11 @@ Macro Statistics
 =========================================================================
 
 Optimizing unit <updater> ...
-Loading device for application Rf_Device from file '2v250.nph' in environment C:/Xilinx.
+Loading device for application Rf_Device from file '2v2000.nph' in environment C:/Xilinx.
 
 Mapping all equations...
 Building and optimizing final netlist ...
-Found area constraint ratio of 100 (+ 5) on block updater, actual ratio is 2.
+Found area constraint ratio of 100 (+ 5) on block updater, actual ratio is 0.
 
 =========================================================================
 *                            Final Report                               *
@@ -179,47 +179,47 @@ Optimization Goal                  : Speed
 Keep Hierarchy                     : NO
 
 Design Statistics
-# IOs                              : 45
+# IOs                              : 37
 
 Macro Statistics :
-# Registers                        : 51
-#      1-bit register              : 51
+# Registers                        : 41
+#      1-bit register              : 41
 # Multiplexers                     : 2
-#      10-bit 4-to-1 multiplexer   : 2
+#      8-bit 4-to-1 multiplexer    : 2
 # Adders/Subtractors               : 4
-#      10-bit adder                : 4
+#      8-bit adder                 : 4
 
 Cell Usage :
-# BELS                             : 155
+# BELS                             : 123
 #      GND                         : 1
 #      INV                         : 3
-#      LUT1                        : 35
-#      LUT2                        : 9
-#      LUT3                        : 20
-#      LUT4                        : 5
-#      MUXCY                       : 36
-#      MUXF5                       : 10
+#      LUT1                        : 27
+#      LUT2                        : 2
+#      LUT3                        : 6
+#      LUT4                        : 20
+#      MUXCY                       : 28
+#      MUXF5                       : 8
 #      VCC                         : 1
-#      XORCY                       : 35
-# FlipFlops/Latches                : 51
-#      FDR                         : 46
+#      XORCY                       : 27
+# FlipFlops/Latches                : 41
+#      FDR                         : 36
 #      FDS                         : 5
 # Clock Buffers                    : 1
 #      BUFGP                       : 1
-# IO Buffers                       : 44
-#      IBUF                        : 23
-#      OBUF                        : 21
+# IO Buffers                       : 36
+#      IBUF                        : 19
+#      OBUF                        : 17
 =========================================================================
 
 Device utilization summary:
 ---------------------------
 
-Selected Device : 2v250cs144-6 
+Selected Device : 2v2000bg575-6 
 
- Number of Slices:                      40  out of   1536     2%  
- Number of Slice Flip Flops:            51  out of   3072     1%  
- Number of 4 input LUTs:                69  out of   3072     2%  
- Number of bonded IOBs:                 45  out of     92    48%  
+ Number of Slices:                      32  out of  10752     0%  
+ Number of Slice Flip Flops:            41  out of  21504     0%  
+ Number of 4 input LUTs:                55  out of  21504     0%  
+ Number of bonded IOBs:                 37  out of    408     9%  
  Number of GCLKs:                        1  out of     16     6%  
 
 
@@ -235,7 +235,7 @@ Clock Information:
 -----------------------------------+------------------------+-------+
 Clock Signal                       | Clock buffer(FF name)  | Load  |
 -----------------------------------+------------------------+-------+
-CLOCK                              | BUFGP                  | 51    |
+CLOCK                              | BUFGP                  | 41    |
 -----------------------------------+------------------------+-------+
 
 Timing Summary:
@@ -243,9 +243,9 @@ Timing Summary:
 Speed Grade: -6
 
    Minimum period: No path found
-   Minimum input arrival time before clock: 5.514ns
+   Minimum input arrival time before clock: 5.430ns
    Maximum output required time after clock: 5.814ns
-   Maximum combinational path delay: 8.733ns
+   Maximum combinational path delay: 8.314ns
 
 Timing Detail:
 --------------
@@ -253,14 +253,14 @@ All values displayed in nanoseconds (ns)
 
 =========================================================================
 Timing constraint: Default OFFSET IN BEFORE for Clock 'CLOCK'
-  Total number of paths / destination ports: 464 / 102
+  Total number of paths / destination ports: 291 / 82
 -------------------------------------------------------------------------
-Offset:              5.514ns (Levels of Logic = 13)
+Offset:              5.430ns (Levels of Logic = 11)
   Source:            NUMERATOR<2> (PAD)
-  Destination:       NUMERATOR4_9 (FF)
+  Destination:       NUMERATOR4_7 (FF)
   Destination Clock: CLOCK rising
 
-  Data Path: NUMERATOR<2> to NUMERATOR4_9
+  Data Path: NUMERATOR<2> to NUMERATOR4_7
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
@@ -271,68 +271,65 @@ Offset:              5.514ns (Levels of Logic = 13)
      MUXCY:CI->O           1   0.042   0.000  updater__n0013<3>cy (updater__n0013<3>_cyo)
      MUXCY:CI->O           1   0.042   0.000  updater__n0013<4>cy (updater__n0013<4>_cyo)
      MUXCY:CI->O           1   0.042   0.000  updater__n0013<5>cy (updater__n0013<5>_cyo)
-     MUXCY:CI->O           1   0.042   0.000  updater__n0013<6>cy (updater__n0013<6>_cyo)
-     MUXCY:CI->O           1   0.042   0.000  updater__n0013<7>cy (updater__n0013<7>_cyo)
-     XORCY:CI->O           2   0.824   0.744  updater__n0013<8>_xor (_n0013<8>)
-     LUT1:I0->O            1   0.347   0.000  _n0013<8>_rt (_n0013<8>_rt)
-     MUXCY:S->O            0   0.235   0.000  updater__n0011<8>cy (updater__n0011<8>_cyo)
-     XORCY:CI->O           1   0.824   0.000  updater__n0011<9>_xor (_n0011<9>)
-     FDR:D                     0.293          NUMERATOR4_9
+     XORCY:CI->O           2   0.824   0.744  updater__n0013<6>_xor (_n0013<6>)
+     LUT1:I0->O            1   0.347   0.000  _n0013<6>_rt (_n0013<6>_rt)
+     MUXCY:S->O            0   0.235   0.000  updater__n0011<6>cy (updater__n0011<6>_cyo)
+     XORCY:CI->O           1   0.824   0.000  updater__n0011<7>_xor (_n0011<7>)
+     FDR:D                     0.293          NUMERATOR4_7
     ----------------------------------------
-    Total                      5.514ns (4.010ns logic, 1.504ns route)
-                                       (72.7% logic, 27.3% route)
+    Total                      5.430ns (3.926ns logic, 1.504ns route)
+                                       (72.3% logic, 27.7% route)
 
 =========================================================================
 Timing constraint: Default OFFSET OUT AFTER for Clock 'CLOCK'
-  Total number of paths / destination ports: 51 / 21
+  Total number of paths / destination ports: 41 / 17
 -------------------------------------------------------------------------
 Offset:              5.814ns (Levels of Logic = 3)
-  Source:            NUMERATOR2_9 (FF)
-  Destination:       NUMERATOR_OUT<9> (PAD)
+  Source:            NUMERATOR2_7 (FF)
+  Destination:       NUMERATOR_OUT<7> (PAD)
   Source Clock:      CLOCK rising
 
-  Data Path: NUMERATOR2_9 to NUMERATOR_OUT<9>
+  Data Path: NUMERATOR2_7 to NUMERATOR_OUT<7>
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
-     FDR:C->Q              1   0.449   0.548  NUMERATOR2_9 (NUMERATOR2_9)
-     LUT3:I1->O            1   0.347   0.000  DATA_IN19 (MUX_BLOCK_N19)
-     MUXF5:I0->O           1   0.345   0.383  DENOMINATOR_OUT<0>_DENOMINATOR_OUT<0>_rn_8 (NUMERATOR_OUT_9_OBUF)
-     OBUF:I->O                 3.743          NUMERATOR_OUT_9_OBUF (NUMERATOR_OUT<9>)
+     FDR:C->Q              1   0.449   0.548  NUMERATOR2_7 (NUMERATOR2_7)
+     LUT4:I1->O            1   0.347   0.000  DENOMINATOR_OUT<0>_DENOMINATOR_OUT<0>_rn_6_F (N25)
+     MUXF5:I0->O           1   0.345   0.383  DENOMINATOR_OUT<0>_DENOMINATOR_OUT<0>_rn_6 (NUMERATOR_OUT_7_OBUF)
+     OBUF:I->O                 3.743          NUMERATOR_OUT_7_OBUF (NUMERATOR_OUT<7>)
     ----------------------------------------
     Total                      5.814ns (4.884ns logic, 0.930ns route)
                                        (84.0% logic, 16.0% route)
 
 =========================================================================
 Timing constraint: Default path analysis
-  Total number of paths / destination ports: 224 / 20
+  Total number of paths / destination ports: 204 / 16
 -------------------------------------------------------------------------
-Delay:               8.733ns (Levels of Logic = 6)
+Delay:               8.314ns (Levels of Logic = 5)
   Source:            DENOMINATOR<0> (PAD)
-  Destination:       DENOMINATOR_OUT<9> (PAD)
+  Destination:       DENOMINATOR_OUT<1> (PAD)
 
-  Data Path: DENOMINATOR<0> to DENOMINATOR_OUT<9>
+  Data Path: DENOMINATOR<0> to DENOMINATOR_OUT<1>
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
      IBUF:I->O             2   0.653   0.743  DENOMINATOR_0_IBUF (DENOMINATOR_0_IBUF)
-     LUT4:I0->O            1   0.347   0.415  _n001410 (CHOICE6)
-     LUT4:I3->O            1   0.347   0.415  _n001416_SW0 (N27)
-     LUT4:I3->O           20   0.347   0.994  _n001416 (HALVE_VALUES)
-     LUT2:I0->O            1   0.347   0.383  DENOMINATOR_OUT<9>1 (DENOMINATOR_OUT_9_OBUF)
-     OBUF:I->O                 3.743          DENOMINATOR_OUT_9_OBUF (DENOMINATOR_OUT<9>)
+     LUT4:I0->O           23   0.347   1.007  _n00144 (CHOICE167)
+     LUT2:I0->O            2   0.347   0.744  _n001410 (HALVE_VALUES)
+     LUT4:I0->O            1   0.347   0.383  DENOMINATOR_OUT<1>1 (DENOMINATOR_OUT_1_OBUF)
+     OBUF:I->O                 3.743          DENOMINATOR_OUT_1_OBUF (DENOMINATOR_OUT<1>)
     ----------------------------------------
-    Total                      8.733ns (5.784ns logic, 2.949ns route)
-                                       (66.2% logic, 33.8% route)
+    Total                      8.314ns (5.437ns logic, 2.877ns route)
+                                       (65.4% logic, 34.6% route)
 
 =========================================================================
-CPU : 4.88 / 5.23 s | Elapsed : 5.00 / 6.00 s
+CPU : 6.39 / 8.98 s | Elapsed : 7.00 / 9.00 s
  
 --> 
 
-Total memory usage is 100604 kilobytes
+Total memory usage is 121148 kilobytes
 
 Number of errors   :    0 (   0 filtered)
-Number of warnings :    1 (   0 filtered)
+Number of warnings :    0 (   0 filtered)
 Number of infos    :    0 (   0 filtered)
 

@@ -55,9 +55,9 @@ end EXP_GOLOMB_COUNTER;
 
 architecture RTL of EXP_GOLOMB_COUNTER is
 signal DATA2 : std_logic_vector (32 downto 0);
-signal LOG : std_logic_vector (5 downto 0);
-signal OUT_ADDRESS : std_logic_vector( 5 downto 0); 
-signal UPDOWN : std_logic;
+signal LOG : std_logic_vector (4 downto 0);
+signal OUT_ADDRESS : std_logic_vector( 4 downto 0); 
+signal MODE : std_logic;
 signal OUTPUT_ACTIVE : std_logic;
 begin
 
@@ -67,110 +67,100 @@ LOGARITHM : process (CLOCK)
 begin
 	if CLOCK'event and CLOCK = '1' then
 		if DATA2(32) = '1' then
-			LOG <= "100000";
+			LOG <= "11111";
 		elsif DATA2(31) = '1' then
-			LOG <= "011111";
+			LOG <= "11110";
 		elsif DATA2(30) = '1' then
-			LOG <= "011110";
+			LOG <= "11101";
 		elsif DATA2(29) = '1' then
-			LOG <= "011101";
+			LOG <= "11100";
 		elsif DATA2(28) = '1' then
-			LOG <= "011100";
+			LOG <= "11011";
 		elsif DATA2(27) = '1' then
-			LOG <= "011011";
+			LOG <= "11010";
 		elsif DATA2(26) = '1' then
-			LOG <= "011010";
+			LOG <= "11001";
 		elsif DATA2(25) = '1' then
-			LOG <= "011001";
+			LOG <= "11000";
 		elsif DATA2(24) = '1' then
-			LOG <= "011000";
+			LOG <= "10111";
 		elsif DATA2(23) = '1' then
-			LOG <= "010111";
+			LOG <= "10110";
 		elsif DATA2(22) = '1' then
-			LOG <= "010110";
+			LOG <= "10101";
 		elsif DATA2(21) = '1' then
-			LOG <= "010101";
+			LOG <= "10100";
 		elsif DATA2(20) = '1' then
-			LOG <= "010100";
+			LOG <= "10011";
 		elsif DATA2(19) = '1' then
-			LOG <= "010011";
+			LOG <= "10010";
 		elsif DATA2(18) = '1' then
-			LOG <= "010010";
+			LOG <= "10001";
 		elsif DATA2(17) = '1' then
-			LOG <= "010001";
+			LOG <= "10000";
 		elsif DATA2(16) = '1' then
-			LOG <= "010000";
+			LOG <= "01111";
 		elsif DATA2(15) = '1' then
-			LOG <= "001111";
+			LOG <= "01110";
 		elsif DATA2(14) = '1' then
-			LOG <= "001110";
+			LOG <= "01101";
 		elsif DATA2(13) = '1' then
-			LOG <= "001101";
+			LOG <= "01100";
 		elsif DATA2(12) = '1' then
-			LOG <= "001100";
+			LOG <= "01011";
 		elsif DATA2(11) = '1' then
-			LOG <= "001011";
+			LOG <= "01010";
 		elsif DATA2(10) = '1' then
-			LOG <= "001010";
+			LOG <= "01001";
 		elsif DATA2(9) = '1' then
-			LOG <= "001001";
+			LOG <= "01000";
 		elsif DATA2(8) = '1' then
-			LOG <= "001000";
+			LOG <= "00111";
 		elsif DATA2(7) = '1' then
-			LOG <= "000111";
+			LOG <= "00110";
 		elsif DATA2(6) = '1' then
-			LOG <= "000110";
+			LOG <= "00101";
 		elsif DATA2(5) = '1' then
-			LOG <= "000101";
+			LOG <= "00100";
 		elsif DATA2(4) = '1' then
-			LOG <= "000100";
+			LOG <= "00011";
 		elsif DATA2(3) = '1' then
-			LOG <= "000011";
+			LOG <= "00010";
 		elsif DATA2(2) = '1' then
-			LOG <= "000010";
-		elsif DATA2(1) = '1' then
-			LOG <= "000001";
+			LOG <= "00001";
 		else
-			LOG <= "000000";
+			LOG <= "00000";
 		end if;
 	end if;
 end process LOGARITHM;
-
-
-MODE : process (CLOCK)
-begin
-	if CLOCK'event and CLOCK = '1' then
-		if RESET = '1' then
-			OUTPUT_ACTIVE <= '0';
-		elsif TEST = '1' then
-			OUTPUT_ACTIVE <= '1';
-		elsif OUT_ADDRESS = "000000" then
-			OUTPUT_ACTIVE <= '0';
-		end if;
-	end if;
-end process MODE;
 
 
 OUTPUT: process (CLOCK)
 begin
 	if CLOCK'event and CLOCK = '1' then
 		if RESET = '1' then
-			UPDOWN <= '0';
-			OUT_ADDRESS <= "000000";
+			MODE <= '0';
+			OUT_ADDRESS <= "00000";
 			DATA_OUT <= '0';
+			OUTPUT_ACTIVE <= '0';
 		elsif OUTPUT_ACTIVE = '1' then
-			if UPDOWN = '0' then
-				if OUT_ADDRESS = LOG then
+			if MODE = '1' then 
+				DATA_OUT <= DATA2(conv_integer(OUT_ADDRESS));
+				MODE <= '0';
+			else
+				if	OUT_ADDRESS	= "00000" then
 					DATA_OUT <= '1';
-					UPDOWN <= '1';
+					OUTPUT_ACTIVE <= '0';
 				else
 					DATA_OUT <= '0';
-					OUT_ADDRESS <= OUT_ADDRESS + "000001";
+					OUT_ADDRESS <= OUT_ADDRESS - "00001";
+					MODE <= '1';
 				end if;
-			else
-				OUT_ADDRESS <= OUT_ADDRESS - "000001";
-				DATA_OUT	<= DATA2(conv_integer(OUT_ADDRESS));
 			end if;
+		elsif TEST = '1' then
+			OUTPUT_ACTIVE <= '1';
+			OUT_ADDRESS <= LOG;
+			MODE <= '0';
 		end if;
 	end if;
 end process OUTPUT;

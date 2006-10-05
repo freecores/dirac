@@ -1,6 +1,6 @@
 -- ***** BEGIN LICENSE BLOCK *****
 -- 
--- $Id: ARITHMETIC_UNIT.vhd,v 1.3 2005-05-27 16:00:28 petebleackley Exp $ $Name: not supported by cvs2svn $
+-- $Id: ARITHMETIC_UNIT.vhd,v 1.4 2006-10-05 16:17:11 petebleackley Exp $ $Name: not supported by cvs2svn $
 -- *
 -- * Version: MPL 1.1/GPL 2.0/LGPL 2.1
 -- *
@@ -20,7 +20,7 @@
 -- * Portions created by the Initial Developer are Copyright (C) 2004.
 -- * All Rights Reserved.
 -- *
--- * Contributor(s): Peter Bleackley (Original author), Stephan Reichör
+-- * Contributor(s): Peter Bleackley (Original author)
 -- *
 -- * Alternatively, the contents of this file may be used under the terms of
 -- * the GNU General Public License Version 2 (the "GPL"), or the GNU Lesser
@@ -35,7 +35,6 @@
 -- * or the LGPL.
 -- * ***** END LICENSE BLOCK ***** */
 
-
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.STD_LOGIC_ARITH.ALL;
@@ -47,9 +46,9 @@ use IEEE.NUMERIC_STD.ALL;
 --library UNISIM;
 --use UNISIM.VComponents.all;
 
-	entity ARITHMETIC_UNIT is
+entity ARITHMETIC_UNIT is
     Port ( DIFFERENCE : in std_logic_vector(15 downto 0);
-           PROB : in std_logic_vector(9 downto 0);
+           PROB : in std_logic_vector(7 downto 0);
 			  LOW :	in std_logic_vector(15 downto 0);
            ENABLE : in std_logic;
 			  RESET :	in std_logic;
@@ -64,7 +63,7 @@ end ARITHMETIC_UNIT;
 architecture RTL of ARITHMETIC_UNIT is
 
 	signal LOW2 : std_logic_vector(16 downto 0);
-	signal PRODUCT :	std_logic_vector (26 downto 0);
+	signal PRODUCT :	std_logic_vector (24 downto 0);
 	signal PRODUCT2 :	 std_logic_vector (16 downto 0);
 	signal RESULT :	std_logic_vector (16 downto 0);
 	signal RESULT0 : std_logic_vector (16 downto 0);
@@ -73,19 +72,22 @@ architecture RTL of ARITHMETIC_UNIT is
 	signal DIFFERENCE3 : std_logic_vector(16 downto 0);
 	signal DIFFERENCE4 :	std_logic_vector(16 downto 0);
 	signal DELAY1 : std_logic;
-	signal DELAY2 : std_logic;
+--	signal DELAY2 : std_logic;
 	signal CALCULATE :	std_logic;
 begin
 
 -- The arithmetic
 	DIFFERENCE2 <= ('0' & DIFFERENCE) + "00000000000000001";
-MULTIPLY : process (CLOCK, DIFFERENCE2, PROB)
+MULTIPLY : process (CLOCK)
 	begin
 	if CLOCK'event and CLOCK = '1' then
-	PRODUCT <= DIFFERENCE2 * PROB;
+		if ENABLE = '1' then
+		PRODUCT <= DIFFERENCE2 * PROB;
+		end if;
 	end if;
-	end process MULTIPLY;
-	PRODUCT2	<= PRODUCT(26 downto 10);
+end process MULTIPLY;
+
+	PRODUCT2	<= PRODUCT(24 downto 8);
 	RESULT <= LOW2 + PRODUCT2;
 	RESULT_OUT1 <= RESULT(15 downto 0);
 	RESULT0	<= (RESULT - "00000000000000001");
@@ -93,13 +95,13 @@ MULTIPLY : process (CLOCK, DIFFERENCE2, PROB)
 	DIFFERENCE3 <= (PRODUCT2 - "00000000000000001");
 	DIFFERENCE4 <= (DIFFERENCE1 - PRODUCT2);
 	DIFFERENCE_OUT1 <= DIFFERENCE4(15 downto 0);
-
+	DIFFERENCE_OUT0 <= DIFFERENCE3(15 downto 0);
 
 
 
 -- Control logic
 	CALCULATE <= ENABLE and not RESET;
-	DATA_LOAD <= DELAY1 and DELAY2;
+	DATA_LOAD <= DELAY1;-- and DELAY2;
 
 -- Sequential control logic
 
@@ -107,10 +109,12 @@ DELAYS: process (CLOCK)
 	begin
 	if CLOCK'event and CLOCK = '1' then
 		DELAY1 <= CALCULATE;
-		DELAY2 <= DELAY1;
-		DIFFERENCE1 <= '0' & DIFFERENCE;
-		LOW2 <= '0' & LOW;
-		DIFFERENCE_OUT0 <= DIFFERENCE3(15 downto 0);
+--		DELAY2 <= DELAY1;
+		if ENABLE = '1' then
+			DIFFERENCE1 <= '0' & DIFFERENCE;
+			LOW2 <= '0' & LOW;
+		end if;
+
 	end if;
 end process DELAYS;
 

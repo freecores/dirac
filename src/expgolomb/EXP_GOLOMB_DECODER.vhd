@@ -33,6 +33,8 @@
 --  your version of this file under the terms of any one of the MPL, the GPL
 --  or the LGPL.
 -- * ***** END LICENSE BLOCK ***** */
+
+
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.STD_LOGIC_ARITH.ALL;
@@ -53,11 +55,7 @@ entity EXP_GOLOMB_DECODER is
 end EXP_GOLOMB_DECODER;
 
 architecture RTL of EXP_GOLOMB_DECODER is
-	signal DATA_1 : std_logic_vector(31 downto 0);
-	signal DATA_2 : std_logic_vector(31 downto 0);
-	signal SUM : std_logic_vector(31 downto 0);
-	signal NUMBITS_1 : std_logic_vector(4 downto 0);
-	signal NUMBITS_2 : std_logic_vector(4 downto 0);
+	signal DATA : std_logic_vector(31 downto 0);
 	signal MODE : std_logic;
 	signal CALC_COMPLETE : std_logic;
 begin
@@ -66,38 +64,29 @@ READ_DATA : process (CLOCK)
 begin
 	if CLOCK'event and CLOCK = '1' then		--WHEN CLOCK EDGE DETECTED
 		if RESET = '1' then		--SET ALL REGISTERS TO ZERO
-			DATA_1 <= (others => '0');
-			DATA_2 <= (others => '0');
-			NUMBITS_1 <= (others => '0');
-			NUMBITS_2 <= (others => '0');
+			DATA <= ((0)=>'1', others => '0');
 			DATA_OUT <= (others => '0');
-			MODE <= '0';
 			CALC_COMPLETE <= '0';
+			MODE <= '0';
 		elsif CALC_COMPLETE = '1' then
-		  	DATA_1 <= (others => '0');
-			DATA_2 <= (others => '0');
-			NUMBITS_1 <= (others => '0');
-			NUMBITS_2 <= (others => '0');
-			MODE <= '0';
+		  	DATA <= ((0)=> '1',others => '0');
 			CALC_COMPLETE <= '0';
-		elsif (NUMBITS_2 = NUMBITS_1) and (MODE = '1') then --IF CALCULATION IS COMPLETE 
-			DATA_OUT <= SUM;
-			CALC_COMPLETE <= '1';
+			MODE <= '0';
 		elsif ENABLE = '1' then		--IF DATA IS BEING INPUT
-			if MODE = '1' then		 --READ INPUT DATA INTO REGISTER DATA_2, AND COUNT THE NUMBER OF BITS READ IN
-				DATA_2 <= DATA_2 (30 downto 0) & DATA_IN;
-				NUMBITS_2 <= NUMBITS_2 + "00001";
-			elsif DATA_IN = '1' then	 --DETECT END OF EXPONENT, SWITCH TO MODE 1, FOR READING DATA
+			if MODE = '0' then		 --FOR "FOLLOW_ON" BITS
+				CALC_COMPLETE <= DATA_IN;
 				MODE <= '1';
-			else			  --IN MODE 0 (FOR READING EXPONENT)
-				DATA_1 <= DATA_1 (30 downto 0) & '1';
-				NUMBITS_1 <= NUMBITS_1 + "00001";
+				if DATA_IN = '1' then
+					DATA_OUT <= DATA - "00000000000000000000000000000001";
+				end if;
+			else			  --IN MODE 1 (FOR DATA_BITS)
+				DATA <= DATA (30 downto 0) & DATA_IN;
+				MODE <= '0';
 			end if;
 		end if;
 end if;
 end process READ_DATA;
 
-SUM <= DATA_1 + DATA_2;
 READY <= CALC_COMPLETE;
 
 end RTL;

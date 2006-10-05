@@ -1,10 +1,10 @@
 Release 7.1.04i - xst H.42
 Copyright (c) 1995-2005 Xilinx, Inc.  All rights reserved.
 --> Parameter TMPDIR set to __projnav
-CPU : 0.00 / 0.34 s | Elapsed : 0.00 / 0.00 s
+CPU : 0.00 / 0.36 s | Elapsed : 0.00 / 0.00 s
  
 --> Parameter xsthdpdir set to ./xst
-CPU : 0.00 / 0.34 s | Elapsed : 0.00 / 0.00 s
+CPU : 0.00 / 0.36 s | Elapsed : 0.00 / 0.00 s
  
 --> Reading design: arithmeticcoder.prj
 
@@ -98,8 +98,7 @@ enable_auto_floorplanning          : No
 Compiling vhdl file "C:/Xilinx/bin/ArithmeticCoder/Divider.vhd" in Library work.
 Architecture rtl of Entity divider is up to date.
 Compiling vhdl file "C:/Xilinx/bin/ArithmeticCoder/UPDATER.vhd" in Library work.
-Entity <updater> compiled.
-Entity <updater> (Architecture <rtl>) compiled.
+Architecture rtl of Entity updater is up to date.
 Compiling vhdl file "C:/Xilinx/bin/ArithmeticCoder/HALVING_MANAGER.vhd" in Library work.
 Architecture rtl of Entity halving_manager is up to date.
 Compiling vhdl file "C:/Xilinx/bin/ArithmeticCoder/FIFO.vhd" in Library work.
@@ -166,12 +165,14 @@ Analyzing Entity <OUTPUT_UNIT> (Architecture <rtl>).
 Entity <OUTPUT_UNIT> analyzed. Unit <OUTPUT_UNIT> generated.
 
 Analyzing Entity <CONTEXT_MANAGER> (Architecture <rtl>).
+WARNING:Xst:790 - "C:/Xilinx/bin/ArithmeticCoder/CONTEXT_MANAGER.vhd" line 118: Index value(s) does not match array range, simulation mismatch.
 WARNING:Xst:790 - "C:/Xilinx/bin/ArithmeticCoder/CONTEXT_MANAGER.vhd" line 133: Index value(s) does not match array range, simulation mismatch.
 WARNING:Xst:790 - "C:/Xilinx/bin/ArithmeticCoder/CONTEXT_MANAGER.vhd" line 137: Index value(s) does not match array range, simulation mismatch.
+WARNING:Xst:790 - "C:/Xilinx/bin/ArithmeticCoder/CONTEXT_MANAGER.vhd" line 141: Index value(s) does not match array range, simulation mismatch.
 Entity <CONTEXT_MANAGER> analyzed. Unit <CONTEXT_MANAGER> generated.
 
 Analyzing Entity <DIVIDER> (Architecture <rtl>).
-WARNING:Xst:790 - "C:/Xilinx/bin/ArithmeticCoder/Divider.vhd" line 1079: Index value(s) does not match array range, simulation mismatch.
+WARNING:Xst:790 - "C:/Xilinx/bin/ArithmeticCoder/Divider.vhd" line 308: Index value(s) does not match array range, simulation mismatch.
 Entity <DIVIDER> analyzed. Unit <DIVIDER> generated.
 
 Analyzing Entity <UPDATER> (Architecture <rtl>).
@@ -181,6 +182,7 @@ Analyzing Entity <HALVING_MANAGER> (Architecture <rtl>).
 WARNING:Xst:790 - "C:/Xilinx/bin/ArithmeticCoder/HALVING_MANAGER.vhd" line 71: Index value(s) does not match array range, simulation mismatch.
 WARNING:Xst:790 - "C:/Xilinx/bin/ArithmeticCoder/HALVING_MANAGER.vhd" line 71: Index value(s) does not match array range, simulation mismatch.
 WARNING:Xst:790 - "C:/Xilinx/bin/ArithmeticCoder/HALVING_MANAGER.vhd" line 73: Index value(s) does not match array range, simulation mismatch.
+WARNING:Xst:1610 - "C:/Xilinx/bin/ArithmeticCoder/HALVING_MANAGER.vhd" line 78: Width mismatch. <NUMERATOR2> has a width of 8 bits but assigned expression is 10-bit wide.
 WARNING:Xst:790 - "C:/Xilinx/bin/ArithmeticCoder/HALVING_MANAGER.vhd" line 108: Index value(s) does not match array range, simulation mismatch.
 Entity <HALVING_MANAGER> analyzed. Unit <HALVING_MANAGER> generated.
 
@@ -284,13 +286,13 @@ Synthesizing Unit <HALVING_MANAGER>.
     Found 3-bit addsub for signal <$n0142>.
     Found 3-bit addsub for signal <$n0143>.
     Found 3-bit addsub for signal <$n0144>.
-    Found 10-bit comparator greater for signal <$n0147> created at line 99.
+    Found 8-bit comparator greater for signal <$n0147> created at line 99.
     Found 3-bit comparator greater for signal <$n0241> created at line 108.
     Found 1-bit register for signal <AFTER_TRIGGER>.
-    Found 10-bit register for signal <DENOMINATOR>.
-    Found 10-bit adder for signal <DENOMINATOR2>.
-    Found 10-bit register for signal <NUMERATOR>.
-    Found 10-bit adder for signal <NUMERATOR2>.
+    Found 8-bit register for signal <DENOMINATOR>.
+    Found 8-bit adder for signal <DENOMINATOR2>.
+    Found 8-bit register for signal <NUMERATOR>.
+    Found 8-bit adder for signal <NUMERATOR2>.
     Found 138-bit register for signal <SHIFTS>.
     Summary:
 	inferred 139 D-type flip-flop(s).
@@ -302,45 +304,41 @@ Unit <HALVING_MANAGER> synthesized.
 
 Synthesizing Unit <UPDATER>.
     Related source file is "C:/Xilinx/bin/ArithmeticCoder/UPDATER.vhd".
-WARNING:Xst:1780 - Signal <HALVING_ALLOWED> is never used or assigned.
     Found 1-bit register for signal <UPDATE>.
-    Found 10-bit 4-to-1 multiplexer for signal <DENOMINATOR_OUT>.
-    Found 10-bit 4-to-1 multiplexer for signal <NUMERATOR_OUT>.
-    Found 10-bit adder for signal <$n0009> created at line 51.
-    Found 10-bit adder for signal <$n0011> created at line 73.
-    Found 10-bit adder for signal <$n0012> created at line 84.
-    Found 10-bit adder for signal <$n0013> created at line 62.
-    Found 10-bit register for signal <DENOMINATOR2>.
-    Found 10-bit register for signal <NUMERATOR1>.
-    Found 10-bit register for signal <NUMERATOR2>.
-    Found 10-bit register for signal <NUMERATOR3>.
-    Found 10-bit register for signal <NUMERATOR4>.
+    Found 8-bit 4-to-1 multiplexer for signal <DENOMINATOR_OUT>.
+    Found 8-bit 4-to-1 multiplexer for signal <NUMERATOR_OUT>.
+    Found 8-bit adder for signal <$n0009> created at line 50.
+    Found 8-bit adder for signal <$n0011> created at line 72.
+    Found 8-bit adder for signal <$n0012> created at line 83.
+    Found 8-bit adder for signal <$n0013> created at line 61.
+    Found 8-bit register for signal <DENOMINATOR2>.
+    Found 8-bit register for signal <NUMERATOR1>.
+    Found 8-bit register for signal <NUMERATOR2>.
+    Found 8-bit register for signal <NUMERATOR3>.
+    Found 8-bit register for signal <NUMERATOR4>.
     Found 1-bit xor2 for signal <UPDATE_SWITCH>.
     Summary:
 	inferred   1 D-type flip-flop(s).
 	inferred   4 Adder/Subtractor(s).
-	inferred  20 Multiplexer(s).
+	inferred  16 Multiplexer(s).
 Unit <UPDATER> synthesized.
 
 
 Synthesizing Unit <DIVIDER>.
     Related source file is "C:/Xilinx/bin/ArithmeticCoder/Divider.vhd".
-WARNING:Xst:646 - Signal <TOTAL<41:32>> is assigned but never used.
-WARNING:Xst:646 - Signal <TOTAL<21:0>> is assigned but never used.
-    Found 1022x32-bit ROM for signal <$n0002> created at line 1079.
-    Found 16x10-bit multiplier for signal <$n0003> created at line 1086.
-    Found 16x10-bit multiplier for signal <$n0004> created at line 1093.
-    Found 10-bit subtractor for signal <INDEX>.
-    Found 10-bit register for signal <NUMERATOR2>.
-    Found 26-bit register for signal <PRODUCT1>.
-    Found 26-bit register for signal <PRODUCT2>.
-    Found 32-bit register for signal <RECIPROCAL>.
-    Found 42-bit adder for signal <TOTAL>.
+WARNING:Xst:646 - Signal <PRODUCT<23:16>> is assigned but never used.
+WARNING:Xst:646 - Signal <PRODUCT<7:0>> is assigned but never used.
+    Found 254x16-bit ROM for signal <$n0002> created at line 308.
+    Found 16x8-bit multiplier for signal <$n0003> created at line 315.
+    Found 8-bit subtractor for signal <INDEX>.
+    Found 8-bit register for signal <NUMERATOR2>.
+    Found 24-bit register for signal <PRODUCT>.
+    Found 16-bit register for signal <RECIPROCAL>.
     Summary:
 	inferred   1 ROM(s).
-	inferred  84 D-type flip-flop(s).
-	inferred   2 Adder/Subtractor(s).
-	inferred   2 Multiplier(s).
+	inferred  40 D-type flip-flop(s).
+	inferred   1 Adder/Subtractor(s).
+	inferred   1 Multiplier(s).
 Unit <DIVIDER> synthesized.
 
 
@@ -396,10 +394,10 @@ Unit <FIFO> synthesized.
 
 Synthesizing Unit <CONTEXT_MANAGER>.
     Related source file is "C:/Xilinx/bin/ArithmeticCoder/CONTEXT_MANAGER.vhd".
-    Found 46x20-bit dual-port block RAM for signal <PROBABILITY>.
+    Found 46x16-bit dual-port block RAM for signal <PROBABILITY>.
     -----------------------------------------------------------------------
     | mode               | write-first                         |          |
-    | aspect ratio       | 46-word x 20-bit                    |          |
+    | aspect ratio       | 46-word x 16-bit                    |          |
     | clock              | connected to signal <CLOCK>         | rise     |
     | dual clock         | connected to signal <CLOCK>         | rise     |
     | dual enable        | connected to signal <SET>           | high     |
@@ -411,15 +409,15 @@ Synthesizing Unit <CONTEXT_MANAGER>.
     | dual data out      | connected to signal <RATIO>         |          |
     | ram_style          | Auto                                |          |
     -----------------------------------------------------------------------
-    Found 1-bit 64-to-1 multiplexer for signal <$n0003> created at line 141.
+    Found 1-bit 46-to-1 multiplexer for signal <$n0003> created at line 141.
     Found 1-bit register for signal <CONTEXT_VALID>.
     Found 2-bit register for signal <DATA_READY>.
     Found 6-bit register for signal <OLD_CONTEXT>.
     Found 6-bit register for signal <READ_ADDRESS>.
-    Found 64-bit register for signal <RESET_FLAGS>.
+    Found 46-bit register for signal <RESET_FLAGS>.
     Summary:
 	inferred   1 RAM(s).
-	inferred  79 D-type flip-flop(s).
+	inferred  61 D-type flip-flop(s).
 	inferred   1 Multiplexer(s).
 Unit <CONTEXT_MANAGER> synthesized.
 
@@ -451,22 +449,22 @@ Unit <CONVERGENCE_CHECK> synthesized.
 
 Synthesizing Unit <ARITHMETIC_UNIT>.
     Related source file is "C:/Xilinx/bin/ArithmeticCoder/ARITHMETIC_UNIT.vhd".
-WARNING:Xst:646 - Signal <PRODUCT<9:0>> is assigned but never used.
+WARNING:Xst:646 - Signal <PRODUCT<7:0>> is assigned but never used.
 WARNING:Xst:646 - Signal <DIFFERENCE3<16>> is assigned but never used.
 WARNING:Xst:646 - Signal <DIFFERENCE4<16>> is assigned but never used.
 WARNING:Xst:646 - Signal <RESULT0<16>> is assigned but never used.
-    Found 17x10-bit multiplier for signal <$n0000> created at line 48.
+    Found 17x8-bit multiplier for signal <$n0000> created at line 48.
     Found 1-bit register for signal <DELAY1>.
     Found 17-bit register for signal <DIFFERENCE1>.
     Found 17-bit adder for signal <DIFFERENCE2>.
     Found 17-bit subtractor for signal <DIFFERENCE3>.
     Found 17-bit subtractor for signal <DIFFERENCE4>.
     Found 17-bit register for signal <LOW2>.
-    Found 27-bit register for signal <PRODUCT>.
+    Found 25-bit register for signal <PRODUCT>.
     Found 17-bit adder for signal <RESULT>.
     Found 17-bit subtractor for signal <RESULT0>.
     Summary:
-	inferred  62 D-type flip-flop(s).
+	inferred  60 D-type flip-flop(s).
 	inferred   5 Adder/Subtractor(s).
 	inferred   1 Multiplier(s).
 Unit <ARITHMETIC_UNIT> synthesized.
@@ -536,9 +534,6 @@ Advanced multiplier inference ...
     Found registered multiplier on signal <_n0003>:
 	- 1 register level(s) found in a register connected to the multiplier macro ouput.
 	  Pushing register(s) into the multiplier macro.
-    Found registered multiplier on signal <_n0004>:
-	- 1 register level(s) found in a register connected to the multiplier macro ouput.
-	  Pushing register(s) into the multiplier macro.
 Advanced Registered AddSub inference ...
 Dynamic shift register inference ...
 
@@ -547,44 +542,40 @@ HDL Synthesis Report
 
 Macro Statistics
 # Block RAMs                       : 2
- 1022x32-bit single-port block RAM : 1
- 46x20-bit dual-port block RAM     : 1
+ 254x16-bit single-port block RAM  : 1
+ 46x16-bit dual-port block RAM     : 1
 # LUT RAMs                         : 2
  256x1-bit dual-port distributed RAM: 1
  256x8-bit dual-port distributed RAM: 1
-# Multipliers                      : 3
- 16x10-bit registered multiplier   : 2
- 17x10-bit registered multiplier   : 1
-# Adders/Subtractors               : 59
- 10-bit adder                      : 6
- 10-bit subtractor                 : 1
+# Multipliers                      : 2
+ 16x8-bit registered multiplier    : 1
+ 17x8-bit registered multiplier    : 1
+# Adders/Subtractors               : 58
  17-bit adder                      : 2
  17-bit subtractor                 : 3
  3-bit addsub                      : 46
- 42-bit adder                      : 1
+ 8-bit adder                       : 6
+ 8-bit subtractor                  : 1
 # Counters                         : 5
  8-bit up counter                  : 4
  8-bit updown counter              : 1
-# Registers                        : 184
- 1-bit register                    : 125
- 10-bit register                   : 8
+# Registers                        : 166
+ 1-bit register                    : 107
  17-bit register                   : 2
  3-bit register                    : 46
  6-bit register                    : 2
- 8-bit register                    : 1
+ 8-bit register                    : 9
 # Comparators                      : 6
- 10-bit comparator greater         : 1
  3-bit comparator greater          : 1
  8-bit comparator equal            : 2
- 8-bit comparator greater          : 1
+ 8-bit comparator greater          : 2
  8-bit comparator lessequal        : 1
 # Multiplexers                     : 52
  1-bit 4-to-1 multiplexer          : 1
- 1-bit 64-to-1 multiplexer         : 1
- 10-bit 4-to-1 multiplexer         : 2
+ 1-bit 46-to-1 multiplexer         : 1
  3-bit 4-to-1 multiplexer          : 46
  3-bit 46-to-1 multiplexer         : 1
- 8-bit 4-to-1 multiplexer          : 1
+ 8-bit 4-to-1 multiplexer          : 3
 # Xors                             : 2
  1-bit xor2                        : 2
 
@@ -640,24 +631,22 @@ WARNING:Xst:637 - Naming conflict between signal DATA_OUT<0> of unit CONTEXT_BUF
 WARNING:Xst:637 - Naming conflict between signal SHIFT_ALL of unit DIFFERENCE and signal DIFFERENCE_SHIFT_ALL of unit arithmeticcoder : renaming DIFFERENCE_SHIFT_ALL to DIFFERENCE_SHIFT_ALL1.
 Building and optimizing final netlist ...
 Register <PROBABILITY_PROBUPDATE_UPDATE> equivalent to <PROBABILITY_DATA_READY_0> has been removed
+Register <PROBABILITY_DIVISION_NUMERATOR2_5> equivalent to <PROBABILITY_PROBUPDATE_NUMERATOR1_5> has been removed
 Register <PROBABILITY_DIVISION_NUMERATOR2_7> equivalent to <PROBABILITY_PROBUPDATE_NUMERATOR1_7> has been removed
-Register <PROBABILITY_DIVISION_NUMERATOR2_9> equivalent to <PROBABILITY_PROBUPDATE_NUMERATOR1_9> has been removed
-Register <PROBABILITY_DIVISION_NUMERATOR2_8> equivalent to <PROBABILITY_PROBUPDATE_NUMERATOR1_8> has been removed
+Register <PROBABILITY_DIVISION_NUMERATOR2_6> equivalent to <PROBABILITY_PROBUPDATE_NUMERATOR1_6> has been removed
 Register <PROBABILITY_DIVISION_NUMERATOR2_0> equivalent to <PROBABILITY_PROBUPDATE_NUMERATOR1_0> has been removed
 Register <PROBABILITY_DIVISION_NUMERATOR2_1> equivalent to <PROBABILITY_PROBUPDATE_NUMERATOR1_1> has been removed
 Register <PROBABILITY_DIVISION_NUMERATOR2_2> equivalent to <PROBABILITY_PROBUPDATE_NUMERATOR1_2> has been removed
 Register <PROBABILITY_DIVISION_NUMERATOR2_3> equivalent to <PROBABILITY_PROBUPDATE_NUMERATOR1_3> has been removed
 Register <PROBABILITY_DIVISION_NUMERATOR2_4> equivalent to <PROBABILITY_PROBUPDATE_NUMERATOR1_4> has been removed
-Register <PROBABILITY_DIVISION_NUMERATOR2_5> equivalent to <PROBABILITY_PROBUPDATE_NUMERATOR1_5> has been removed
-Register <PROBABILITY_DIVISION_NUMERATOR2_6> equivalent to <PROBABILITY_PROBUPDATE_NUMERATOR1_6> has been removed
 Found area constraint ratio of 100 (+ 5) on block arithmeticcoder, actual ratio is 6.
 FlipFlop ARITH_DELAY1 has been replicated 1 time(s)
-FlipFlop CONTEXT_BUFFER_STORAGE_READ_ADDRESS_0 has been replicated 14 time(s)
-FlipFlop CONTEXT_BUFFER_STORAGE_READ_ADDRESS_1 has been replicated 14 time(s)
-FlipFlop CONTEXT_BUFFER_STORAGE_READ_ADDRESS_2 has been replicated 14 time(s)
-FlipFlop CONTEXT_BUFFER_STORAGE_READ_ADDRESS_3 has been replicated 14 time(s)
-FlipFlop CONTEXT_BUFFER_STORAGE_READ_ADDRESS_4 has been replicated 7 time(s)
-FlipFlop CONTEXT_BUFFER_STORAGE_READ_ADDRESS_5 has been replicated 2 time(s)
+FlipFlop CONTEXT_BUFFER_STORAGE_READ_ADDRESS_0 has been replicated 15 time(s)
+FlipFlop CONTEXT_BUFFER_STORAGE_READ_ADDRESS_1 has been replicated 15 time(s)
+FlipFlop CONTEXT_BUFFER_STORAGE_READ_ADDRESS_2 has been replicated 15 time(s)
+FlipFlop CONTEXT_BUFFER_STORAGE_READ_ADDRESS_3 has been replicated 15 time(s)
+FlipFlop CONTEXT_BUFFER_STORAGE_READ_ADDRESS_4 has been replicated 5 time(s)
+FlipFlop CONTEXT_BUFFER_STORAGE_READ_ADDRESS_5 has been replicated 3 time(s)
 FlipFlop CONTEXT_BUFFER_STORAGE_WRITE_ADDRESS_0 has been replicated 1 time(s)
 FlipFlop CONTEXT_BUFFER_STORAGE_WRITE_ADDRESS_1 has been replicated 1 time(s)
 FlipFlop CONTEXT_BUFFER_STORAGE_WRITE_ADDRESS_2 has been replicated 1 time(s)
@@ -684,83 +673,79 @@ Design Statistics
 
 Macro Statistics :
 # RAM                              : 4
-#      1022x32-bit single-port block RAM: 1
+#      254x16-bit single-port block RAM: 1
 #      256x1-bit dual-port distributed RAM: 1
 #      256x8-bit dual-port distributed RAM: 1
-#      46x20-bit dual-port block RAM: 1
-# Registers                        : 261
-#      1-bit register              : 205
+#      46x16-bit dual-port block RAM: 1
+# Registers                        : 227
+#      1-bit register              : 171
 #      17-bit register             : 2
 #      3-bit register              : 46
 #      6-bit register              : 2
 #      8-bit register              : 6
 # Multiplexers                     : 52
 #      1-bit 4-to-1 multiplexer    : 1
-#      1-bit 64-to-1 multiplexer   : 1
-#      10-bit 4-to-1 multiplexer   : 2
+#      1-bit 46-to-1 multiplexer   : 1
 #      3-bit 4-to-1 multiplexer    : 46
 #      3-bit 46-to-1 multiplexer   : 1
-#      8-bit 4-to-1 multiplexer    : 1
-# Adders/Subtractors               : 18
-#      10-bit adder                : 6
-#      10-bit subtractor           : 1
+#      8-bit 4-to-1 multiplexer    : 3
+# Adders/Subtractors               : 17
 #      17-bit adder                : 2
 #      17-bit subtractor           : 3
-#      42-bit adder                : 1
-#      8-bit adder                 : 5
-# Multipliers                      : 3
-#      16x10-bit registered multiplier: 2
-#      17x10-bit registered multiplier: 1
+#      8-bit adder                 : 11
+#      8-bit subtractor            : 1
+# Multipliers                      : 2
+#      16x8-bit registered multiplier: 1
+#      17x8-bit registered multiplier: 1
 # Comparators                      : 6
-#      10-bit comparator greater   : 1
 #      3-bit comparator greater    : 1
 #      8-bit comparator equal      : 2
-#      8-bit comparator greater    : 1
+#      8-bit comparator greater    : 2
 #      8-bit comparator lessequal  : 1
 # Xors                             : 92
 #      1-bit xor3                  : 92
 
 Cell Usage :
-# BELS                             : 1489
+# BELS                             : 1336
 #      GND                         : 1
 #      INV                         : 36
-#      LUT1                        : 64
-#      LUT1_L                      : 9
-#      LUT2                        : 60
-#      LUT2_D                      : 2
-#      LUT2_L                      : 2
-#      LUT3                        : 108
-#      LUT3_D                      : 10
-#      LUT3_L                      : 246
-#      LUT4                        : 272
-#      LUT4_D                      : 33
-#      LUT4_L                      : 158
-#      MUXCY                       : 196
-#      MUXF5                       : 69
-#      MUXF6                       : 23
-#      MUXF7                       : 10
-#      MUXF8                       : 5
+#      LUT1                        : 55
+#      LUT1_L                      : 7
+#      LUT2                        : 58
+#      LUT2_D                      : 1
+#      LUT2_L                      : 10
+#      LUT3                        : 147
+#      LUT3_D                      : 9
+#      LUT3_L                      : 142
+#      LUT4                        : 252
+#      LUT4_D                      : 24
+#      LUT4_L                      : 185
+#      MUXCY                       : 161
+#      MUXF5                       : 62
+#      MUXF6                       : 20
+#      MUXF7                       : 8
+#      MUXF8                       : 4
 #      VCC                         : 1
-#      XORCY                       : 184
-# FlipFlops/Latches                : 500
+#      XORCY                       : 153
+# FlipFlops/Latches                : 471
 #      FD                          : 7
 #      FDE                         : 86
-#      FDR                         : 50
-#      FDRE                        : 281
+#      FDR                         : 40
+#      FDRE                        : 280
 #      FDRSE                       : 2
 #      FDS                         : 7
-#      FDSE                        : 67
-# RAMS                             : 39
+#      FDSE                        : 49
+# RAMS                             : 38
 #      RAM64X1D                    : 36
-#      RAMB16_S18                  : 2
+#      RAMB16_S36                  : 1
 #      RAMB16_S36_S36              : 1
 # Clock Buffers                    : 1
 #      BUFGP                       : 1
 # IO Buffers                       : 15
 #      IBUF                        : 12
 #      OBUF                        : 3
-# MULTs                            : 3
-#      MULT18X18S                  : 3
+# MULTs                            : 2
+#      MULT18X18S                  : 2
 =========================================================================
 
 Device utilization summary:
@@ -768,12 +753,12 @@ Device utilization summary:
 
 Selected Device : 2v2000bg575-6 
 
- Number of Slices:                     750  out of  10752     6%  
- Number of Slice Flip Flops:           500  out of  21504     2%  
- Number of 4 input LUTs:              1108  out of  21504     5%  
+ Number of Slices:                     719  out of  10752     6%  
+ Number of Slice Flip Flops:           471  out of  21504     2%  
+ Number of 4 input LUTs:              1034  out of  21504     4%  
  Number of bonded IOBs:                 16  out of    408     3%  
- Number of BRAMs:                        3  out of     56     5%  
- Number of MULT18X18s:                   3  out of     56     5%  
+ Number of BRAMs:                        2  out of     56     3%  
+ Number of MULT18X18s:                   2  out of     56     3%  
  Number of GCLKs:                        1  out of     16     6%  
 
 
@@ -789,17 +774,17 @@ Clock Information:
 -----------------------------------+------------------------+-------+
 Clock Signal                       | Clock buffer(FF name)  | Load  |
 -----------------------------------+------------------------+-------+
-CLOCK                              | BUFGP                  | 540   |
+CLOCK                              | BUFGP                  | 510   |
 -----------------------------------+------------------------+-------+
 
 Timing Summary:
 ---------------
 Speed Grade: -6
 
-   Minimum period: 16.221ns (Maximum Frequency: 61.648MHz)
-   Minimum input arrival time before clock: 15.527ns
+   Minimum period: 16.315ns (Maximum Frequency: 61.291MHz)
+   Minimum input arrival time before clock: 15.562ns
    Maximum output required time after clock: 8.122ns
-   Maximum combinational path delay: 7.764ns
+   Maximum combinational path delay: 7.705ns
 
 Timing Detail:
 --------------
@@ -807,16 +792,16 @@ All values displayed in nanoseconds (ns)
 
 =========================================================================
 Timing constraint: Default period analysis for Clock 'CLOCK'
-  Clock period: 16.221ns (frequency: 61.648MHz)
-  Total number of paths / destination ports: 30998811 / 1448
+  Clock period: 16.315ns (frequency: 61.291MHz)
+  Total number of paths / destination ports: 23899270 / 1400
 -------------------------------------------------------------------------
-Delay:               16.221ns (Levels of Logic = 30)
+Delay:               16.315ns (Levels of Logic = 28)
   Source:            INBUFFER_STORAGE_READ_ADDRESS_1 (FF)
-  Destination:       PROBABILITY_PROBUPDATE_NUMERATOR4_9 (FF)
+  Destination:       PROBABILITY_PROBUPDATE_NUMERATOR4_7 (FF)
   Source Clock:      CLOCK rising
   Destination Clock: CLOCK rising
 
-  Data Path: INBUFFER_STORAGE_READ_ADDRESS_1 to PROBABILITY_PROBUPDATE_NUMERATOR4_9
+  Data Path: INBUFFER_STORAGE_READ_ADDRESS_1 to PROBABILITY_PROBUPDATE_NUMERATOR4_7
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
@@ -826,79 +811,75 @@ Delay:               16.221ns (Levels of Logic = 30)
      MUXCY:CI->O           1   0.042   0.000  INBUFFER_STORAGE_Eq_stagecy_rn_0 (INBUFFER_STORAGE_Eq_stage_cyo1)
      MUXCY:CI->O           1   0.042   0.000  INBUFFER_STORAGE_Eq_stagecy_rn_1 (INBUFFER_STORAGE_Eq_stage_cyo2)
      MUXCY:CI->O          10   0.601   0.819  INBUFFER_STORAGE_Eq_stagecy_rn_2 (INBUFFER_FIFO_EMPTY)
-     LUT2:I1->O            1   0.347   0.547  BUFFER_INPUT1_SW1 (N827)
+     LUT2:I1->O            1   0.347   0.547  BUFFER_INPUT1_SW1 (N835)
      LUT4_D:I1->O         12   0.347   0.715  INBUFFER_SENDING1 (DATA_AVAILABLE)
-     LUT4:I2->O            8   0.347   0.653  CONTEXT_BUFFER_Ker01 (CONTEXT_BUFFER_N01)
-     LUT4_D:I3->O          6   0.347   0.613  CONTEXT_BUFFER_DATA_OUT<6>_SW0_SW0 (N829)
+     LUT4_D:I2->O         13   0.347   0.738  CONTEXT_BUFFER_Ker31 (CONTEXT_BUFFER_N3)
+     LUT4_D:I3->O          6   0.347   0.613  CONTEXT_BUFFER_DATA_OUT<6>_SW0_SW0 (N849)
      LUT3:I2->O            9   0.347   0.665  CONTEXT_BUFFER_DATA_OUT<6>_2 (CONTEXT_BUFFER_DATA_OUT<6>_1)
-     LUT3_L:I2->LO         1   0.347   0.000  PROBABILITY_REFRESH_CONTEXT<4>3 (PROBABILITY_REFRESH_MUX_BLOCK_N4)
-     MUXF5:I0->O           1   0.345   0.000  PROBABILITY_REFRESH_CONTEXT<1>_rn_0 (PROBABILITY_REFRESH_MUX_BLOCK_CONTEXT<1>_MUXF51)
-     MUXF6:I0->O           1   0.354   0.000  PROBABILITY_REFRESH_CONTEXT<0> (PROBABILITY_REFRESH_MUX_BLOCK_CONTEXT<0>_MUXF6)
-     MUXF7:I1->O           1   0.354   0.000  PROBABILITY_REFRESH_CONTEXT<2> (PROBABILITY_REFRESH_MUX_BLOCK_CONTEXT<2>_MUXF7)
+     LUT3_L:I2->LO         1   0.347   0.000  PROBABILITY_REFRESH_CONTEXT<4>5 (PROBABILITY_REFRESH_MUX_BLOCK_N6)
+     MUXF5:I0->O           1   0.345   0.000  PROBABILITY_REFRESH_CONTEXT<1>_rn_1 (PROBABILITY_REFRESH_MUX_BLOCK_CONTEXT<1>_MUXF52)
+     MUXF6:I1->O           1   0.354   0.000  PROBABILITY_REFRESH_CONTEXT<0>_rn_0 (PROBABILITY_REFRESH_MUX_BLOCK_CONTEXT<0>_MUXF61)
+     MUXF7:I0->O           1   0.354   0.000  PROBABILITY_REFRESH_CONTEXT<2> (PROBABILITY_REFRESH_MUX_BLOCK_CONTEXT<2>_MUXF7)
      MUXF8:I1->O           1   0.354   0.548  PROBABILITY_REFRESH_CONTEXT<3> (PROBABILITY_REFRESH_MUX_BLOCK_CONTEXT<3>_MUXF8)
-     LUT4_D:I1->LO         1   0.347   0.132  PROBABILITY_REFRESH__n0241106 (N969)
-     LUT4:I3->O           11   0.347   0.699  PROBABILITY_REFRESH__n0241109_1 (PROBABILITY_REFRESH__n0241109)
-     LUT4_D:I2->LO         2   0.347   0.000  PROBABILITY_PROBUPDATE_UPDATER__n0013<0>lut (N979)
+     LUT4_L:I1->LO         1   0.347   0.132  PROBABILITY_REFRESH__n0241106 (CHOICE621)
+     LUT4:I3->O           19   0.347   0.792  PROBABILITY_REFRESH__n0241109 (PROBABILITY_REFRESH__n0241)
+     LUT4_D:I2->LO         2   0.347   0.000  PROBABILITY_PROBUPDATE_UPDATER__n0013<0>lut (N991)
      MUXCY:S->O            1   0.235   0.000  PROBABILITY_PROBUPDATE_UPDATER__n0013<0>cy (PROBABILITY_PROBUPDATE_UPDATER__n0013<0>_cyo)
      MUXCY:CI->O           1   0.042   0.000  PROBABILITY_PROBUPDATE_UPDATER__n0013<1>cy (PROBABILITY_PROBUPDATE_UPDATER__n0013<1>_cyo)
      MUXCY:CI->O           1   0.042   0.000  PROBABILITY_PROBUPDATE_UPDATER__n0013<2>cy (PROBABILITY_PROBUPDATE_UPDATER__n0013<2>_cyo)
      MUXCY:CI->O           1   0.042   0.000  PROBABILITY_PROBUPDATE_UPDATER__n0013<3>cy (PROBABILITY_PROBUPDATE_UPDATER__n0013<3>_cyo)
      MUXCY:CI->O           1   0.042   0.000  PROBABILITY_PROBUPDATE_UPDATER__n0013<4>cy (PROBABILITY_PROBUPDATE_UPDATER__n0013<4>_cyo)
      MUXCY:CI->O           1   0.042   0.000  PROBABILITY_PROBUPDATE_UPDATER__n0013<5>cy (PROBABILITY_PROBUPDATE_UPDATER__n0013<5>_cyo)
-     MUXCY:CI->O           1   0.042   0.000  PROBABILITY_PROBUPDATE_UPDATER__n0013<6>cy (PROBABILITY_PROBUPDATE_UPDATER__n0013<6>_cyo)
-     MUXCY:CI->O           1   0.042   0.000  PROBABILITY_PROBUPDATE_UPDATER__n0013<7>cy (PROBABILITY_PROBUPDATE_UPDATER__n0013<7>_cyo)
-     XORCY:CI->O           2   0.824   0.744  PROBABILITY_PROBUPDATE_UPDATER__n0013<8>_xor (PROBABILITY_PROBUPDATE__n0013<8>)
-     LUT1_L:I0->LO         1   0.347   0.000  PROBABILITY_PROBUPDATE__n0013<8>_rt (PROBABILITY_PROBUPDATE__n0013<8>_rt)
-     MUXCY:S->O            0   0.235   0.000  PROBABILITY_PROBUPDATE_UPDATER__n0011<8>cy (PROBABILITY_PROBUPDATE_UPDATER__n0011<8>_cyo)
-     XORCY:CI->O           1   0.824   0.000  PROBABILITY_PROBUPDATE_UPDATER__n0011<9>_xor (PROBABILITY_PROBUPDATE__n0011<9>)
-     FDR:D                     0.293          PROBABILITY_PROBUPDATE_NUMERATOR4_9
+     XORCY:CI->O           2   0.824   0.744  PROBABILITY_PROBUPDATE_UPDATER__n0013<6>_xor (PROBABILITY_PROBUPDATE__n0013<6>)
+     LUT1_L:I0->LO         1   0.347   0.000  PROBABILITY_PROBUPDATE__n0013<6>_rt (PROBABILITY_PROBUPDATE__n0013<6>_rt)
+     MUXCY:S->O            0   0.235   0.000  PROBABILITY_PROBUPDATE_UPDATER__n0011<6>cy (PROBABILITY_PROBUPDATE_UPDATER__n0011<6>_cyo)
+     XORCY:CI->O           1   0.824   0.000  PROBABILITY_PROBUPDATE_UPDATER__n0011<7>_xor (PROBABILITY_PROBUPDATE__n0011<7>)
+     FDR:D                     0.293          PROBABILITY_PROBUPDATE_NUMERATOR4_7
     ----------------------------------------
-    Total                     16.221ns (9.298ns logic, 6.923ns route)
-                                       (57.3% logic, 42.7% route)
+    Total                     16.315ns (9.214ns logic, 7.101ns route)
+                                       (56.5% logic, 43.5% route)
 
 =========================================================================
 Timing constraint: Default OFFSET IN BEFORE for Clock 'CLOCK'
-  Total number of paths / destination ports: 1938326 / 1222
+  Total number of paths / destination ports: 1496299 / 1156
 -------------------------------------------------------------------------
-Offset:              15.527ns (Levels of Logic = 26)
+Offset:              15.562ns (Levels of Logic = 24)
   Source:            RESET (PAD)
-  Destination:       PROBABILITY_PROBUPDATE_NUMERATOR4_9 (FF)
+  Destination:       PROBABILITY_PROBUPDATE_NUMERATOR4_7 (FF)
   Destination Clock: CLOCK rising
 
-  Data Path: RESET to PROBABILITY_PROBUPDATE_NUMERATOR4_9
+  Data Path: RESET to PROBABILITY_PROBUPDATE_NUMERATOR4_7
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
-     IBUF:I->O           475   0.653   1.877  RESET_IBUF (RESET_IBUF)
+     IBUF:I->O           444   0.653   1.818  RESET_IBUF (RESET_IBUF)
      LUT4:I0->O            8   0.347   0.648  OUTPUT_SENDING1 (SENDING_OBUF)
      LUT4_D:I2->O         12   0.347   0.715  INBUFFER_SENDING1 (DATA_AVAILABLE)
-     LUT4:I2->O            8   0.347   0.653  CONTEXT_BUFFER_Ker01 (CONTEXT_BUFFER_N01)
-     LUT4_D:I3->O          6   0.347   0.613  CONTEXT_BUFFER_DATA_OUT<6>_SW0_SW0 (N829)
+     LUT4_D:I2->O         13   0.347   0.738  CONTEXT_BUFFER_Ker31 (CONTEXT_BUFFER_N3)
+     LUT4_D:I3->O          6   0.347   0.613  CONTEXT_BUFFER_DATA_OUT<6>_SW0_SW0 (N849)
      LUT3:I2->O            9   0.347   0.665  CONTEXT_BUFFER_DATA_OUT<6>_2 (CONTEXT_BUFFER_DATA_OUT<6>_1)
-     LUT3_L:I2->LO         1   0.347   0.000  PROBABILITY_REFRESH_CONTEXT<4>3 (PROBABILITY_REFRESH_MUX_BLOCK_N4)
-     MUXF5:I0->O           1   0.345   0.000  PROBABILITY_REFRESH_CONTEXT<1>_rn_0 (PROBABILITY_REFRESH_MUX_BLOCK_CONTEXT<1>_MUXF51)
-     MUXF6:I0->O           1   0.354   0.000  PROBABILITY_REFRESH_CONTEXT<0> (PROBABILITY_REFRESH_MUX_BLOCK_CONTEXT<0>_MUXF6)
-     MUXF7:I1->O           1   0.354   0.000  PROBABILITY_REFRESH_CONTEXT<2> (PROBABILITY_REFRESH_MUX_BLOCK_CONTEXT<2>_MUXF7)
+     LUT3_L:I2->LO         1   0.347   0.000  PROBABILITY_REFRESH_CONTEXT<4>5 (PROBABILITY_REFRESH_MUX_BLOCK_N6)
+     MUXF5:I0->O           1   0.345   0.000  PROBABILITY_REFRESH_CONTEXT<1>_rn_1 (PROBABILITY_REFRESH_MUX_BLOCK_CONTEXT<1>_MUXF52)
+     MUXF6:I1->O           1   0.354   0.000  PROBABILITY_REFRESH_CONTEXT<0>_rn_0 (PROBABILITY_REFRESH_MUX_BLOCK_CONTEXT<0>_MUXF61)
+     MUXF7:I0->O           1   0.354   0.000  PROBABILITY_REFRESH_CONTEXT<2> (PROBABILITY_REFRESH_MUX_BLOCK_CONTEXT<2>_MUXF7)
      MUXF8:I1->O           1   0.354   0.548  PROBABILITY_REFRESH_CONTEXT<3> (PROBABILITY_REFRESH_MUX_BLOCK_CONTEXT<3>_MUXF8)
-     LUT4_D:I1->LO         1   0.347   0.132  PROBABILITY_REFRESH__n0241106 (N969)
-     LUT4:I3->O           11   0.347   0.699  PROBABILITY_REFRESH__n0241109_1 (PROBABILITY_REFRESH__n0241109)
-     LUT4_D:I2->LO         2   0.347   0.000  PROBABILITY_PROBUPDATE_UPDATER__n0013<0>lut (N979)
+     LUT4_L:I1->LO         1   0.347   0.132  PROBABILITY_REFRESH__n0241106 (CHOICE621)
+     LUT4:I3->O           19   0.347   0.792  PROBABILITY_REFRESH__n0241109 (PROBABILITY_REFRESH__n0241)
+     LUT4_D:I2->LO         2   0.347   0.000  PROBABILITY_PROBUPDATE_UPDATER__n0013<0>lut (N991)
      MUXCY:S->O            1   0.235   0.000  PROBABILITY_PROBUPDATE_UPDATER__n0013<0>cy (PROBABILITY_PROBUPDATE_UPDATER__n0013<0>_cyo)
      MUXCY:CI->O           1   0.042   0.000  PROBABILITY_PROBUPDATE_UPDATER__n0013<1>cy (PROBABILITY_PROBUPDATE_UPDATER__n0013<1>_cyo)
      MUXCY:CI->O           1   0.042   0.000  PROBABILITY_PROBUPDATE_UPDATER__n0013<2>cy (PROBABILITY_PROBUPDATE_UPDATER__n0013<2>_cyo)
      MUXCY:CI->O           1   0.042   0.000  PROBABILITY_PROBUPDATE_UPDATER__n0013<3>cy (PROBABILITY_PROBUPDATE_UPDATER__n0013<3>_cyo)
      MUXCY:CI->O           1   0.042   0.000  PROBABILITY_PROBUPDATE_UPDATER__n0013<4>cy (PROBABILITY_PROBUPDATE_UPDATER__n0013<4>_cyo)
      MUXCY:CI->O           1   0.042   0.000  PROBABILITY_PROBUPDATE_UPDATER__n0013<5>cy (PROBABILITY_PROBUPDATE_UPDATER__n0013<5>_cyo)
-     MUXCY:CI->O           1   0.042   0.000  PROBABILITY_PROBUPDATE_UPDATER__n0013<6>cy (PROBABILITY_PROBUPDATE_UPDATER__n0013<6>_cyo)
-     MUXCY:CI->O           1   0.042   0.000  PROBABILITY_PROBUPDATE_UPDATER__n0013<7>cy (PROBABILITY_PROBUPDATE_UPDATER__n0013<7>_cyo)
-     XORCY:CI->O           2   0.824   0.744  PROBABILITY_PROBUPDATE_UPDATER__n0013<8>_xor (PROBABILITY_PROBUPDATE__n0013<8>)
-     LUT1_L:I0->LO         1   0.347   0.000  PROBABILITY_PROBUPDATE__n0013<8>_rt (PROBABILITY_PROBUPDATE__n0013<8>_rt)
-     MUXCY:S->O            0   0.235   0.000  PROBABILITY_PROBUPDATE_UPDATER__n0011<8>cy (PROBABILITY_PROBUPDATE_UPDATER__n0011<8>_cyo)
-     XORCY:CI->O           1   0.824   0.000  PROBABILITY_PROBUPDATE_UPDATER__n0011<9>_xor (PROBABILITY_PROBUPDATE__n0011<9>)
-     FDR:D                     0.293          PROBABILITY_PROBUPDATE_NUMERATOR4_9
+     XORCY:CI->O           2   0.824   0.744  PROBABILITY_PROBUPDATE_UPDATER__n0013<6>_xor (PROBABILITY_PROBUPDATE__n0013<6>)
+     LUT1_L:I0->LO         1   0.347   0.000  PROBABILITY_PROBUPDATE__n0013<6>_rt (PROBABILITY_PROBUPDATE__n0013<6>_rt)
+     MUXCY:S->O            0   0.235   0.000  PROBABILITY_PROBUPDATE_UPDATER__n0011<6>cy (PROBABILITY_PROBUPDATE_UPDATER__n0011<6>_cyo)
+     XORCY:CI->O           1   0.824   0.000  PROBABILITY_PROBUPDATE_UPDATER__n0011<7>_xor (PROBABILITY_PROBUPDATE__n0011<7>)
+     FDR:D                     0.293          PROBABILITY_PROBUPDATE_NUMERATOR4_7
     ----------------------------------------
-    Total                     15.527ns (8.235ns logic, 7.292ns route)
-                                       (53.0% logic, 47.0% route)
+    Total                     15.562ns (8.151ns logic, 7.411ns route)
+                                       (52.4% logic, 47.6% route)
 
 =========================================================================
 Timing constraint: Default OFFSET OUT AFTER for Clock 'CLOCK'
@@ -927,7 +908,7 @@ Offset:              8.122ns (Levels of Logic = 5)
 Timing constraint: Default path analysis
   Total number of paths / destination ports: 2 / 2
 -------------------------------------------------------------------------
-Delay:               7.764ns (Levels of Logic = 4)
+Delay:               7.705ns (Levels of Logic = 4)
   Source:            RESET (PAD)
   Destination:       DATA_OUT (PAD)
 
@@ -935,22 +916,22 @@ Delay:               7.764ns (Levels of Logic = 4)
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
-     IBUF:I->O           475   0.653   1.877  RESET_IBUF (RESET_IBUF)
+     IBUF:I->O           444   0.653   1.818  RESET_IBUF (RESET_IBUF)
      LUT2:I0->O            1   0.347   0.414  OUTPUT_DATA_OUT1 (OUTPUT_N0)
      LUT4:I3->O            1   0.347   0.383  OUTPUT_DATA_OUT2 (DATA_OUT_OBUF)
      OBUF:I->O                 3.743          DATA_OUT_OBUF (DATA_OUT)
     ----------------------------------------
-    Total                      7.764ns (5.090ns logic, 2.674ns route)
-                                       (65.6% logic, 34.4% route)
+    Total                      7.705ns (5.090ns logic, 2.615ns route)
+                                       (66.1% logic, 33.9% route)
 
 =========================================================================
-CPU : 34.83 / 35.22 s | Elapsed : 35.00 / 35.00 s
+CPU : 32.67 / 33.06 s | Elapsed : 33.00 / 33.00 s
  
 --> 
 
-Total memory usage is 130364 kilobytes
+Total memory usage is 129340 kilobytes
 
 Number of errors   :    0 (   0 filtered)
-Number of warnings :   27 (   0 filtered)
+Number of warnings :   29 (   0 filtered)
 Number of infos    :    5 (   0 filtered)
 
